@@ -1,6 +1,17 @@
+#include "interpreter/interpreter.h"
 #include <iostream>
+#include <sstream>
 
 int main(int argc, char** argv) {
-    std::cout << "Hello, world!" << std::endl;
+    std::string code = R"(
+        cond = true
+        if cond then
+            print("true")
+        end if
+    )";
+
+    std::istringstream stream(code);
+
+    interpret(stream, std::cout);
     return 0;
 }

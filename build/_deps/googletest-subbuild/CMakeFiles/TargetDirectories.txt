@@ -1,0 +1,3 @@
+/home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-subbuild/CMakeFiles/googletest-populate.dir
+/home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-subbuild/CMakeFiles/edit_cache.dir
+/home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-subbuild/CMakeFiles/rebuild_cache.dir

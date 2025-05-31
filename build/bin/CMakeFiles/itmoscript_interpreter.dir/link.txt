@@ -1,0 +1,1 @@
+/usr/bin/g++ -g CMakeFiles/itmoscript_interpreter.dir/main.cpp.o -o itmoscript_interpreter  ../lib/libitmoscript.a 

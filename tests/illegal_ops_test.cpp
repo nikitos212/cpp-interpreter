@@ -1,7 +1,7 @@
 #include <string>
 #include <vector>
 
-#include <lib/interpreter.h>
+#include "lib/interpreter/interpreter.h"
 #include <gtest/gtest.h>
 
 
