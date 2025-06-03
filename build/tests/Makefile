@@ -209,6 +209,30 @@ function_test.cpp.s:
 	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/function_test.cpp.s
 .PHONY : function_test.cpp.s
 
+illegal_ops_test.o: illegal_ops_test.cpp.o
+.PHONY : illegal_ops_test.o
+
+# target to build an object file
+illegal_ops_test.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/illegal_ops_test.cpp.o
+.PHONY : illegal_ops_test.cpp.o
+
+illegal_ops_test.i: illegal_ops_test.cpp.i
+.PHONY : illegal_ops_test.i
+
+# target to preprocess a source file
+illegal_ops_test.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/illegal_ops_test.cpp.i
+.PHONY : illegal_ops_test.cpp.i
+
+illegal_ops_test.s: illegal_ops_test.cpp.s
+.PHONY : illegal_ops_test.s
+
+# target to generate assembly for a file
+illegal_ops_test.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/illegal_ops_test.cpp.s
+.PHONY : illegal_ops_test.cpp.s
+
 loop_and_branch_test.o: loop_and_branch_test.cpp.o
 .PHONY : loop_and_branch_test.o
 
@@ -274,6 +298,9 @@ help:
 	@echo "... function_test.o"
 	@echo "... function_test.i"
 	@echo "... function_test.s"
+	@echo "... illegal_ops_test.o"
+	@echo "... illegal_ops_test.i"
+	@echo "... illegal_ops_test.s"
 	@echo "... loop_and_branch_test.o"
 	@echo "... loop_and_branch_test.i"
 	@echo "... loop_and_branch_test.s"

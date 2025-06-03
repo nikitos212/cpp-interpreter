@@ -1,4 +1,6 @@
 #include "nodes.h"
+#include "tokens/tokens.h"
+#include <iostream>
 
 using Value = std::variant<int, double, std::string, bool>;
 
@@ -30,16 +32,24 @@ BinOpNode::BinOpNode(std::unique_ptr<ASTNode> l, TokenType o, std::unique_ptr<AS
 Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
     Value lval = left->get(symbols, out);
     Value rval = right->get(symbols, out);
+    if (std::holds_alternative<int>(lval) && std::holds_alternative<int>(rval) && op == TokenType::REM) {
+        return std::get<int>(lval) % std::get<int>(rval);
+    }
     if (std::holds_alternative<int>(lval)) {
-        int l = std::get<int>(lval);
-        if (std::holds_alternative<int>(rval)) return apply_operator(l, std::get<int>(rval));
-        if (std::holds_alternative<double>(rval)) return apply_operator(static_cast<double>(l), std::get<double>(rval));
+        if (std::holds_alternative<int>(rval)) return apply_operator(std::get<int>(lval), std::get<int>(rval));
+        if (std::holds_alternative<double>(rval)) return apply_operator(static_cast<double>(std::get<int>(lval)), std::get<double>(rval));
     }
     if (std::holds_alternative<double>(lval)) {
-        double l = std::get<double>(lval);
-        if (std::holds_alternative<int>(rval)) return apply_operator(l, static_cast<double>(std::get<int>(rval)));
-        if (std::holds_alternative<double>(rval)) return apply_operator(l, std::get<double>(rval));
+        if (std::holds_alternative<int>(rval)) return apply_operator(std::get<double>(lval), static_cast<double>(std::get<int>(rval)));
+        if (std::holds_alternative<double>(rval)) return apply_operator(std::get<double>(lval), std::get<double>(rval));
     }
+    if (std::holds_alternative<int>(lval) && std::holds_alternative<std::string>(rval) && op == TokenType::MULTIPLY) {
+        return std::get<std::string>(rval) * std::get<int>(lval);
+    }
+    if (std::holds_alternative<int>(rval) && std::holds_alternative<std::string>(lval) && op == TokenType::MULTIPLY) {
+        return std::get<std::string>(lval) * std::get<int>(rval);
+    }
+
     throw std::runtime_error("Type mismatch in binary operation");
 }
 
@@ -50,19 +60,6 @@ Value PrintNode::get(SymbolTable& symbols, std::ostream& out) {
     out << val;
     
     return val;
-}
-
-bool is_truthy(const Value& val) {
-    if (std::holds_alternative<bool>(val)) {
-        return std::get<bool>(val);
-    }
-    if (std::holds_alternative<int>(val)) {
-        return std::get<int>(val) != 0;
-    }
-    if (std::holds_alternative<double>(val)) {
-        return std::get<double>(val) != 0.0;
-    }
-    return true;
 }
 
 
@@ -111,4 +108,83 @@ Value IfNode::get(SymbolTable& symbols, std::ostream& out) {
 StringNode::StringNode(const std::string& val) : value(val) {}
 Value StringNode::get(SymbolTable&, std::ostream&) {
     return value;
+}
+
+BoolNode::BoolNode(const std::string& val) {
+    if (val == "true") value = true;
+    else value = false;
+}
+Value BoolNode::get(SymbolTable&, std::ostream&) {
+    return value;
+}
+
+Value ForNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value s_val = start_expr->get(symbols, out);
+    Value e_val = end_expr->get(symbols, out);
+    Value t_val = step_expr->get(symbols, out);
+
+    int s, e, st;
+    if (std::holds_alternative<int>(s_val)) {
+        s = std::get<int>(s_val);
+    } else if (std::holds_alternative<double>(s_val)) {
+        s = static_cast<int>(std::get<double>(s_val));
+    } else {
+        throw std::runtime_error("Range start is not a number");
+    }
+
+    if (std::holds_alternative<int>(e_val)) {
+        e = std::get<int>(e_val);
+    } else if (std::holds_alternative<double>(e_val)) {
+        e = static_cast<int>(std::get<double>(e_val));
+    } else {
+        throw std::runtime_error("Range end is not a number");
+    }
+
+    if (std::holds_alternative<int>(t_val)) {
+        st = std::get<int>(t_val);
+    } else if (std::holds_alternative<double>(t_val)) {
+        st = static_cast<int>(std::get<double>(t_val));
+    } else {
+        throw std::runtime_error("Range step is not a number");
+    }
+    if (st == 0) {
+        throw std::runtime_error("Range step cannot be zero");
+    }
+
+    if (st > 0) {
+        for (int i = s; i < e; i += st) {
+            symbols.add_variable(var_name, i);
+            for (auto& stmt : body) {
+                stmt->get(symbols, out);
+            }
+        }
+    } else {
+        for (int i = s; i > e; i += st) {
+            symbols.add_variable(var_name, i);
+            for (auto& stmt : body) {
+                stmt->get(symbols, out);
+            }
+        }
+    }
+    return Value{}; 
+}
+
+Value LenNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value v = expr->get(symbols, out);
+    if (!std::holds_alternative<std::string>(v)) {
+        throw std::runtime_error("len() argument must be a string");
+    }
+    const std::string& s = std::get<std::string>(v);
+    return static_cast<int>(s.size());
+}
+
+Value WhileNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value cond_val = condition->get(symbols, out);
+    while (is_truthy(cond_val)) {
+        for (auto& stmt : body) {
+            stmt->get(symbols, out);
+        }
+        cond_val = condition->get(symbols, out);
+    }
+    return Value{};
 }

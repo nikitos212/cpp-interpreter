@@ -64,7 +64,7 @@ TEST(BranchTestSuite, ComplexIfTest) {
 
 TEST(BranchTestSuite, OneLineIfTest) {
     std::string code = "if 2 * 2 == 4 then print(\"2 * 2 == 4\") else print(\"omg\") end if";
-    std::string expected = "\"2 * 2 == 4\"";
+    std::string expected = "2 * 2 == 4";
 
     std::istringstream input(code);
     std::ostringstream output;

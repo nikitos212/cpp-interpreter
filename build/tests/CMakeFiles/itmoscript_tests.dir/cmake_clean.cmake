@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/itmoscript_tests.dir/function_test.cpp.o"
   "CMakeFiles/itmoscript_tests.dir/function_test.cpp.o.d"
+  "CMakeFiles/itmoscript_tests.dir/illegal_ops_test.cpp.o"
+  "CMakeFiles/itmoscript_tests.dir/illegal_ops_test.cpp.o.d"
   "CMakeFiles/itmoscript_tests.dir/loop_and_branch_test.cpp.o"
   "CMakeFiles/itmoscript_tests.dir/loop_and_branch_test.cpp.o.d"
   "CMakeFiles/itmoscript_tests.dir/types_test.cpp.o"

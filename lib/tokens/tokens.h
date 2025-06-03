@@ -3,11 +3,20 @@
 
 enum class TokenType {
     INTEGER,
+    BOOL,
     EQUAL,
+    PLUS_EQUAL,
+    MINUS_EQUAL,
+    MULTIPLY_EQUAL,
+    DIVIDE_EQUAL,
+    MOD_EQUAL,
+    POWER_EQUAL,
     PLUS,
     MINUS,
     MULTIPLY,
     DIVIDE,
+    POW,
+    REM,
     EQUAL_EQUAL, 
     NOT_EQUAL,
     LESS,
@@ -23,6 +32,15 @@ enum class TokenType {
     ELSE,
     END_IF,
     STRING,
+    FOR,
+    IN,
+    END_FOR,
+    COMMA,
+    WHILE,
+    END_WHILE,
+    AND,
+    OR,
+    NOT,
     END
 };
 
@@ -50,3 +68,19 @@ struct Token {
     Token(TokenType t, const std::string& v = "");
 };
 
+inline std::string operator*(const std::string& str, size_t n) {
+    std::string result;
+    result.reserve(str.size() * n);
+    while (n--) result += str;
+    return result;
+}
+
+
+inline int pow(int l, int r) {
+    int res = 1;
+    if (r == 0) return 1;
+    if (r > 0)  for (int i = 0; i < r; ++i) res *= l;
+    else for (int i = 0; i < r; ++i) res /= l;
+
+    return res;
+}

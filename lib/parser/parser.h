@@ -12,7 +12,13 @@ class Parser {
 
     std::unique_ptr<ASTNode> term();
 
+    std::unique_ptr<ASTNode> arith_expr(); 
+
     std::unique_ptr<ASTNode> expr();
+
+    std::unique_ptr<ASTNode> logic_and();
+    
+    std::unique_ptr<ASTNode> logic_or();  
 
     std::unique_ptr<ASTNode> comparison();
 
@@ -20,6 +26,9 @@ class Parser {
 
     std::unique_ptr<ASTNode> parse_if();
 
+    std::unique_ptr<ASTNode> parse_for();
+
+    std::unique_ptr<ASTNode> parse_while();
 
 public:
     Parser(const std::string& text);

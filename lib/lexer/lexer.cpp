@@ -29,16 +29,6 @@ std::string Lexer::number() {
     return result;
 }
 
-std::string Lexer::variable() {
-    std::string name;
-    while (current_char != '\0' && (isalnum(current_char) || current_char == '_')) {
-        name += current_char;
-        step();
-    }
-    return name;
-}
-
-
 Lexer::Lexer(const std::string& t) : text(t), current_char(t.empty() ? '\0' : t[0]) {}
 
 Token Lexer::get_next_token() {
@@ -81,15 +71,64 @@ Token Lexer::get_next_token() {
                     step(); 
                     return Token(TokenType::END_IF);
                 }
+                else if (current_char == 'f' && peek(1) == 'o' && peek(2) == 'r') {
+                    step();
+                    step();
+                    step();
+                    return Token(TokenType::END_FOR);
+                }
+                else if (current_char == 'w' && peek(1) == 'h' && peek(2) == 'i' &&
+                    peek(3) == 'l' && peek(4) == 'e') {
+                    step();
+                    step();
+                    step();
+                    step();
+                    step();
+                    return Token(TokenType::END_WHILE);
+                }
+
                 return Token(TokenType::END);
             }
             
             if (word == "print") return Token(TokenType::PRINT);
-            if (word == "if") return Token(TokenType::IF);
-            if (word == "then") return Token(TokenType::THEN);
-            if (word == "else") return Token(TokenType::ELSE);
+            else if (word == "if") return Token(TokenType::IF);
+            else if (word == "then") return Token(TokenType::THEN);
+            else if (word == "else") return Token(TokenType::ELSE);
+            else if (word == "true") return Token(TokenType::BOOL, "true");
+            else if (word == "false") return Token(TokenType::BOOL, "false");
+            else if (word == "for")     return Token(TokenType::FOR);
+            else if (word == "in")      return Token(TokenType::IN);
+            else if (word == "while")   return Token(TokenType::WHILE);
+            else if (word == "and")   return Token(TokenType::AND);
+            else if (word == "or")   return Token(TokenType::OR);
+            else if (word == "not")   return Token(TokenType::NOT);
             
             return Token(TokenType::VAR, word);
+        }
+
+        if (current_char == '+') {
+            if (peek(1) == '=') { step(); step(); return Token(TokenType::PLUS_EQUAL); }
+            step(); return Token(TokenType::PLUS);
+        }
+        if (current_char == '-') {
+            if (peek(1) == '=') { step(); step(); return Token(TokenType::MINUS_EQUAL); }
+            step(); return Token(TokenType::MINUS);
+        }
+        if (current_char == '*') {
+            if (peek(1) == '=') { step(); step(); return Token(TokenType::MULTIPLY_EQUAL); }
+            step(); return Token(TokenType::MULTIPLY);
+        }
+        if (current_char == '/') {
+            if (peek(1) == '=') { step(); step(); return Token(TokenType::DIVIDE_EQUAL); }
+            step(); return Token(TokenType::DIVIDE);
+        }
+        if (current_char == '%') {
+            if (peek(1) == '=') { step(); step(); return Token(TokenType::MOD_EQUAL); }
+            step(); return Token(TokenType::MOD_EQUAL); 
+        }
+        if (current_char == '^') {
+            if (peek(1) == '=') { step(); step(); return Token(TokenType::POWER_EQUAL); }
+            step(); return Token(TokenType::POW); 
         }
 
         if (current_char == '=') {
@@ -129,12 +168,10 @@ Token Lexer::get_next_token() {
         }
 
         switch (current_char) {
-            case '+': step(); return Token(TokenType::PLUS);
-            case '-': step(); return Token(TokenType::MINUS);
-            case '*': step(); return Token(TokenType::MULTIPLY);
-            case '/': step(); return Token(TokenType::DIVIDE);
             case '(': step(); return Token(TokenType::LPAREN);
             case ')': step(); return Token(TokenType::RPAREN);
+            case ',': step(); return Token(TokenType::COMMA);
+            case '!': step(); return Token(TokenType::NOT);
             default:
                 throw std::runtime_error(std::string("Unexpected character: ") + current_char);
         }

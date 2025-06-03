@@ -17,6 +17,7 @@ add_executable(
   function_test.cpp
   types_test.cpp
   loop_and_branch_test.cpp
+  illegal_ops_test.cpp
 )
 
 target_link_libraries(

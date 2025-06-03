@@ -4,10 +4,7 @@
 
 int main(int argc, char** argv) {
     std::string code = R"(
-        cond = true
-        if cond then
-            print("true")
-        end if
+
     )";
 
     std::istringstream stream(code);

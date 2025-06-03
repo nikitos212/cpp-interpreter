@@ -3,6 +3,22 @@
 #include "tokens/tokens.h"
 #include <memory>
 
+inline bool is_truthy(const Value& val) {
+    if (std::holds_alternative<bool>(val)) {
+        return std::get<bool>(val);
+    }
+    if (std::holds_alternative<int>(val)) {
+        return std::get<int>(val) != 0;
+    }
+    if (std::holds_alternative<double>(val)) {
+        return std::get<double>(val) != 0.0;
+    }
+    if (std::holds_alternative<std::string>(val)) {
+        return !std::get<std::string>(val).empty();
+    }
+    return true;
+}
+
 class ASTNode {
 public:
     virtual ~ASTNode() = default;
@@ -51,12 +67,15 @@ private:
             case TokenType::DIVIDE:
                 if (r == 0) throw std::runtime_error("Division by zero");
                 return l / r;
+            case TokenType::POW: return pow(l, r);
             case TokenType::EQUAL_EQUAL: return l == r;
             case TokenType::NOT_EQUAL:   return l != r;
             case TokenType::LESS:        return l < r;
             case TokenType::GREATER:     return l > r;
             case TokenType::LESS_EQUAL:  return l <= r;
             case TokenType::GREATER_EQUAL: return l >= r;
+            case TokenType::AND: return is_truthy(l) && is_truthy(r);
+            case TokenType::OR: return is_truthy(l) || is_truthy(r);
             default: throw std::runtime_error("Invalid operator");
         }
     }
@@ -96,4 +115,51 @@ class StringNode : public ASTNode {
 public:
     StringNode(const std::string& val);
     Value get(SymbolTable&, std::ostream&) override;
+};
+
+class BoolNode : public ASTNode {
+    bool value;
+public:
+    BoolNode(const std::string& val);
+    Value get(SymbolTable&, std::ostream&) override;
+};
+
+class ForNode : public ASTNode {
+    std::string var_name;
+    std::unique_ptr<ASTNode> start_expr;
+    std::unique_ptr<ASTNode> end_expr;
+    std::unique_ptr<ASTNode> step_expr;
+    std::vector<std::unique_ptr<ASTNode>> body;
+
+public:
+    ForNode(std::string var,
+            std::unique_ptr<ASTNode> start,
+            std::unique_ptr<ASTNode> end,
+            std::unique_ptr<ASTNode> step,
+            std::vector<std::unique_ptr<ASTNode>> body_nodes)
+        : var_name(std::move(var)),
+          start_expr(std::move(start)),
+          end_expr(std::move(end)),
+          step_expr(std::move(step)),
+          body(std::move(body_nodes)) {}
+
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class LenNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    LenNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class WhileNode : public ASTNode {
+    std::unique_ptr<ASTNode> condition;
+    std::vector<std::unique_ptr<ASTNode>> body;
+public:
+    WhileNode(std::unique_ptr<ASTNode> cond,
+              std::vector<std::unique_ptr<ASTNode>> body_nodes)
+        : condition(std::move(cond)),
+          body(std::move(body_nodes)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
 };

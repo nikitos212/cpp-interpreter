@@ -15,8 +15,6 @@ class Lexer {
 
     std::string number();
 
-    std::string variable();
-
 public:
     Lexer(const std::string& t);
 

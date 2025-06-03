@@ -40,6 +40,7 @@ lib/CMakeFiles/itmoscript.dir/ast/nodes.cpp.o: /home/littleking08/Projects/labwo
   /usr/include/c++/13/bits/hashtable_policy.h \
   /usr/include/c++/13/bits/invoke.h \
   /usr/include/c++/13/bits/ios_base.h \
+  /usr/include/c++/13/bits/istream.tcc \
   /usr/include/c++/13/bits/iterator_concepts.h \
   /usr/include/c++/13/bits/locale_classes.h \
   /usr/include/c++/13/bits/locale_classes.tcc \
@@ -119,6 +120,8 @@ lib/CMakeFiles/itmoscript.dir/ast/nodes.cpp.o: /home/littleking08/Projects/labwo
   /usr/include/c++/13/initializer_list \
   /usr/include/c++/13/ios \
   /usr/include/c++/13/iosfwd \
+  /usr/include/c++/13/iostream \
+  /usr/include/c++/13/istream \
   /usr/include/c++/13/memory \
   /usr/include/c++/13/new \
   /usr/include/c++/13/numbers \
@@ -1262,17 +1265,13 @@ lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o: /home/littleking08/Projects/l
 
 /home/littleking08/Projects/labwork10-nikitos212/lib/lexer/lexer.cpp:
 
-/usr/include/c++/13/istream:
-
-/usr/include/c++/13/iostream:
-
-/usr/include/c++/13/bits/istream.tcc:
-
 /home/littleking08/Projects/labwork10-nikitos212/lib/lexer/lexer.h:
 
 /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.h:
 
-/usr/include/c++/13/pstl/pstl_config.h:
+/home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.cpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h:
 
 /usr/include/c++/13/pstl/execution_defs.h:
 
@@ -1285,6 +1284,8 @@ lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o: /home/littleking08/Projects/l
 /usr/include/c++/13/bits/streambuf_iterator.h:
 
 /usr/include/x86_64-linux-gnu/bits/confname.h:
+
+/usr/include/c++/13/iostream:
 
 /usr/include/c++/13/ext/type_traits.h:
 
@@ -1394,9 +1395,21 @@ lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o: /home/littleking08/Projects/l
 
 /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
 
+/usr/include/c++/13/istream:
+
 /usr/include/c++/13/bits/stl_function.h:
 
 /usr/include/c++/13/bits/ranges_algobase.h:
+
+/usr/include/c++/13/bits/range_access.h:
+
+/usr/include/c++/13/compare:
+
+/usr/include/c++/13/system_error:
+
+/usr/include/c++/13/bits/string_view.tcc:
+
+/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
 
 /usr/include/c++/13/cstddef:
 
@@ -1425,8 +1438,6 @@ lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o: /home/littleking08/Projects/l
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h:
-
-/usr/include/c++/13/bits/hashtable_policy.h:
 
 /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.cpp:
 
@@ -1506,7 +1517,11 @@ lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o: /home/littleking08/Projects/l
 
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
-/home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.cpp:
+/usr/include/c++/13/bits/hashtable_policy.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 
 /usr/include/c++/13/bits/cxxabi_init_exception.h:
 
@@ -1519,6 +1534,8 @@ lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o: /home/littleking08/Projects/l
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
 /usr/include/c++/13/bits/exception_ptr.h:
+
+/usr/include/c++/13/bits/istream.tcc:
 
 /usr/include/c++/13/bits/functional_hash.h:
 
@@ -1560,17 +1577,9 @@ lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o: /home/littleking08/Projects/l
 
 /usr/include/c++/13/ios:
 
+/usr/include/c++/13/pstl/pstl_config.h:
+
 /usr/include/c++/13/stdexcept:
-
-/usr/include/c++/13/bits/range_access.h:
-
-/usr/include/c++/13/compare:
-
-/usr/include/c++/13/system_error:
-
-/usr/include/c++/13/bits/string_view.tcc:
-
-/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
@@ -1783,9 +1792,3 @@ lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o: /home/littleking08/Projects/l
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h:
