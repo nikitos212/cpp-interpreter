@@ -19,33 +19,35 @@ std::unique_ptr<ASTNode> Parser::factor() {
         eat(TokenType::INTEGER);
         return std::make_unique<NumberNode>(std::stoi(token.value));
     }
-    else if (token.type == TokenType::BOOL) {
+    if (token.type == TokenType::BOOL) {
         eat(TokenType::BOOL);
         return std::make_unique<BoolNode>(token.value);
     }
-    else if (token.type == TokenType::STRING) {
+    if (token.type == TokenType::STRING) {
         eat(TokenType::STRING);
         return std::make_unique<StringNode>(token.value);
     }
-    else if (token.type == TokenType::NOT) {
+    if (token.type == TokenType::NOT) {
         eat(TokenType::NOT);
-        auto node = factor();
+        auto inner = factor();
         auto falseNode = std::make_unique<NumberNode>(0);
-        return std::make_unique<BinOpNode>(std::move(node), TokenType::EQUAL_EQUAL, std::move(falseNode));
+        return std::make_unique<BinOpNode>(std::move(inner),
+                                           TokenType::EQUAL_EQUAL,
+                                           std::move(falseNode));
     }
-    else if (token.type == TokenType::LPAREN) {
+    if (token.type == TokenType::LPAREN) {
         eat(TokenType::LPAREN);
-        auto node = comparison();
+        auto node = expr();
         eat(TokenType::RPAREN);
         return node;
     }
-    else if (token.type == TokenType::VAR) {
+    if (token.type == TokenType::VAR) {
         std::string name = token.value;
         eat(TokenType::VAR);
 
         if (name == "len") {
             eat(TokenType::LPAREN);
-            auto arg = comparison();
+            auto arg = expr();
             eat(TokenType::RPAREN);
             return std::make_unique<LenNode>(std::move(arg));
         } else {
@@ -68,7 +70,7 @@ std::unique_ptr<ASTNode> Parser::term() {
 }
 
 std::unique_ptr<ASTNode> Parser::comparison() {
-    auto node = expr(); 
+    auto node = arith_expr(); 
     while (current_token.type == TokenType::EQUAL_EQUAL ||
            current_token.type == TokenType::NOT_EQUAL ||
            current_token.type == TokenType::LESS ||
@@ -77,7 +79,7 @@ std::unique_ptr<ASTNode> Parser::comparison() {
            current_token.type == TokenType::GREATER_EQUAL) {
         Token op = current_token;
         eat(op.type);
-        node = std::make_unique<BinOpNode>(std::move(node), op.type, expr());
+        node = std::make_unique<BinOpNode>(std::move(node), op.type, arith_expr());
     }
     
     return node;
@@ -104,7 +106,7 @@ std::unique_ptr<ASTNode> Parser::logic_or() {
     return node;
 }
 
-std::unique_ptr<ASTNode> Parser::expr() {
+std::unique_ptr<ASTNode> Parser::arith_expr() {
     auto node = term();
     
     while (current_token.type == TokenType::PLUS || current_token.type == TokenType::MINUS) {
@@ -114,6 +116,10 @@ std::unique_ptr<ASTNode> Parser::expr() {
     }
     
     return node;
+}
+
+std::unique_ptr<ASTNode> Parser::expr() {
+    return logic_or();
 }
 
 
@@ -132,28 +138,55 @@ std::unique_ptr<ASTNode> Parser::parse() {
     else if (current_token.type == TokenType::PRINT) {
         eat(TokenType::PRINT);
         eat(TokenType::LPAREN);
-        auto arg = comparison();
+        auto arg = expr();
         eat(TokenType::RPAREN); 
         return std::make_unique<PrintNode>(std::move(arg));
     } 
-    else if (current_token.type == TokenType::VAR) {
+    if (current_token.type == TokenType::VAR) {
         std::string var_name = current_token.value;
         eat(TokenType::VAR);
-        if (current_token.type == TokenType::EQUAL) { 
-            eat(TokenType::EQUAL);
-            return std::make_unique<AssignmentNode>(var_name, comparison());
-        } else {
-            return std::make_unique<VariableNode>(var_name);
+
+        if (current_token.type == TokenType::PLUS_EQUAL
+         || current_token.type == TokenType::MINUS_EQUAL
+         || current_token.type == TokenType::MULTIPLY_EQUAL
+         || current_token.type == TokenType::DIVIDE_EQUAL
+         || current_token.type == TokenType::MOD_EQUAL
+         || current_token.type == TokenType::POWER_EQUAL) {
+            TokenType op = current_token.type;
+            eat(op);
+
+            auto right = expr();
+            TokenType binOp;
+            switch (op) {
+                case TokenType::PLUS_EQUAL:     binOp = TokenType::PLUS;     break;
+                case TokenType::MINUS_EQUAL:    binOp = TokenType::MINUS;    break;
+                case TokenType::MULTIPLY_EQUAL: binOp = TokenType::MULTIPLY; break;
+                case TokenType::DIVIDE_EQUAL:   binOp = TokenType::DIVIDE;   break;
+                case TokenType::MOD_EQUAL:      binOp = TokenType::MOD_EQUAL; break;
+                case TokenType::POWER_EQUAL:    binOp = TokenType::POW;    break;
+                default:
+                    throw std::runtime_error("Unknown compound assignment operator");
+            }
+            auto varNode = std::make_unique<VariableNode>(var_name);
+            auto bin = std::make_unique<BinOpNode>(std::move(varNode), binOp, std::move(right));
+            return std::make_unique<AssignmentNode>(var_name, std::move(bin));
         }
-    } 
-    else {
-        return comparison();
+
+        if (current_token.type == TokenType::EQUAL) {
+            eat(TokenType::EQUAL);
+            auto right = expr();
+            return std::make_unique<AssignmentNode>(var_name, std::move(right));
+        }
+
+        return std::make_unique<VariableNode>(var_name);
     }
+
+    return expr();
 }
 
 std::unique_ptr<ASTNode> Parser::parse_if() {
     eat(TokenType::IF);
-    auto condition = comparison();
+    auto condition = expr();
     eat(TokenType::THEN);
 
     std::vector<std::unique_ptr<ASTNode>> then_branch;
@@ -171,7 +204,7 @@ std::unique_ptr<ASTNode> Parser::parse_if() {
         
         if (current_token.type == TokenType::IF) {
             eat(TokenType::IF);
-            auto elif_cond = comparison();
+            auto elif_cond = expr();
             eat(TokenType::THEN);
             
             std::vector<std::unique_ptr<ASTNode>> elif_body;
@@ -228,13 +261,13 @@ std::unique_ptr<ASTNode> Parser::parse_for() {
 
     eat(TokenType::LPAREN);
 
-    auto start_node = comparison();
+    auto start_node = expr();
     eat(TokenType::COMMA);
 
-    auto end_node = comparison();
+    auto end_node = expr();
     eat(TokenType::COMMA);
 
-    auto step_node = comparison();
+    auto step_node = expr();
     eat(TokenType::RPAREN);
 
     std::vector<std::unique_ptr<ASTNode>> body_nodes;
@@ -260,7 +293,7 @@ std::unique_ptr<ASTNode> Parser::parse_for() {
 
 std::unique_ptr<ASTNode> Parser::parse_while() {
     eat(TokenType::WHILE);
-    auto condition_node = comparison();
+    auto condition_node = expr();
 
     std::vector<std::unique_ptr<ASTNode>> body_nodes;
     while (current_token.type != TokenType::END_WHILE &&

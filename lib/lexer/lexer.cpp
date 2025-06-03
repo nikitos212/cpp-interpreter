@@ -146,7 +146,7 @@ Token Lexer::get_next_token() {
                 step();
                 return Token(TokenType::NOT_EQUAL);
             }
-            throw std::runtime_error("Expected !=, got !");
+            return Token(TokenType::NOT);
         }
 
         if (current_char == '<') {
@@ -171,7 +171,6 @@ Token Lexer::get_next_token() {
             case '(': step(); return Token(TokenType::LPAREN);
             case ')': step(); return Token(TokenType::RPAREN);
             case ',': step(); return Token(TokenType::COMMA);
-            case '!': step(); return Token(TokenType::NOT);
             default:
                 throw std::runtime_error(std::string("Unexpected character: ") + current_char);
         }

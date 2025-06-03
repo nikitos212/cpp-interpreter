@@ -32,25 +32,225 @@ BinOpNode::BinOpNode(std::unique_ptr<ASTNode> l, TokenType o, std::unique_ptr<AS
 Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
     Value lval = left->get(symbols, out);
     Value rval = right->get(symbols, out);
-    if (std::holds_alternative<int>(lval) && std::holds_alternative<int>(rval) && op == TokenType::REM) {
-        return std::get<int>(lval) % std::get<int>(rval);
-    }
-    if (std::holds_alternative<int>(lval)) {
-        if (std::holds_alternative<int>(rval)) return apply_operator(std::get<int>(lval), std::get<int>(rval));
-        if (std::holds_alternative<double>(rval)) return apply_operator(static_cast<double>(std::get<int>(lval)), std::get<double>(rval));
-    }
-    if (std::holds_alternative<double>(lval)) {
-        if (std::holds_alternative<int>(rval)) return apply_operator(std::get<double>(lval), static_cast<double>(std::get<int>(rval)));
-        if (std::holds_alternative<double>(rval)) return apply_operator(std::get<double>(lval), std::get<double>(rval));
-    }
-    if (std::holds_alternative<int>(lval) && std::holds_alternative<std::string>(rval) && op == TokenType::MULTIPLY) {
-        return std::get<std::string>(rval) * std::get<int>(lval);
-    }
-    if (std::holds_alternative<int>(rval) && std::holds_alternative<std::string>(lval) && op == TokenType::MULTIPLY) {
-        return std::get<std::string>(lval) * std::get<int>(rval);
+
+    if (op == TokenType::POW) {
+        if (std::holds_alternative<int>(lval) && std::holds_alternative<int>(rval)) {
+            int base = std::get<int>(lval);
+            int exponent = std::get<int>(rval);
+            int result = 1;
+            for (int i = 0; i < exponent; ++i) {
+                result = result * base;
+            }
+            return result;
+        }
+        double base_d, exp_d;
+        if (std::holds_alternative<int>(lval))
+            base_d = static_cast<double>(std::get<int>(lval));
+        else if (std::holds_alternative<double>(lval))
+            base_d = std::get<double>(lval);
+        else
+            throw std::runtime_error("Bad types for '^' operator");
+
+        if (std::holds_alternative<int>(rval))
+            exp_d = static_cast<double>(std::get<int>(rval));
+        else if (std::holds_alternative<double>(rval))
+            exp_d = std::get<double>(rval);
+        else
+            throw std::runtime_error("Bad types for '^' operator");
+
+        return pow(base_d, exp_d);
     }
 
-    throw std::runtime_error("Type mismatch in binary operation");
+    if (op == TokenType::MULTIPLY) {
+        if (std::holds_alternative<std::string>(lval) && std::holds_alternative<int>(rval)) {
+            const std::string& s = std::get<std::string>(lval);
+            int times = std::get<int>(rval);
+            if (times < 0) throw std::runtime_error("Negative repetition");
+            std::string result;
+            result.reserve(s.size() * times);
+            for (int i = 0; i < times; ++i) {
+                result += s;
+            }
+            return result;
+        }
+        if (std::holds_alternative<int>(lval) && std::holds_alternative<std::string>(rval)) {
+            int times = std::get<int>(lval);
+            const std::string& s = std::get<std::string>(rval);
+            if (times < 0) throw std::runtime_error("Negative repetition");
+            std::string result;
+            result.reserve(s.size() * times);
+            for (int i = 0; i < times; ++i) {
+                result += s;
+            }
+            return result;
+        }
+    }
+
+    if (op == TokenType::AND) {
+        bool a = is_truthy(lval);
+        bool b = is_truthy(rval);
+        return a && b;
+    }
+    if (op == TokenType::OR) {
+        bool a = is_truthy(lval);
+        bool b = is_truthy(rval);
+        return a || b;
+    }
+
+
+    if (op == TokenType::PLUS) {
+        if (std::holds_alternative<std::string>(lval) && std::holds_alternative<std::string>(rval)) {
+            return std::get<std::string>(lval) + std::get<std::string>(rval);
+        }
+        if (std::holds_alternative<int>(lval)) {
+            int a = std::get<int>(lval);
+            if (std::holds_alternative<int>(rval)) {
+                return a + std::get<int>(rval);
+            }
+            if (std::holds_alternative<double>(rval)) {
+                return static_cast<double>(a) + std::get<double>(rval);
+            }
+        }
+        if (std::holds_alternative<double>(lval)) {
+            double a = std::get<double>(lval);
+            if (std::holds_alternative<int>(rval)) {
+                return a + static_cast<double>(std::get<int>(rval));
+            }
+            if (std::holds_alternative<double>(rval)) {
+                return a + std::get<double>(rval);
+            }
+        }
+        throw std::runtime_error("Bad types for '+'");
+    }
+
+    if (op == TokenType::MINUS) {
+        if (std::holds_alternative<int>(lval)) {
+            int a = std::get<int>(lval);
+            if (std::holds_alternative<int>(rval)) {
+                return a - std::get<int>(rval);
+            }
+            if (std::holds_alternative<double>(rval)) {
+                return static_cast<double>(a) - std::get<double>(rval);
+            }
+        }
+        if (std::holds_alternative<double>(lval)) {
+            double a = std::get<double>(lval);
+            if (std::holds_alternative<int>(rval)) {
+                return a - static_cast<double>(std::get<int>(rval));
+            }
+            if (std::holds_alternative<double>(rval)) {
+                return a - std::get<double>(rval);
+            }
+        }
+        throw std::runtime_error("Bad types for '-'");
+    }
+
+    if (op == TokenType::DIVIDE) {
+        if (std::holds_alternative<int>(lval)) {
+            int a = std::get<int>(lval);
+            if (std::holds_alternative<int>(rval)) {
+                int b = std::get<int>(rval);
+                if (b == 0) throw std::runtime_error("Division by zero");
+                return a / b;
+            }
+            if (std::holds_alternative<double>(rval)) {
+                double b = std::get<double>(rval);
+                if (b == 0.0) throw std::runtime_error("Division by zero");
+                return static_cast<double>(a) / b;
+            }
+        }
+        if (std::holds_alternative<double>(lval)) {
+            double a = std::get<double>(lval);
+            if (std::holds_alternative<int>(rval)) {
+                int b = std::get<int>(rval);
+                if (b == 0) throw std::runtime_error("Division by zero");
+                return a / static_cast<double>(b);
+            }
+            if (std::holds_alternative<double>(rval)) {
+                double b = std::get<double>(rval);
+                if (b == 0.0) throw std::runtime_error("Division by zero");
+                return a / b;
+            }
+        }
+        throw std::runtime_error("Bad types for '/'");
+    }
+
+    if (op == TokenType::MOD_EQUAL) {
+        if (std::holds_alternative<int>(lval) && std::holds_alternative<int>(rval)) {
+            int a = std::get<int>(lval);
+            int b = std::get<int>(rval);
+            if (b == 0) throw std::runtime_error("Modulo by zero");
+            return a % b;
+        }
+        throw std::runtime_error("Bad types for '%'");
+    }
+
+    if (op == TokenType::MULTIPLY) {
+        if (std::holds_alternative<int>(lval)) {
+            int a = std::get<int>(lval);
+            if (std::holds_alternative<int>(rval)) {
+                return a * std::get<int>(rval);
+            }
+            if (std::holds_alternative<double>(rval)) {
+                return static_cast<double>(a) * std::get<double>(rval);
+            }
+        }
+        if (std::holds_alternative<double>(lval)) {
+            double a = std::get<double>(lval);
+            if (std::holds_alternative<int>(rval)) {
+                return a * static_cast<double>(std::get<int>(rval));
+            }
+            if (std::holds_alternative<double>(rval)) {
+                return a * std::get<double>(rval);
+            }
+        }
+        throw std::runtime_error("Bad types for '*'");
+    }
+
+    if (op == TokenType::EQUAL_EQUAL) {
+        return lval == rval;
+    }
+    if (op == TokenType::NOT_EQUAL) {
+        return lval != rval;
+    }
+    if (op == TokenType::LESS) {
+        if (std::holds_alternative<int>(lval) && std::holds_alternative<int>(rval)) {
+            return std::get<int>(lval) < std::get<int>(rval);
+        }
+        if (std::holds_alternative<double>(lval) && std::holds_alternative<double>(rval)) {
+            return std::get<double>(lval) < std::get<double>(rval);
+        }
+        throw std::runtime_error("Bad types for '<'");
+    }
+    if (op == TokenType::GREATER) {
+        if (std::holds_alternative<int>(lval) && std::holds_alternative<int>(rval)) {
+            return std::get<int>(lval) > std::get<int>(rval);
+        }
+        if (std::holds_alternative<double>(lval) && std::holds_alternative<double>(rval)) {
+            return std::get<double>(lval) > std::get<double>(rval);
+        }
+        throw std::runtime_error("Bad types for '>'");
+    }
+    if (op == TokenType::LESS_EQUAL) {
+        if (std::holds_alternative<int>(lval) && std::holds_alternative<int>(rval)) {
+            return std::get<int>(lval) <= std::get<int>(rval);
+        }
+        if (std::holds_alternative<double>(lval) && std::holds_alternative<double>(rval)) {
+            return std::get<double>(lval) <= std::get<double>(rval);
+        }
+        throw std::runtime_error("Bad types for '<='");
+    }
+    if (op == TokenType::GREATER_EQUAL) {
+        if (std::holds_alternative<int>(lval) && std::holds_alternative<int>(rval)) {
+            return std::get<int>(lval) >= std::get<int>(rval);
+        }
+        if (std::holds_alternative<double>(lval) && std::holds_alternative<double>(rval)) {
+            return std::get<double>(lval) >= std::get<double>(rval);
+        }
+        throw std::runtime_error("Bad types for '>='");
+    }
+
+    throw std::runtime_error("Unknown binary operator or bad types");
 }
 
 

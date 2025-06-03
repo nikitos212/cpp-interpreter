@@ -74,8 +74,6 @@ private:
             case TokenType::GREATER:     return l > r;
             case TokenType::LESS_EQUAL:  return l <= r;
             case TokenType::GREATER_EQUAL: return l >= r;
-            case TokenType::AND: return is_truthy(l) && is_truthy(r);
-            case TokenType::OR: return is_truthy(l) || is_truthy(r);
             default: throw std::runtime_error("Invalid operator");
         }
     }

@@ -108,3 +108,23 @@ TEST(LoopTestSuit, WhileLoop) {
     ASSERT_TRUE(interpret(input, output));
     ASSERT_EQ(output.str(), expected);
 }
+
+TEST(LoopTestSuit, WhileLoopWithANDOR) {
+    std::string code = R"(
+        s = "ITMO"
+        k = 0
+        while len(s) < 1000 and (k < 3)
+            s = s * 2
+            k += 1
+        end while
+        print(s)
+    )";
+
+    std::string expected = "ITMOITMOITMOITMOITMOITMOITMOITMO";
+
+    std::istringstream input(code);
+    std::ostringstream output;
+
+    ASSERT_TRUE(interpret(input, output));
+    ASSERT_EQ(output.str(), expected);
+}
