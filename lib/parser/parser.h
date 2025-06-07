@@ -30,6 +30,10 @@ class Parser {
 
     std::unique_ptr<ASTNode> parse_while();
 
+    std::unique_ptr<ASTNode> parse_function();
+
+    std::unique_ptr<ASTNode> parse_return();
+
 public:
     Parser(const std::string& text);
 

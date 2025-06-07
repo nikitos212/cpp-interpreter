@@ -71,37 +71,43 @@ Token Lexer::get_next_token() {
                     step(); 
                     return Token(TokenType::END_IF);
                 }
-                else if (current_char == 'f' && peek(1) == 'o' && peek(2) == 'r') {
-                    step();
-                    step();
-                    step();
+                if (current_char == 'f' && peek(1) == 'o' && peek(2) == 'r') {
+                    step(); step(); step();
                     return Token(TokenType::END_FOR);
                 }
-                else if (current_char == 'w' && peek(1) == 'h' && peek(2) == 'i' &&
+                if (current_char == 'w' && peek(1) == 'h' && peek(2) == 'i' &&
                     peek(3) == 'l' && peek(4) == 'e') {
-                    step();
-                    step();
-                    step();
-                    step();
-                    step();
+                    step(); step(); step(); step(); step();
                     return Token(TokenType::END_WHILE);
+                }
+                if (current_char == 'f' && peek(1) == 'u' && peek(2) == 'n' && peek(3) == 'c' && peek(4) == 't' && peek(5) == 'i' && peek(6) == 'o' && peek(7) == 'n') {
+                    step(); step(); step(); step(); step(); step(); step(); step();
+                    return Token(TokenType::END_FUNCTION);
                 }
 
                 return Token(TokenType::END);
             }
             
             if (word == "print") return Token(TokenType::PRINT);
-            else if (word == "if") return Token(TokenType::IF);
-            else if (word == "then") return Token(TokenType::THEN);
-            else if (word == "else") return Token(TokenType::ELSE);
-            else if (word == "true") return Token(TokenType::BOOL, "true");
-            else if (word == "false") return Token(TokenType::BOOL, "false");
-            else if (word == "for")     return Token(TokenType::FOR);
-            else if (word == "in")      return Token(TokenType::IN);
-            else if (word == "while")   return Token(TokenType::WHILE);
-            else if (word == "and")   return Token(TokenType::AND);
-            else if (word == "or")   return Token(TokenType::OR);
-            else if (word == "not")   return Token(TokenType::NOT);
+            if (word == "if") return Token(TokenType::IF);
+            if (word == "then") return Token(TokenType::THEN);
+            if (word == "else") return Token(TokenType::ELSE);
+            if (word == "true") return Token(TokenType::BOOL, "true");
+            if (word == "false") return Token(TokenType::BOOL, "false");
+            if (word == "for")     return Token(TokenType::FOR);
+            if (word == "in")      return Token(TokenType::IN);
+            if (word == "while")   return Token(TokenType::WHILE);
+            if (word == "and")   return Token(TokenType::AND);
+            if (word == "or")   return Token(TokenType::OR);
+            if (word == "not")   return Token(TokenType::NOT);
+            if (word == "function") return Token(TokenType::FUNCTION);
+            if (word == "return")   return Token(TokenType::RETURN);
+            if (word == "push")      return Token(TokenType::PUSH);
+            if (word == "pop")       return Token(TokenType::POP);
+            if (word == "insert")    return Token(TokenType::INSERT);
+            if (word == "remove")    return Token(TokenType::REMOVE);
+            if (word == "sort")      return Token(TokenType::SORT);
+            if (word == "len")      return Token(TokenType::LEN);
             
             return Token(TokenType::VAR, word);
         }
@@ -171,6 +177,9 @@ Token Lexer::get_next_token() {
             case '(': step(); return Token(TokenType::LPAREN);
             case ')': step(); return Token(TokenType::RPAREN);
             case ',': step(); return Token(TokenType::COMMA);
+            case '[': step(); return Token(TokenType::LBRACKET);
+            case ']': step(); return Token(TokenType::RBRACKET);
+            case ':': step(); return Token(TokenType::COLON);
             default:
                 throw std::runtime_error(std::string("Unexpected character: ") + current_char);
         }

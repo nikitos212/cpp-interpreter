@@ -2,13 +2,10 @@
 #include "tokens/tokens.h"
 #include <iostream>
 
-using Value = std::variant<int, double, std::string, bool>;
-
 std::ostream& operator<<(std::ostream& os, const Value& value) {
     std::visit([&os](auto&& arg) { os << arg; }, value);
     return os;
 }
-
 
 NumberNode::NumberNode(int v) : value(v) {}
 NumberNode::NumberNode(double v) : value(v) {}
@@ -208,10 +205,52 @@ Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
     }
 
     if (op == TokenType::EQUAL_EQUAL) {
-        return lval == rval;
+        if (std::holds_alternative<int>(lval) && std::holds_alternative<int>(rval)) {
+        return std::get<int>(lval) == std::get<int>(rval);
+        }
+        if (std::holds_alternative<double>(lval) && std::holds_alternative<double>(rval)) {
+            return std::get<double>(lval) == std::get<double>(rval);
+        }
+        if (std::holds_alternative<int>(lval) && std::holds_alternative<double>(rval)) {
+            return static_cast<double>(std::get<int>(lval)) == std::get<double>(rval);
+        }
+        if (std::holds_alternative<double>(lval) && std::holds_alternative<int>(rval)) {
+            return std::get<double>(lval) == static_cast<double>(std::get<int>(rval));
+        }
+        if (std::holds_alternative<bool>(lval) && std::holds_alternative<bool>(rval)) {
+            return std::get<bool>(lval) == std::get<bool>(rval);
+        }
+        if (std::holds_alternative<std::string>(lval) && std::holds_alternative<std::string>(rval)) {
+            return std::get<std::string>(lval) == std::get<std::string>(rval);
+        }
+        if (std::holds_alternative<FunctionValue>(lval) && std::holds_alternative<FunctionValue>(rval)) {
+            throw std::runtime_error("Cannot compare functions with == ");
+        }
+        throw std::runtime_error("Type mismatch in '==' operation");
     }
     if (op == TokenType::NOT_EQUAL) {
-        return lval != rval;
+         if (std::holds_alternative<int>(lval) && std::holds_alternative<int>(rval)) {
+        return std::get<int>(lval) != std::get<int>(rval);
+        }
+        if (std::holds_alternative<double>(lval) && std::holds_alternative<double>(rval)) {
+            return std::get<double>(lval) != std::get<double>(rval);
+        }
+        if (std::holds_alternative<int>(lval) && std::holds_alternative<double>(rval)) {
+            return static_cast<double>(std::get<int>(lval)) != std::get<double>(rval);
+        }
+        if (std::holds_alternative<double>(lval) && std::holds_alternative<int>(rval)) {
+            return std::get<double>(lval) != static_cast<double>(std::get<int>(rval));
+        }
+        if (std::holds_alternative<bool>(lval) && std::holds_alternative<bool>(rval)) {
+            return std::get<bool>(lval) != std::get<bool>(rval);
+        }
+        if (std::holds_alternative<std::string>(lval) && std::holds_alternative<std::string>(rval)) {
+            return std::get<std::string>(lval) != std::get<std::string>(rval);
+        }
+        if (std::holds_alternative<FunctionValue>(lval) && std::holds_alternative<FunctionValue>(rval)) {
+            throw std::runtime_error("Cannot compare functions with == ");
+        }
+        throw std::runtime_error("Type mismatch in '==' operation");
     }
     if (op == TokenType::LESS) {
         if (std::holds_alternative<int>(lval) && std::holds_alternative<int>(rval)) {
@@ -387,4 +426,168 @@ Value WhileNode::get(SymbolTable& symbols, std::ostream& out) {
         cond_val = condition->get(symbols, out);
     }
     return Value{};
+}
+
+ReturnNode::ReturnNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+Value ReturnNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value v = expr->get(symbols, out);
+    throw ReturnException(std::move(v));
+}
+
+FunctionNode::FunctionNode(std::vector<std::string> p,
+                           std::vector<std::shared_ptr<ASTNode>> b)
+    : params(std::move(p)), body(std::move(b)) {}
+
+Value FunctionNode::get(SymbolTable& symbols, std::ostream& out) {
+    FunctionValue fv;
+    fv.params = params;
+    fv.body   = body;
+    return fv;
+}
+
+CallNode::CallNode(std::unique_ptr<ASTNode> f,
+                   std::vector<std::unique_ptr<ASTNode>> a)
+    : funcExpr(std::move(f)), args(std::move(a)) {}
+
+Value CallNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value fval = funcExpr->get(symbols, out);
+
+    if (!std::holds_alternative<FunctionValue>(fval)) {
+        throw std::runtime_error("Attempt to call a non-function value");
+    }
+    FunctionValue fv = std::get<FunctionValue>(std::move(fval));
+
+    if (args.size() != fv.params.size()) {
+        throw std::runtime_error("Function called with wrong number of arguments");
+    }
+
+    SymbolTable local = symbols.create_child();
+
+    for (size_t i = 0; i < args.size(); ++i) {
+        Value aval = args[i]->get(symbols, out);
+        local.add_variable(fv.params[i], std::move(aval));
+    }
+
+    try {
+        for (auto& stmt_ptr : fv.body) {
+            stmt_ptr->get(local, out);
+        }
+    } catch (const ReturnException& rex) {
+        return rex.value;
+    }
+
+    return Value{0};
+}
+
+static int to_int(const Value& v) {
+    if (std::holds_alternative<int>(v))       return std::get<int>(v);
+    if (std::holds_alternative<double>(v))    return static_cast<int>(std::get<double>(v));
+    if (std::holds_alternative<bool>(v))      return std::get<bool>(v) ? 1 : 0;
+    if (std::holds_alternative<std::string>(v)) return std::stoi(std::get<std::string>(v));
+    throw std::runtime_error("Cannot convert to int");
+}
+
+Value ListNode::get(SymbolTable& symbols, std::ostream& out) {
+    ListValue result;
+    for (auto& elem : elements) {
+        Value v = elem->get(symbols, out);
+
+        if (std::holds_alternative<int>(v)) {
+            result.push_back(std::get<int>(v));
+        }
+        else if (std::holds_alternative<double>(v)) {
+            result.push_back(std::get<double>(v));
+        }
+        else if (std::holds_alternative<std::string>(v)) {
+            result.push_back(std::get<std::string>(v));
+        }
+        else if (std::holds_alternative<bool>(v)) {
+            result.push_back(std::get<bool>(v));
+        }
+        else if (std::holds_alternative<FunctionValue>(v)) {
+            result.push_back(std::get<FunctionValue>(v));
+        }
+        else {
+            throw std::runtime_error("Unsupported type in ListNode::get");
+        }
+    }
+    return result;
+}
+
+
+Value IndexNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value container_val = container->get(symbols, out);
+    Value idx_val       = index->get(symbols, out);
+    int idx = to_int(idx_val);
+
+    if (std::holds_alternative<ListValue>(container_val)) {
+        const ListValue& lv = std::get<ListValue>(container_val);
+
+        if (idx < 0 || idx >= static_cast<int>(lv.size()))
+            throw std::runtime_error("List index out of range");
+
+        const auto& element = lv[idx];
+
+        if (std::holds_alternative<int>(element)) {
+            return std::get<int>(element);
+        }
+        if (std::holds_alternative<double>(element)) {
+            return std::get<double>(element);
+        }
+        if (std::holds_alternative<std::string>(element)) {
+            return std::get<std::string>(element);
+        }
+        if (std::holds_alternative<bool>(element)) {
+            return std::get<bool>(element);
+        }
+        if (std::holds_alternative<FunctionValue>(element)) {
+            return std::get<FunctionValue>(element);
+        }
+
+        if (std::holds_alternative<List>(element)) {
+            const List& inner_list = std::get<List>(element);
+            ListValue wrapper;
+            wrapper.reserve(1);
+            wrapper.push_back(inner_list);
+            return wrapper;
+        }
+
+        throw std::runtime_error("IndexNode: unexpected variant alternative");
+    }
+
+    if (std::holds_alternative<std::string>(container_val)) {
+        const std::string& s = std::get<std::string>(container_val);
+        if (idx < 0 || idx >= static_cast<int>(s.size()))
+            throw std::runtime_error("String index out of range");
+        return std::string(1, s[idx]);
+    }
+
+    throw std::runtime_error("Indexing non-list/string value");
+}
+
+
+Value SliceNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value container_val = container->get(symbols, out);
+    int start_idx = to_int(start->get(symbols, out));
+    int end_idx   = to_int(  end->get(symbols, out) );
+
+    if (std::holds_alternative<ListValue>(container_val)) {
+        auto& lst = std::get<ListValue>(container_val);
+        if (start_idx < 0) start_idx = 0;
+        if (end_idx > (int)lst.size()) end_idx = lst.size();
+        if (start_idx > end_idx) start_idx = end_idx;
+        ListValue slice;
+        for (int i = start_idx; i < end_idx; ++i) {
+            slice.push_back(lst[i]);
+        }
+        return slice;
+    }
+    if (std::holds_alternative<std::string>(container_val)) {
+        auto& s = std::get<std::string>(container_val);
+        if (start_idx < 0) start_idx = 0;
+        if (end_idx > (int)s.size()) end_idx = s.size();
+        if (start_idx > end_idx) start_idx = end_idx;
+        return s.substr(start_idx, end_idx - start_idx);
+    }
+    throw std::runtime_error("Slicing non-list/string value");
 }

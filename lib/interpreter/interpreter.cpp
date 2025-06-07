@@ -2,7 +2,6 @@
 #include "symbol_table/SymbolTable.h"
 #include "parser/parser.h"
 #include "ast/nodes.h"
-#include <cstddef>
 
 class Interpreter {
     SymbolTable symbol_table;
@@ -25,15 +24,22 @@ bool interpret(std::istream& input, std::ostream& output) {
     while (true) {
         if (!std::getline(input, line))
             break;
-        
+
         std::string trimmed = line;
         trimmed.erase(0, trimmed.find_first_not_of(" \t"));
 
-        if (trimmed.empty() || (trimmed.size() >= 2 && trimmed[0] == '/' && trimmed[1] == '/')) {
+        if (trimmed.empty() || (trimmed.size() >= 2 && trimmed[0] == '/' && trimmed[1] == '/'))
+        {
             continue;
         }
 
-        if (trimmed.rfind("if ", 0) != 0 && trimmed.rfind("for ", 0) != 0 && trimmed.rfind("while ", 0) != 0) {
+        bool isIf    = (trimmed.rfind("if ", 0)    == 0);
+        bool isFor   = (trimmed.rfind("for ", 0)   == 0);
+        bool isWhile = (trimmed.rfind("while ", 0) == 0);
+        bool isList = (trimmed.find("= [") != std::string::npos);
+        bool isFunctionLiteral = (trimmed.find("= function") != std::string::npos);
+
+        if (!isIf && !isFor && !isWhile && !isFunctionLiteral && !isList) {
             try {
                 interpreter.interpr(trimmed);
             } catch (const std::exception& e) {
@@ -44,8 +50,16 @@ bool interpret(std::istream& input, std::ostream& output) {
         }
 
         std::string block = trimmed + "\n";
-        
-        if (trimmed.rfind("if ", 0) == 0 && trimmed.find("end if") != std::string::npos) {
+
+        int depth = 1;
+
+        bool oneLineIf    = (isIf    && (trimmed.find("end if")    != std::string::npos));
+        bool oneLineFor   = (isFor   && (trimmed.find("end for")   != std::string::npos));
+        bool oneLineWhile = (isWhile && (trimmed.find("end while") != std::string::npos));
+        bool oneLineFunc  = (isFunctionLiteral && (trimmed.find("end function") != std::string::npos));
+        bool oneLineList  = (isList && (trimmed.find("]") != std::string::npos));
+
+        if (oneLineIf || oneLineFor || oneLineWhile || oneLineFunc) {
             try {
                 interpreter.interpr(block);
             } catch (const std::exception& e) {
@@ -54,42 +68,38 @@ bool interpret(std::istream& input, std::ostream& output) {
             }
             continue;
         }
-
-        if (trimmed.rfind("for ", 0) == 0 && trimmed.find("end for") != std::string::npos) {
-            try {
-                interpreter.interpr(block);
-            } catch (const std::exception& e) {
-                output << "Error: " << e.what() << std::endl;
-                return false;
-            }
-            continue;
-        }
-
-        if (trimmed.rfind("while ", 0) == 0 && trimmed.find("end while") != std::string::npos) {
-            try {
-                interpreter.interpr(block);
-            } catch (const std::exception& e) {
-                output << "Error: " << e.what() << std::endl;
-                return false;
-            }
-            continue;
-        }
-
-        size_t depth = 1;
 
         while (depth > 0) {
             if (!std::getline(input, line)) {
                 output << "Error: unclosed block starting with: " << trimmed << std::endl;
                 return false;
             }
-            
+
             std::string t = line;
             t.erase(0, t.find_first_not_of(" \t"));
-            
-            if (t.rfind("if ", 0) == 0 || t.rfind("for ", 0) == 0 || t.rfind("while ", 0) == 0) {
-                depth++; 
+
+            if (t.rfind("if ", 0) == 0) {
+                depth++;
             }
-            else if (t.rfind("end if", 0) == 0 || t.rfind("end for", 0) == 0 || t.rfind("end while", 0) == 0 || t == "end") {
+            if (t.rfind("for ", 0) == 0) {
+                depth++;
+            }
+            if (t.rfind("while ", 0) == 0) {
+                depth++;
+            }
+            if (t.find("= function") != std::string::npos) {
+                depth++;
+            }
+            if (t.find("= [") != std::string::npos) {
+                depth++;
+            }
+
+            if (t.rfind("end if", 0) == 0 ||
+                t.rfind("end for", 0) == 0 ||
+                t.rfind("end while", 0) == 0 ||
+                t.rfind("end function", 0) == 0 ||
+                t.find("]") != std::string::npos)
+            {
                 depth--;
             }
 

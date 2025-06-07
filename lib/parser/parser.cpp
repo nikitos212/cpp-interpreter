@@ -1,5 +1,7 @@
 #include "parser.h"
+#include "ast/nodes.h"
 #include "tokens/tokens.h"
+#include <memory>
 
 void Parser::eat(TokenType type) {
     if (current_token.type == type) {
@@ -35,24 +37,109 @@ std::unique_ptr<ASTNode> Parser::factor() {
                                            TokenType::EQUAL_EQUAL,
                                            std::move(falseNode));
     }
+    if (token.type == TokenType::LEN) {
+        eat(TokenType::LEN);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<LenNode>(std::move(inside));
+    }
+    if (token.type == TokenType::FUNCTION) {
+        auto functionNode = parse_function();
+
+        if (current_token.type == TokenType::LPAREN) {
+            eat(TokenType::LPAREN);
+            std::vector<std::unique_ptr<ASTNode>> args;
+            if (current_token.type != TokenType::RPAREN) {
+                args.push_back(expr());
+                while (current_token.type == TokenType::COMMA) {
+                    eat(TokenType::COMMA);
+                    args.push_back(expr());
+                }
+            }
+            eat(TokenType::RPAREN);
+            return std::make_unique<CallNode>(
+                std::move(functionNode),
+                std::move(args)
+            );
+        }
+
+        return functionNode;
+    }
+
+    if (token.type == TokenType::RETURN) {
+        return parse_return();
+    }
+
+    if (token.type == TokenType::VAR) {
+        std::string name = token.value;
+        eat(TokenType::VAR);
+
+        if (current_token.type == TokenType::LPAREN) {
+            eat(TokenType::LPAREN);
+            std::vector<std::unique_ptr<ASTNode>> args;
+            if (current_token.type != TokenType::RPAREN) {
+                args.push_back(expr());
+                while (current_token.type == TokenType::COMMA) {
+                    eat(TokenType::COMMA);
+                    args.push_back(expr());
+                }
+            }
+            eat(TokenType::RPAREN);
+            auto varNode = std::make_unique<VariableNode>(name);
+            return std::make_unique<CallNode>(
+                std::move(varNode),
+                std::move(args)
+            );
+        }
+
+        if (current_token.type == TokenType::LBRACKET) {
+            eat(TokenType::LBRACKET);
+            auto idx = expr();
+            if (current_token.type == TokenType::COLON) {
+                eat(TokenType::COLON);
+                auto endExpr = expr();
+                eat(TokenType::RBRACKET);
+                auto varNode = std::make_unique<VariableNode>(name);
+                return std::make_unique<SliceNode>(
+                    std::move(varNode),
+                    std::move(idx),
+                    std::move(endExpr)
+                );
+            } else {
+                auto node = std::unique_ptr<ASTNode>();
+                eat(TokenType::RBRACKET);
+                node = std::make_unique<IndexNode>(
+                    std::make_unique<VariableNode>(name),
+                    std::move(idx)
+                );
+
+                while (current_token.type == TokenType::LPAREN) {
+                    eat(TokenType::LPAREN);
+                    std::vector<std::unique_ptr<ASTNode>> args;
+                    if (current_token.type != TokenType::RPAREN) {
+                        args.push_back(expr());
+                        while (current_token.type == TokenType::COMMA) {
+                            eat(TokenType::COMMA);
+                            args.push_back(expr());
+                        }
+                    }
+                    eat(TokenType::RPAREN);
+                    node = std::make_unique<CallNode>(std::move(node), std::move(args));
+                }
+
+                return node;
+            }
+        }
+
+        return std::make_unique<VariableNode>(name);
+    }
+
     if (token.type == TokenType::LPAREN) {
         eat(TokenType::LPAREN);
         auto node = expr();
         eat(TokenType::RPAREN);
         return node;
-    }
-    if (token.type == TokenType::VAR) {
-        std::string name = token.value;
-        eat(TokenType::VAR);
-
-        if (name == "len") {
-            eat(TokenType::LPAREN);
-            auto arg = expr();
-            eat(TokenType::RPAREN);
-            return std::make_unique<LenNode>(std::move(arg));
-        } else {
-            return std::make_unique<VariableNode>(name);
-        }
     }
     
     throw std::runtime_error("Unexpected token in factor: " + 
@@ -66,6 +153,18 @@ std::unique_ptr<ASTNode> Parser::term() {
         eat(token.type);
         node = std::make_unique<BinOpNode>(std::move(node), token.type, factor());
     }
+    return node;
+}
+
+std::unique_ptr<ASTNode> Parser::arith_expr() {
+    auto node = term();
+    
+    while (current_token.type == TokenType::PLUS || current_token.type == TokenType::MINUS) {
+        Token op = current_token;
+        eat(op.type);
+        node = std::make_unique<BinOpNode>(std::move(node), op.type, term());
+    }
+    
     return node;
 }
 
@@ -103,18 +202,6 @@ std::unique_ptr<ASTNode> Parser::logic_or() {
         eat(op);
         node = std::make_unique<BinOpNode>(std::move(node), op, logic_and());
     }
-    return node;
-}
-
-std::unique_ptr<ASTNode> Parser::arith_expr() {
-    auto node = term();
-    
-    while (current_token.type == TokenType::PLUS || current_token.type == TokenType::MINUS) {
-        Token op = current_token;
-        eat(op.type);
-        node = std::make_unique<BinOpNode>(std::move(node), op.type, term());
-    }
-    
     return node;
 }
 
@@ -172,8 +259,52 @@ std::unique_ptr<ASTNode> Parser::parse() {
             return std::make_unique<AssignmentNode>(var_name, std::move(bin));
         }
 
+        if (current_token.type == TokenType::LPAREN) {
+            eat(TokenType::LPAREN);
+            std::vector<std::unique_ptr<ASTNode>> args;
+            if (current_token.type != TokenType::RPAREN) {
+                args.push_back(expr());
+                while (current_token.type == TokenType::COMMA) {
+                    eat(TokenType::COMMA);
+                    args.push_back(expr());
+                }
+            }
+            eat(TokenType::RPAREN);
+            auto varNode = std::make_unique<VariableNode>(var_name);
+            return std::make_unique<CallNode>(
+                std::move(varNode),
+                std::move(args)
+            );
+        }
+
         if (current_token.type == TokenType::EQUAL) {
             eat(TokenType::EQUAL);
+            if (current_token.type == TokenType::FUNCTION) {
+                auto fnNode = parse_function();
+                return std::make_unique<AssignmentNode>(var_name, std::move(fnNode));
+            }
+            if (current_token.type == TokenType::LBRACKET) {
+                eat(TokenType::LBRACKET);
+
+                std::vector<std::unique_ptr<ASTNode>> elements;
+                if (current_token.type != TokenType::RBRACKET) {
+                    while (true) {
+                        elements.push_back(expr());
+                        if (current_token.type == TokenType::COMMA) {
+                            eat(TokenType::COMMA);
+                            if (current_token.type == TokenType::RBRACKET) {
+                                break;
+                            }
+                            continue;
+                        }
+                        break;
+                    }
+                }
+
+                eat(TokenType::RBRACKET);
+                auto listNode = std::make_unique<ListNode>(std::move(elements));
+                return std::make_unique<AssignmentNode>(var_name, std::move(listNode));
+            }
             auto right = expr();
             return std::make_unique<AssignmentNode>(var_name, std::move(right));
         }
@@ -309,4 +440,43 @@ std::unique_ptr<ASTNode> Parser::parse_while() {
 
     return std::make_unique<WhileNode>(std::move(condition_node),
                                        std::move(body_nodes));
+}
+
+std::unique_ptr<ASTNode> Parser::parse_function() {
+    eat(TokenType::FUNCTION);
+    std::vector<std::string> paramsList;
+    eat(TokenType::LPAREN);
+    if (current_token.type != TokenType::RPAREN) {
+        paramsList.push_back(current_token.value);
+        eat(TokenType::VAR);
+        while (current_token.type == TokenType::COMMA) {
+            eat(TokenType::COMMA);
+            if (current_token.type != TokenType::VAR) {
+                throw std::runtime_error("Expected parameter name after comma");
+            }
+            paramsList.push_back(current_token.value);
+            eat(TokenType::VAR);
+        }
+    }
+    eat(TokenType::RPAREN);
+
+    std::vector<std::shared_ptr<ASTNode>> bodyNodesShared;
+    while (current_token.type != TokenType::END_FUNCTION &&
+           current_token.type != TokenType::END)
+    {
+        auto stmt = parse();
+        std::shared_ptr<ASTNode> sharedStmt = std::move(stmt);
+        bodyNodesShared.push_back(std::move(sharedStmt));
+    }
+    eat(TokenType::END_FUNCTION);
+    return std::make_unique<FunctionNode>(
+        std::move(paramsList),
+        std::move(bodyNodesShared)
+    );
+}
+
+std::unique_ptr<ASTNode> Parser::parse_return() {
+    eat(TokenType::RETURN);
+    auto node = expr();
+    return std::make_unique<ReturnNode>(std::move(node));
 }
