@@ -21,22 +21,29 @@ std::unique_ptr<ASTNode> Parser::factor() {
         eat(TokenType::INTEGER);
         return std::make_unique<NumberNode>(std::stoi(token.value));
     }
+
     if (token.type == TokenType::BOOL) {
         eat(TokenType::BOOL);
         return std::make_unique<BoolNode>(token.value);
     }
+
     if (token.type == TokenType::STRING) {
         eat(TokenType::STRING);
         return std::make_unique<StringNode>(token.value);
     }
+
+    if (token.type == TokenType::NIL) {
+        eat(TokenType::NIL);
+        return std::make_unique<NilNode>();
+    }
+
     if (token.type == TokenType::NOT) {
         eat(TokenType::NOT);
         auto inner = factor();
         auto falseNode = std::make_unique<NumberNode>(0);
-        return std::make_unique<BinOpNode>(std::move(inner),
-                                           TokenType::EQUAL_EQUAL,
-                                           std::move(falseNode));
+        return std::make_unique<BinOpNode>(std::move(inner), TokenType::EQUAL_EQUAL, std::move(falseNode));
     }
+
     if (token.type == TokenType::LEN) {
         eat(TokenType::LEN);
         eat(TokenType::LPAREN);
@@ -44,6 +51,23 @@ std::unique_ptr<ASTNode> Parser::factor() {
         eat(TokenType::RPAREN);
         return std::make_unique<LenNode>(std::move(inside));
     }
+
+    if (token.type == TokenType::MAX) {
+        eat(TokenType::MAX);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<MaxNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::MIN) {
+        eat(TokenType::MIN);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<MinNode>(std::move(inside));
+    }
+
     if (token.type == TokenType::FUNCTION) {
         auto functionNode = parse_function();
 
@@ -139,6 +163,29 @@ std::unique_ptr<ASTNode> Parser::factor() {
         eat(TokenType::LPAREN);
         auto node = expr();
         eat(TokenType::RPAREN);
+        return node;
+    }
+
+    if (token.type == TokenType::LBRACKET) {
+        eat(TokenType::LBRACKET);
+
+        std::vector<std::unique_ptr<ASTNode>> elements;
+        if (current_token.type != TokenType::RBRACKET) {
+            while (true) {
+                elements.push_back(expr());
+                if (current_token.type == TokenType::COMMA) {
+                    eat(TokenType::COMMA);
+                    if (current_token.type == TokenType::RBRACKET)
+                        break;
+                } else {
+                    break;
+                }
+            }
+        }
+        eat(TokenType::RBRACKET);
+
+        auto node = std::make_unique<ListNode>(std::move(elements));
+
         return node;
     }
     
@@ -385,41 +432,72 @@ std::unique_ptr<ASTNode> Parser::parse_for() {
     }
     eat(TokenType::IN);
 
-    if (!(current_token.type == TokenType::VAR && current_token.value == "range")) {
-        throw std::runtime_error("Expected 'range' after 'in' in for-statement");
-    }
-    eat(TokenType::VAR);
+    if ((current_token.type == TokenType::VAR && current_token.value == "range")) {
+        eat(TokenType::VAR);
+        eat(TokenType::LPAREN);
 
-    eat(TokenType::LPAREN);
+        std::unique_ptr<ASTNode> start_node;
+        std::unique_ptr<ASTNode> end_node;
+        std::unique_ptr<ASTNode> step_node;
 
-    auto start_node = expr();
-    eat(TokenType::COMMA);
+        start_node = expr();
+        if (current_token.type == TokenType::RPAREN) {
+            eat(TokenType::RPAREN);
+            end_node = std::move(start_node);
+            start_node = std::make_unique<NumberNode>(0);
+            step_node = std::make_unique<NumberNode>(1);
+        } else {
+            eat(TokenType::COMMA);
+            end_node = expr();
+            if (current_token.type == TokenType::RPAREN) {
+                eat(TokenType::RPAREN);
+                step_node = std::make_unique<NumberNode>(1);
+            } else {
+                eat(TokenType::COMMA);
+                step_node = expr();
+                eat(TokenType::RPAREN);
+            }
+        }
 
-    auto end_node = expr();
-    eat(TokenType::COMMA);
+        std::vector<std::unique_ptr<ASTNode>> body_nodes;
+        while (current_token.type != TokenType::END_FOR && 
+            current_token.type != TokenType::END) {
+            body_nodes.push_back(parse());
+        }
 
-    auto step_node = expr();
-    eat(TokenType::RPAREN);
+        if (current_token.type == TokenType::END_FOR) {
+            eat(TokenType::END_FOR);
+        } else {
+            throw std::runtime_error("Expected 'end for' at end of for-statement");
+        }
 
-    std::vector<std::unique_ptr<ASTNode>> body_nodes;
-    while (current_token.type != TokenType::END_FOR && 
-           current_token.type != TokenType::END) {
-        body_nodes.push_back(parse());
-    }
-
-    if (current_token.type == TokenType::END_FOR) {
-        eat(TokenType::END_FOR);
+        return std::make_unique<ForNode>(
+            var_name,
+            std::move(start_node),
+            std::move(end_node),
+            std::move(step_node),
+            std::move(body_nodes)
+        );
     } else {
-        throw std::runtime_error("Expected 'end for' at end of for-statement");
-    }
+        auto iterable_expr = expr();
 
-    return std::make_unique<ForNode>(
-        var_name,
-        std::move(start_node),
-        std::move(end_node),
-        std::move(step_node),
-        std::move(body_nodes)
-    );
+        std::vector<std::unique_ptr<ASTNode>> body;
+        while (current_token.type != TokenType::END_FOR &&
+            current_token.type != TokenType::END) {
+            body.push_back(parse());
+        }
+        if (current_token.type == TokenType::END_FOR) {
+            eat(TokenType::END_FOR);
+        } else {
+            throw std::runtime_error("Expected 'end for' at end of for-statement");
+        }
+
+        return std::make_unique<ForNode>(
+            var_name,
+            std::move(iterable_expr),
+            std::move(body)
+        );
+    }
 }
 
 std::unique_ptr<ASTNode> Parser::parse_while() {
@@ -461,8 +539,7 @@ std::unique_ptr<ASTNode> Parser::parse_function() {
     eat(TokenType::RPAREN);
 
     std::vector<std::shared_ptr<ASTNode>> bodyNodesShared;
-    while (current_token.type != TokenType::END_FUNCTION &&
-           current_token.type != TokenType::END)
+    while (current_token.type != TokenType::END_FUNCTION)
     {
         auto stmt = parse();
         std::shared_ptr<ASTNode> sharedStmt = std::move(stmt);

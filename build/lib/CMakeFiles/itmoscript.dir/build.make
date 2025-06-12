@@ -125,24 +125,10 @@ lib/CMakeFiles/itmoscript.dir/parser/parser.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/itmoscript.dir/parser/parser.cpp.s"
 	cd /home/littleking08/Projects/labwork10-nikitos212/build/lib && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/littleking08/Projects/labwork10-nikitos212/lib/parser/parser.cpp -o CMakeFiles/itmoscript.dir/parser/parser.cpp.s
 
-lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o: lib/CMakeFiles/itmoscript.dir/flags.make
-lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o: /home/littleking08/Projects/labwork10-nikitos212/lib/symbol_table/SymbolTable.cpp
-lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o: lib/CMakeFiles/itmoscript.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o"
-	cd /home/littleking08/Projects/labwork10-nikitos212/build/lib && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o -MF CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o.d -o CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o -c /home/littleking08/Projects/labwork10-nikitos212/lib/symbol_table/SymbolTable.cpp
-
-lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.i"
-	cd /home/littleking08/Projects/labwork10-nikitos212/build/lib && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/littleking08/Projects/labwork10-nikitos212/lib/symbol_table/SymbolTable.cpp > CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.i
-
-lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.s"
-	cd /home/littleking08/Projects/labwork10-nikitos212/build/lib && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/littleking08/Projects/labwork10-nikitos212/lib/symbol_table/SymbolTable.cpp -o CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.s
-
 lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o: lib/CMakeFiles/itmoscript.dir/flags.make
 lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o: /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.cpp
 lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o: lib/CMakeFiles/itmoscript.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o"
 	cd /home/littleking08/Projects/labwork10-nikitos212/build/lib && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o -MF CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o.d -o CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o -c /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.cpp
 
 lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.i: cmake_force
@@ -159,7 +145,6 @@ itmoscript_OBJECTS = \
 "CMakeFiles/itmoscript.dir/interpreter/interpreter.cpp.o" \
 "CMakeFiles/itmoscript.dir/lexer/lexer.cpp.o" \
 "CMakeFiles/itmoscript.dir/parser/parser.cpp.o" \
-"CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o" \
 "CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o"
 
 # External object files for target itmoscript
@@ -169,11 +154,10 @@ lib/libitmoscript.a: lib/CMakeFiles/itmoscript.dir/ast/nodes.cpp.o
 lib/libitmoscript.a: lib/CMakeFiles/itmoscript.dir/interpreter/interpreter.cpp.o
 lib/libitmoscript.a: lib/CMakeFiles/itmoscript.dir/lexer/lexer.cpp.o
 lib/libitmoscript.a: lib/CMakeFiles/itmoscript.dir/parser/parser.cpp.o
-lib/libitmoscript.a: lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o
 lib/libitmoscript.a: lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o
 lib/libitmoscript.a: lib/CMakeFiles/itmoscript.dir/build.make
 lib/libitmoscript.a: lib/CMakeFiles/itmoscript.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX static library libitmoscript.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library libitmoscript.a"
 	cd /home/littleking08/Projects/labwork10-nikitos212/build/lib && $(CMAKE_COMMAND) -P CMakeFiles/itmoscript.dir/cmake_clean_target.cmake
 	cd /home/littleking08/Projects/labwork10-nikitos212/build/lib && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/itmoscript.dir/link.txt --verbose=$(VERBOSE)
 

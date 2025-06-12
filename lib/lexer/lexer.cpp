@@ -94,20 +94,23 @@ Token Lexer::get_next_token() {
             if (word == "else") return Token(TokenType::ELSE);
             if (word == "true") return Token(TokenType::BOOL, "true");
             if (word == "false") return Token(TokenType::BOOL, "false");
-            if (word == "for")     return Token(TokenType::FOR);
-            if (word == "in")      return Token(TokenType::IN);
-            if (word == "while")   return Token(TokenType::WHILE);
-            if (word == "and")   return Token(TokenType::AND);
-            if (word == "or")   return Token(TokenType::OR);
-            if (word == "not")   return Token(TokenType::NOT);
+            if (word == "for") return Token(TokenType::FOR);
+            if (word == "in") return Token(TokenType::IN);
+            if (word == "while") return Token(TokenType::WHILE);
+            if (word == "and") return Token(TokenType::AND);
+            if (word == "or") return Token(TokenType::OR);
+            if (word == "not") return Token(TokenType::NOT);
             if (word == "function") return Token(TokenType::FUNCTION);
-            if (word == "return")   return Token(TokenType::RETURN);
-            if (word == "push")      return Token(TokenType::PUSH);
-            if (word == "pop")       return Token(TokenType::POP);
-            if (word == "insert")    return Token(TokenType::INSERT);
-            if (word == "remove")    return Token(TokenType::REMOVE);
-            if (word == "sort")      return Token(TokenType::SORT);
-            if (word == "len")      return Token(TokenType::LEN);
+            if (word == "return") return Token(TokenType::RETURN);
+            if (word == "push") return Token(TokenType::PUSH);
+            if (word == "pop") return Token(TokenType::POP);
+            if (word == "insert") return Token(TokenType::INSERT);
+            if (word == "remove") return Token(TokenType::REMOVE);
+            if (word == "sort") return Token(TokenType::SORT);
+            if (word == "len") return Token(TokenType::LEN);
+            if (word == "MAX") return Token(TokenType::MAX);
+            if (word == "MIN") return Token(TokenType::MIN);
+            if (word == "nil") return Token(TokenType::NIL);
             
             return Token(TokenType::VAR, word);
         }
@@ -118,6 +121,7 @@ Token Lexer::get_next_token() {
         }
         if (current_char == '-') {
             if (peek(1) == '=') { step(); step(); return Token(TokenType::MINUS_EQUAL); }
+            if (isdigit(peek(1))) { step(); return Token(TokenType::INTEGER, '-' + number()); }
             step(); return Token(TokenType::MINUS);
         }
         if (current_char == '*') {
@@ -130,7 +134,7 @@ Token Lexer::get_next_token() {
         }
         if (current_char == '%') {
             if (peek(1) == '=') { step(); step(); return Token(TokenType::MOD_EQUAL); }
-            step(); return Token(TokenType::MOD_EQUAL); 
+            step(); return Token(TokenType::REM); 
         }
         if (current_char == '^') {
             if (peek(1) == '=') { step(); step(); return Token(TokenType::POWER_EQUAL); }

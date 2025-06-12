@@ -4,6 +4,7 @@
 enum class TokenType {
     INTEGER,
     BOOL,
+    NIL,
     EQUAL,
     PLUS_EQUAL,
     MINUS_EQUAL,
@@ -54,6 +55,8 @@ enum class TokenType {
     REMOVE,
     SORT,
     INSERT,
+    MAX,
+    MIN,
     END
 };
 
@@ -62,6 +65,7 @@ inline std::string token_type_to_string(TokenType type) {
         case TokenType::INTEGER:       return "INTEGER";
         case TokenType::BOOL:          return "BOOL";
         case TokenType::STRING:        return "STRING";
+        case TokenType::NIL:           return "NIL";
         case TokenType::LPAREN:        return "LPAREN";
         case TokenType::RPAREN:        return "RPAREN";
         case TokenType::LBRACKET:      return "LBRACKET";
@@ -119,13 +123,25 @@ struct Token {
     Token(TokenType t, const std::string& v = "");
 };
 
-inline std::string operator*(const std::string& str, size_t n) {
+template<typename T>
+inline std::string operator*(const std::string& str, T n) {
     std::string result;
-    result.reserve(str.size() * n);
-    while (n--) result += str;
+    auto x = static_cast<size_t>(n);
+    if (x <= 0) return result;
+    result.reserve(str.size() * x);
+    while (x--) result += str;
     return result;
 }
 
+template<typename T>
+inline std::string operator*(T n, const std::string& str) {
+    std::string result;
+    auto x = static_cast<size_t>(n);
+    if (x <= 0) return result;
+    result.reserve(str.size() * x);
+    while (x--) result += str;
+    return result;
+}
 
 inline int pow(int l, int r) {
     int res = 1;

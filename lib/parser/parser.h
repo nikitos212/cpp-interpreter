@@ -22,8 +22,6 @@ class Parser {
 
     std::unique_ptr<ASTNode> comparison();
 
-    std::unique_ptr<ASTNode> parse_statement();
-
     std::unique_ptr<ASTNode> parse_if();
 
     std::unique_ptr<ASTNode> parse_for();

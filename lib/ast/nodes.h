@@ -15,11 +15,23 @@ struct FunctionValue {
     bool operator!=(const FunctionValue& other) { return false; }
 };
 
-using List = std::vector<std::variant<int, double, std::string, bool, FunctionValue>>;
+struct ListValue;
 
-using ListValue = std::vector<std::variant<int, double, std::string, bool, FunctionValue, List>>;
+struct Nil { };
 
-using Value = std::variant<int, double, std::string, bool, FunctionValue, ListValue>;
+using Value = std::variant<
+    int,
+    double,
+    std::string,
+    bool,
+    FunctionValue,
+    std::shared_ptr<ListValue>,
+    Nil
+>;
+
+struct ListValue {
+    std::vector<Value> items;
+};
 
 class SymbolTable {
     struct Scope {
@@ -177,11 +189,18 @@ public:
     Value get(SymbolTable&, std::ostream&) override;
 };
 
+class NilNode : public ASTNode {
+public:
+    NilNode() {};
+    Value get(SymbolTable&, std::ostream&) override;
+};
+
 class ForNode : public ASTNode {
     std::string var_name;
     std::unique_ptr<ASTNode> start_expr;
     std::unique_ptr<ASTNode> end_expr;
     std::unique_ptr<ASTNode> step_expr;
+    std::unique_ptr<ASTNode> iterable_expr;
     std::vector<std::unique_ptr<ASTNode>> body;
 
 public:
@@ -195,6 +214,13 @@ public:
           end_expr(std::move(end)),
           step_expr(std::move(step)),
           body(std::move(body_nodes)) {}
+          
+    ForNode(std::string var,
+            std::unique_ptr<ASTNode> iterable_node,
+            std::vector<std::unique_ptr<ASTNode>> body_nodes)
+        : var_name(std::move(var)),
+          iterable_expr(std::move(iterable_node)),
+          body(std::move(body_nodes)) {}
 
     Value get(SymbolTable& symbols, std::ostream& out) override;
 };
@@ -203,6 +229,20 @@ class LenNode : public ASTNode {
     std::unique_ptr<ASTNode> expr;
 public:
     LenNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class MaxNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    MaxNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class MinNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    MinNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
     Value get(SymbolTable& symbols, std::ostream& out) override;
 };
 
@@ -262,6 +302,9 @@ inline bool is_truthy(const Value& val) {
     }
     if (std::holds_alternative<std::string>(val)) {
         return !std::get<std::string>(val).empty();
+    }
+    if (std::holds_alternative<Nil>(val)) {
+        return false;
     }
     return true;
 }

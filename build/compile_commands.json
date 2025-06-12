@@ -25,12 +25,6 @@
 },
 {
   "directory": "/home/littleking08/Projects/labwork10-nikitos212/build/lib",
-  "command": "/usr/bin/g++  -I/home/littleking08/Projects/labwork10-nikitos212/lib -g -std=gnu++23 -o CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o -c /home/littleking08/Projects/labwork10-nikitos212/lib/symbol_table/SymbolTable.cpp",
-  "file": "/home/littleking08/Projects/labwork10-nikitos212/lib/symbol_table/SymbolTable.cpp",
-  "output": "lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o"
-},
-{
-  "directory": "/home/littleking08/Projects/labwork10-nikitos212/build/lib",
   "command": "/usr/bin/g++  -I/home/littleking08/Projects/labwork10-nikitos212/lib -g -std=gnu++23 -o CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o -c /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.cpp",
   "file": "/home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.cpp",
   "output": "lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o"

@@ -281,30 +281,6 @@ parser/parser.cpp.s:
 	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f lib/CMakeFiles/itmoscript.dir/build.make lib/CMakeFiles/itmoscript.dir/parser/parser.cpp.s
 .PHONY : parser/parser.cpp.s
 
-symbol_table/SymbolTable.o: symbol_table/SymbolTable.cpp.o
-.PHONY : symbol_table/SymbolTable.o
-
-# target to build an object file
-symbol_table/SymbolTable.cpp.o:
-	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f lib/CMakeFiles/itmoscript.dir/build.make lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o
-.PHONY : symbol_table/SymbolTable.cpp.o
-
-symbol_table/SymbolTable.i: symbol_table/SymbolTable.cpp.i
-.PHONY : symbol_table/SymbolTable.i
-
-# target to preprocess a source file
-symbol_table/SymbolTable.cpp.i:
-	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f lib/CMakeFiles/itmoscript.dir/build.make lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.i
-.PHONY : symbol_table/SymbolTable.cpp.i
-
-symbol_table/SymbolTable.s: symbol_table/SymbolTable.cpp.s
-.PHONY : symbol_table/SymbolTable.s
-
-# target to generate assembly for a file
-symbol_table/SymbolTable.cpp.s:
-	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f lib/CMakeFiles/itmoscript.dir/build.make lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.s
-.PHONY : symbol_table/SymbolTable.cpp.s
-
 tokens/tokens.o: tokens/tokens.cpp.o
 .PHONY : tokens/tokens.o
 
@@ -355,9 +331,6 @@ help:
 	@echo "... parser/parser.o"
 	@echo "... parser/parser.i"
 	@echo "... parser/parser.s"
-	@echo "... symbol_table/SymbolTable.o"
-	@echo "... symbol_table/SymbolTable.i"
-	@echo "... symbol_table/SymbolTable.s"
 	@echo "... tokens/tokens.o"
 	@echo "... tokens/tokens.i"
 	@echo "... tokens/tokens.s"

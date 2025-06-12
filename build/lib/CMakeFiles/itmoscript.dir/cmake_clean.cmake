@@ -7,8 +7,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/itmoscript.dir/lexer/lexer.cpp.o.d"
   "CMakeFiles/itmoscript.dir/parser/parser.cpp.o"
   "CMakeFiles/itmoscript.dir/parser/parser.cpp.o.d"
-  "CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o"
-  "CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o.d"
   "CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o"
   "CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o.d"
   "libitmoscript.a"

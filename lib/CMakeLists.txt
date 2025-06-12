@@ -3,6 +3,5 @@ add_library(itmoscript STATIC
     interpreter/interpreter.cpp
     lexer/lexer.cpp
     parser/parser.cpp
-    symbol_table/SymbolTable.cpp
     tokens/tokens.cpp
 )

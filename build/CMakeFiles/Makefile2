@@ -185,12 +185,12 @@ tests/clean: _deps/googletest-build/clean
 lib/CMakeFiles/itmoscript.dir/all:
 	$(MAKE) $(MAKESILENT) -f lib/CMakeFiles/itmoscript.dir/build.make lib/CMakeFiles/itmoscript.dir/depend
 	$(MAKE) $(MAKESILENT) -f lib/CMakeFiles/itmoscript.dir/build.make lib/CMakeFiles/itmoscript.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=9,10,11,12,13,14,15 "Built target itmoscript"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=9,10,11,12,13,14 "Built target itmoscript"
 .PHONY : lib/CMakeFiles/itmoscript.dir/all
 
 # Build rule for subdir invocation for target.
 lib/CMakeFiles/itmoscript.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/CMakeFiles/itmoscript.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles 0
 .PHONY : lib/CMakeFiles/itmoscript.dir/rule
@@ -211,12 +211,12 @@ lib/CMakeFiles/itmoscript.dir/clean:
 bin/CMakeFiles/itmoscript_interpreter.dir/all: lib/CMakeFiles/itmoscript.dir/all
 	$(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/depend
 	$(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=16,17 "Built target itmoscript_interpreter"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=15,16 "Built target itmoscript_interpreter"
 .PHONY : bin/CMakeFiles/itmoscript_interpreter.dir/all
 
 # Build rule for subdir invocation for target.
 bin/CMakeFiles/itmoscript_interpreter.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles 9
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/CMakeFiles/itmoscript_interpreter.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles 0
 .PHONY : bin/CMakeFiles/itmoscript_interpreter.dir/rule
@@ -239,12 +239,12 @@ tests/CMakeFiles/itmoscript_tests.dir/all: _deps/googletest-build/googletest/CMa
 tests/CMakeFiles/itmoscript_tests.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=18,19,20,21,22 "Built target itmoscript_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=17,18,19,20,21 "Built target itmoscript_tests"
 .PHONY : tests/CMakeFiles/itmoscript_tests.dir/all
 
 # Build rule for subdir invocation for target.
 tests/CMakeFiles/itmoscript_tests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles 16
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/itmoscript_tests.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles 0
 .PHONY : tests/CMakeFiles/itmoscript_tests.dir/rule

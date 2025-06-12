@@ -1,5 +1,4 @@
 #include "interpreter.h"
-#include "symbol_table/SymbolTable.h"
 #include "parser/parser.h"
 #include "ast/nodes.h"
 
@@ -59,7 +58,7 @@ bool interpret(std::istream& input, std::ostream& output) {
         bool oneLineFunc  = (isFunctionLiteral && (trimmed.find("end function") != std::string::npos));
         bool oneLineList  = (isList && (trimmed.find("]") != std::string::npos));
 
-        if (oneLineIf || oneLineFor || oneLineWhile || oneLineFunc) {
+        if (oneLineIf || oneLineFor || oneLineWhile || oneLineFunc || oneLineList) {
             try {
                 interpreter.interpr(block);
             } catch (const std::exception& e) {
@@ -94,11 +93,11 @@ bool interpret(std::istream& input, std::ostream& output) {
                 depth++;
             }
 
-            if (t.rfind("end if", 0) == 0 ||
-                t.rfind("end for", 0) == 0 ||
-                t.rfind("end while", 0) == 0 ||
+            if (t.find("end if") != std::string::npos ||
+                t.find("end for") != std::string::npos ||
+                t.find("end while") != std::string::npos ||
                 t.rfind("end function", 0) == 0 ||
-                t.find("]") != std::string::npos)
+                t.rfind("]", 0) == 0)
             {
                 depth--;
             }

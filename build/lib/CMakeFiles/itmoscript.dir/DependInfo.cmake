@@ -12,7 +12,6 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.cpp" "lib/CMakeFiles/itmoscript.dir/interpreter/interpreter.cpp.o" "gcc" "lib/CMakeFiles/itmoscript.dir/interpreter/interpreter.cpp.o.d"
   "/home/littleking08/Projects/labwork10-nikitos212/lib/lexer/lexer.cpp" "lib/CMakeFiles/itmoscript.dir/lexer/lexer.cpp.o" "gcc" "lib/CMakeFiles/itmoscript.dir/lexer/lexer.cpp.o.d"
   "/home/littleking08/Projects/labwork10-nikitos212/lib/parser/parser.cpp" "lib/CMakeFiles/itmoscript.dir/parser/parser.cpp.o" "gcc" "lib/CMakeFiles/itmoscript.dir/parser/parser.cpp.o.d"
-  "/home/littleking08/Projects/labwork10-nikitos212/lib/symbol_table/SymbolTable.cpp" "lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o" "gcc" "lib/CMakeFiles/itmoscript.dir/symbol_table/SymbolTable.cpp.o.d"
   "/home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.cpp" "lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o" "gcc" "lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o.d"
   )
 
