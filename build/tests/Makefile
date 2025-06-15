@@ -233,6 +233,54 @@ illegal_ops_test.cpp.s:
 	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/illegal_ops_test.cpp.s
 .PHONY : illegal_ops_test.cpp.s
 
+int_funcs.o: int_funcs.cpp.o
+.PHONY : int_funcs.o
+
+# target to build an object file
+int_funcs.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/int_funcs.cpp.o
+.PHONY : int_funcs.cpp.o
+
+int_funcs.i: int_funcs.cpp.i
+.PHONY : int_funcs.i
+
+# target to preprocess a source file
+int_funcs.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/int_funcs.cpp.i
+.PHONY : int_funcs.cpp.i
+
+int_funcs.s: int_funcs.cpp.s
+.PHONY : int_funcs.s
+
+# target to generate assembly for a file
+int_funcs.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/int_funcs.cpp.s
+.PHONY : int_funcs.cpp.s
+
+list_funcs.o: list_funcs.cpp.o
+.PHONY : list_funcs.o
+
+# target to build an object file
+list_funcs.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/list_funcs.cpp.o
+.PHONY : list_funcs.cpp.o
+
+list_funcs.i: list_funcs.cpp.i
+.PHONY : list_funcs.i
+
+# target to preprocess a source file
+list_funcs.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/list_funcs.cpp.i
+.PHONY : list_funcs.cpp.i
+
+list_funcs.s: list_funcs.cpp.s
+.PHONY : list_funcs.s
+
+# target to generate assembly for a file
+list_funcs.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/list_funcs.cpp.s
+.PHONY : list_funcs.cpp.s
+
 loop_and_branch_test.o: loop_and_branch_test.cpp.o
 .PHONY : loop_and_branch_test.o
 
@@ -256,6 +304,30 @@ loop_and_branch_test.s: loop_and_branch_test.cpp.s
 loop_and_branch_test.cpp.s:
 	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/loop_and_branch_test.cpp.s
 .PHONY : loop_and_branch_test.cpp.s
+
+string_funcs.o: string_funcs.cpp.o
+.PHONY : string_funcs.o
+
+# target to build an object file
+string_funcs.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/string_funcs.cpp.o
+.PHONY : string_funcs.cpp.o
+
+string_funcs.i: string_funcs.cpp.i
+.PHONY : string_funcs.i
+
+# target to preprocess a source file
+string_funcs.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/string_funcs.cpp.i
+.PHONY : string_funcs.cpp.i
+
+string_funcs.s: string_funcs.cpp.s
+.PHONY : string_funcs.s
+
+# target to generate assembly for a file
+string_funcs.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/string_funcs.cpp.s
+.PHONY : string_funcs.cpp.s
 
 types_test.o: types_test.cpp.o
 .PHONY : types_test.o
@@ -301,9 +373,18 @@ help:
 	@echo "... illegal_ops_test.o"
 	@echo "... illegal_ops_test.i"
 	@echo "... illegal_ops_test.s"
+	@echo "... int_funcs.o"
+	@echo "... int_funcs.i"
+	@echo "... int_funcs.s"
+	@echo "... list_funcs.o"
+	@echo "... list_funcs.i"
+	@echo "... list_funcs.s"
 	@echo "... loop_and_branch_test.o"
 	@echo "... loop_and_branch_test.i"
 	@echo "... loop_and_branch_test.s"
+	@echo "... string_funcs.o"
+	@echo "... string_funcs.i"
+	@echo "... string_funcs.s"
 	@echo "... types_test.o"
 	@echo "... types_test.i"
 	@echo "... types_test.s"

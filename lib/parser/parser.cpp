@@ -1,6 +1,7 @@
 #include "parser.h"
 #include "ast/nodes.h"
 #include "tokens/tokens.h"
+#include <climits>
 #include <memory>
 
 void Parser::eat(TokenType type) {
@@ -14,12 +15,19 @@ void Parser::eat(TokenType type) {
     }
 }
 
+
+
 std::unique_ptr<ASTNode> Parser::factor() {
     Token token = current_token;
     
     if (token.type == TokenType::INTEGER) {
+        std::string s = token.value;
         eat(TokenType::INTEGER);
-        return std::make_unique<NumberNode>(std::stoi(token.value));
+        if (s.find_first_of("eE.") != std::string::npos) {
+            return std::make_unique<NumberNode>(std::stod(s));
+        } else {
+            return std::make_unique<NumberNode>(std::stoi(s));
+        }
     }
 
     if (token.type == TokenType::BOOL) {
@@ -44,6 +52,13 @@ std::unique_ptr<ASTNode> Parser::factor() {
         return std::make_unique<BinOpNode>(std::move(inner), TokenType::EQUAL_EQUAL, std::move(falseNode));
     }
 
+    if (token.type == TokenType::READ) {
+        eat(TokenType::READ);
+        eat(TokenType::LPAREN);
+        eat(TokenType::RPAREN);
+        return std::make_unique<ReadNode>();
+    }
+
     if (token.type == TokenType::LEN) {
         eat(TokenType::LEN);
         eat(TokenType::LPAREN);
@@ -66,6 +81,166 @@ std::unique_ptr<ASTNode> Parser::factor() {
         auto inside = expr();
         eat(TokenType::RPAREN);
         return std::make_unique<MinNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::ABS) {
+        eat(TokenType::ABS);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<AbsNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::CEIL) {
+        eat(TokenType::CEIL);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<CeilNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::FLOOR) {
+        eat(TokenType::FLOOR);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<FloorNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::ROUND) {
+        eat(TokenType::ROUND);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<RoundNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::SQRT) {
+        eat(TokenType::SQRT);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<SqrtNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::RND) {
+        eat(TokenType::RND);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<RndNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::PARSE_NUM) {
+        eat(TokenType::PARSE_NUM);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<ParseNumNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::TO_STRING) {
+        eat(TokenType::TO_STRING);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<ToStringNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::LOWER) {
+        eat(TokenType::LOWER);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<LowerNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::UPPER) {
+        eat(TokenType::UPPER);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<UpperNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::SPLIT) {
+        eat(TokenType::SPLIT);
+        eat(TokenType::LPAREN);
+        auto s = expr();
+        eat(TokenType::COMMA);
+        auto delim = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<SplitNode>(std::move(s), std::move(delim));
+    }
+
+    if (token.type == TokenType::JOIN) {
+        eat(TokenType::JOIN);
+        eat(TokenType::LPAREN);
+        auto s = expr();
+        eat(TokenType::COMMA);
+        auto delim = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<JoinNode>(std::move(s), std::move(delim));
+    }
+
+    if (token.type == TokenType::REPLACE) {
+        eat(TokenType::REPLACE);
+        eat(TokenType::LPAREN);
+        auto s = expr();
+        eat(TokenType::COMMA);
+        auto old = expr();
+        eat(TokenType::COMMA);
+        auto new_s = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<ReplaceNode>(std::move(s), std::move(old), std::move(new_s));
+    }
+
+    if (token.type == TokenType::PUSH) {
+        eat(TokenType::PUSH);
+        eat(TokenType::LPAREN);
+        auto list = expr();
+        eat(TokenType::COMMA);
+        auto elem = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<PushNode>(std::move(list), std::move(elem));
+    }
+
+    if (token.type == TokenType::POP) {
+        eat(TokenType::POP);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<PopNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::SORT) {
+        eat(TokenType::SORT);
+        eat(TokenType::LPAREN);
+        auto inside = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<SortNode>(std::move(inside));
+    }
+
+    if (token.type == TokenType::REMOVE) {
+        eat(TokenType::REMOVE);
+        eat(TokenType::LPAREN);
+        auto list = expr();
+        eat(TokenType::COMMA);
+        auto ind = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<RemoveNode>(std::move(list), std::move(ind));
+    }
+
+    if (token.type == TokenType::INSERT) {
+        eat(TokenType::INSERT);
+        eat(TokenType::LPAREN);
+        auto list = expr();
+        eat(TokenType::COMMA);
+        auto ind = expr();
+        eat(TokenType::COMMA);
+        auto x = expr();
+        eat(TokenType::RPAREN);
+        return std::make_unique<InsertNode>(std::move(list), std::move(ind), std::move(x));
     }
 
     if (token.type == TokenType::FUNCTION) {
@@ -118,15 +293,48 @@ std::unique_ptr<ASTNode> Parser::factor() {
         }
 
         if (current_token.type == TokenType::LBRACKET) {
+            std::unique_ptr<ASTNode> idx;
+            std::unique_ptr<ASTNode> endExpr;
+
             eat(TokenType::LBRACKET);
-            auto idx = expr();
+
             if (current_token.type == TokenType::COLON) {
                 eat(TokenType::COLON);
-                auto endExpr = expr();
+                idx = std::make_unique<NumberNode>(-1);
+                if (current_token.type == TokenType::RBRACKET) {
+                    eat(TokenType::RBRACKET);
+                    endExpr = std::make_unique<NumberNode>(INT_MAX);
+                    return std::make_unique<SliceNode>(
+                    std::move(std::make_unique<VariableNode>(name)),
+                    std::move(idx),
+                    std::move(endExpr)
+                    );
+                }
+                endExpr = expr();
                 eat(TokenType::RBRACKET);
-                auto varNode = std::make_unique<VariableNode>(name);
                 return std::make_unique<SliceNode>(
-                    std::move(varNode),
+                    std::move(std::make_unique<VariableNode>(name)),
+                    std::move(idx),
+                    std::move(endExpr)
+                );
+            }
+
+            idx = expr();
+            if (current_token.type == TokenType::COLON) {
+                eat(TokenType::COLON);
+                if (current_token.type == TokenType::RBRACKET) {
+                    eat(TokenType::RBRACKET);
+                    endExpr = std::make_unique<NumberNode>(INT_MAX);
+                    return std::make_unique<SliceNode>(
+                    std::move(std::make_unique<VariableNode>(name)),
+                    std::move(idx),
+                    std::move(endExpr)
+                    );
+                }
+                endExpr = expr();
+                eat(TokenType::RBRACKET);
+                return std::make_unique<SliceNode>(
+                    std::move(std::make_unique<VariableNode>(name)),
                     std::move(idx),
                     std::move(endExpr)
                 );
@@ -260,6 +468,14 @@ std::unique_ptr<ASTNode> Parser::expr() {
 Parser::Parser(const std::string& text) : lexer(text), current_token(lexer.get_next_token()) {}
 
 std::unique_ptr<ASTNode> Parser::parse() {
+    if (current_token.type == TokenType::BREAK) {
+        eat(TokenType::BREAK);
+        return std::make_unique<BreakNode>();
+    }
+    if (current_token.type == TokenType::CONTINUE) {
+        eat(TokenType::CONTINUE);
+        return std::make_unique<ContinueNode>();
+    }
     if (current_token.type == TokenType::IF) {
         return parse_if();
     }
@@ -275,6 +491,13 @@ std::unique_ptr<ASTNode> Parser::parse() {
         auto arg = expr();
         eat(TokenType::RPAREN); 
         return std::make_unique<PrintNode>(std::move(arg));
+    }
+    else if (current_token.type == TokenType::PRINTLN) {
+        eat(TokenType::PRINTLN);
+        eat(TokenType::LPAREN);
+        auto arg = expr();
+        eat(TokenType::RPAREN); 
+        return std::make_unique<PrintlnNode>(std::move(arg));
     } 
     if (current_token.type == TokenType::VAR) {
         std::string var_name = current_token.value;

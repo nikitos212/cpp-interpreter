@@ -26,8 +26,26 @@ std::string Lexer::number() {
         result += current_char;
         step();
     }
+
+    if (current_char == 'e' || current_char == 'E') {
+        result += current_char;
+        step();
+        if (current_char == '+' || current_char == '-') {
+            result += current_char;
+            step();
+        }
+        if (!isdigit(current_char)) {
+            throw std::runtime_error("Malformed exponent in number");
+        }
+        while (isdigit(current_char)) {
+            result += current_char;
+            step();
+        }
+    }
+
     return result;
 }
+
 
 Lexer::Lexer(const std::string& t) : text(t), current_char(t.empty() ? '\0' : t[0]) {}
 
@@ -46,15 +64,31 @@ Token Lexer::get_next_token() {
             step();
             std::string str;
             while (current_char != '"' && current_char != '\0') {
-                str += current_char;
-                step();
+                if (current_char == '\\') {
+                    step();
+                    switch (current_char) {
+                        case 'n':  str += '\n'; break;
+                        case 't':  str += '\t'; break;
+                        case 'r':  str += '\r'; break;
+                        case '\\': str += '\\'; break;
+                        case '"':  str += '"';  break;
+                        case '\'': str += '\''; break;
+                        case '0':  str += '\0'; break;
+                        default:
+                            throw std::runtime_error(std::string("Unknown escape sequence: \\") + current_char);
+                    }
+                    step();
+                } else {
+                    str += current_char;
+                    step();
+                }
             }
-            if (current_char != '"') {
+            if (current_char != '"')
                 throw std::runtime_error("Unterminated string literal");
-            }
             step();
             return Token(TokenType::STRING, str);
         }
+
 
         if (isalpha(current_char)) {
             std::string word;
@@ -89,6 +123,9 @@ Token Lexer::get_next_token() {
             }
             
             if (word == "print") return Token(TokenType::PRINT);
+            if (word == "println") return Token(TokenType::PRINTLN);
+            if (word == "read") return Token(TokenType::READ);
+            if (word == "stacktrace") return Token(TokenType::STACKTRACE);
             if (word == "if") return Token(TokenType::IF);
             if (word == "then") return Token(TokenType::THEN);
             if (word == "else") return Token(TokenType::ELSE);
@@ -111,6 +148,21 @@ Token Lexer::get_next_token() {
             if (word == "MAX") return Token(TokenType::MAX);
             if (word == "MIN") return Token(TokenType::MIN);
             if (word == "nil") return Token(TokenType::NIL);
+            if (word == "ceil") return Token(TokenType::CEIL);
+            if (word == "abs") return Token(TokenType::ABS);
+            if (word == "floor") return Token(TokenType::FLOOR);
+            if (word == "round") return Token(TokenType::ROUND);
+            if (word == "sqrt") return Token(TokenType::SQRT);
+            if (word == "rnd") return Token(TokenType::RND);
+            if (word == "parse_num") return Token(TokenType::PARSE_NUM);
+            if (word == "to_string") return Token(TokenType::TO_STRING);
+            if (word == "lower") return Token(TokenType::LOWER);
+            if (word == "upper") return Token(TokenType::UPPER);
+            if (word == "split") return Token(TokenType::SPLIT);
+            if (word == "join") return Token(TokenType::JOIN);
+            if (word == "replace") return Token(TokenType::REPLACE);
+            if (word == "break")    return Token(TokenType::BREAK);
+            if (word == "continue") return Token(TokenType::CONTINUE);
             
             return Token(TokenType::VAR, word);
         }

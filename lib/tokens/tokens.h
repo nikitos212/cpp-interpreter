@@ -57,6 +57,24 @@ enum class TokenType {
     INSERT,
     MAX,
     MIN,
+    ABS,
+    CEIL,
+    FLOOR,
+    ROUND,
+    SQRT,
+    RND,
+    PARSE_NUM,
+    TO_STRING,
+    LOWER,
+    UPPER,
+    SPLIT,
+    JOIN,
+    REPLACE,
+    PRINTLN,
+    READ,
+    STACKTRACE,
+    BREAK,
+    CONTINUE,
     END
 };
 
@@ -151,3 +169,8 @@ inline int pow(int l, int r) {
 
     return res;
 }
+
+
+
+
+

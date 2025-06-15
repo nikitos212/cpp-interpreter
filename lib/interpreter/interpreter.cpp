@@ -5,9 +5,14 @@
 class Interpreter {
     SymbolTable symbol_table;
     std::ostream& output;
+    std::vector<std::string> call_stack;
 
 public:
     Interpreter(std::ostream& out) : output(out) {}
+
+    void push_call(const std::string& name) { call_stack.push_back(name); }
+    void pop_call() { call_stack.pop_back(); }
+    std::vector<std::string> get_call_stack() const { return call_stack; }
 
     Value interpr(const std::string& text) {
         Parser parser(text);
@@ -27,13 +32,10 @@ bool interpret(std::istream& input, std::ostream& output) {
         std::string trimmed = line;
         trimmed.erase(0, trimmed.find_first_not_of(" \t"));
 
-        if (trimmed.empty() || (trimmed.size() >= 2 && trimmed[0] == '/' && trimmed[1] == '/'))
-        {
-            continue;
-        }
+        if (trimmed.empty() || (trimmed.size() >= 2 && trimmed[0] == '/' && trimmed[1] == '/')) continue;
 
-        bool isIf    = (trimmed.rfind("if ", 0)    == 0);
-        bool isFor   = (trimmed.rfind("for ", 0)   == 0);
+        bool isIf    = (trimmed.rfind("if ", 0) == 0);
+        bool isFor   = (trimmed.rfind("for ", 0) == 0);
         bool isWhile = (trimmed.rfind("while ", 0) == 0);
         bool isList = (trimmed.find("= [") != std::string::npos);
         bool isFunctionLiteral = (trimmed.find("= function") != std::string::npos);
@@ -76,6 +78,7 @@ bool interpret(std::istream& input, std::ostream& output) {
 
             std::string t = line;
             t.erase(0, t.find_first_not_of(" \t"));
+            if (t.empty() || (t.size() >= 2 && t[0] == '/' && t[1] == '/')) continue;
 
             if (t.rfind("if ", 0) == 0) {
                 depth++;

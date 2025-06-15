@@ -105,6 +105,7 @@ class VariableNode : public ASTNode {
 public:
     VariableNode(const std::string& n);
     Value get(SymbolTable& symbols, std::ostream& out) override;
+    std::string& get_name();
 };
 
 class AssignmentNode : public ASTNode {
@@ -150,6 +151,20 @@ class PrintNode : public ASTNode {
     std::unique_ptr<ASTNode> expr;
 public:
     PrintNode(std::unique_ptr<ASTNode> e);
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class PrintlnNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    PrintlnNode(std::unique_ptr<ASTNode> e);
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class ReadNode : public ASTNode {
+    std::string expr;
+public:
+    ReadNode();
     Value get(SymbolTable& symbols, std::ostream& out) override;
 };
 
@@ -246,6 +261,140 @@ public:
     Value get(SymbolTable& symbols, std::ostream& out) override;
 };
 
+class AbsNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    AbsNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class CeilNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    CeilNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class FloorNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    FloorNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class RoundNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    RoundNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class SqrtNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    SqrtNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class RndNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    RndNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class ParseNumNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    ParseNumNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class ToStringNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    ToStringNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class LowerNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    LowerNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class UpperNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    UpperNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class SplitNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+    std::unique_ptr<ASTNode> delim;
+public:
+    SplitNode(std::unique_ptr<ASTNode> e, std::unique_ptr<ASTNode> d) : expr(std::move(e)), delim(std::move(d)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class JoinNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+    std::unique_ptr<ASTNode> delim;
+public:
+    JoinNode(std::unique_ptr<ASTNode> e, std::unique_ptr<ASTNode> d) : expr(std::move(e)), delim(std::move(d)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class ReplaceNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+    std::unique_ptr<ASTNode> old;
+    std::unique_ptr<ASTNode> new_s;
+public:
+    ReplaceNode(std::unique_ptr<ASTNode> e, std::unique_ptr<ASTNode> o, std::unique_ptr<ASTNode> n) : expr(std::move(e)), old(std::move(o)), new_s(std::move(n)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class PushNode : public ASTNode {
+    std::unique_ptr<ASTNode> list;
+    std::unique_ptr<ASTNode> expr;
+public:
+    PushNode(std::unique_ptr<ASTNode> l, std::unique_ptr<ASTNode> e) : list(std::move(l)), expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class PopNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    PopNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class SortNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+public:
+    SortNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class RemoveNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+    std::unique_ptr<ASTNode> ind;
+public:
+    RemoveNode(std::unique_ptr<ASTNode> e, std::unique_ptr<ASTNode> i) : expr(std::move(e)), ind(std::move(i)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class InsertNode : public ASTNode {
+    std::unique_ptr<ASTNode> expr;
+    std::unique_ptr<ASTNode> ind;
+    std::unique_ptr<ASTNode> value;
+public:
+    InsertNode(std::unique_ptr<ASTNode> e, std::unique_ptr<ASTNode> i, std::unique_ptr<ASTNode> v) : expr(std::move(e)), ind(std::move(i)), value(std::move(v)) {}
+    Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
 class WhileNode : public ASTNode {
     std::unique_ptr<ASTNode> condition;
     std::vector<std::unique_ptr<ASTNode>> body;
@@ -288,6 +437,24 @@ public:
 struct ReturnException {
     Value value;
     ReturnException(Value v) : value(std::move(v)) {}
+};
+
+struct BreakException {};
+
+class BreakNode : public ASTNode {
+public:
+    Value get(SymbolTable&, std::ostream&) override {
+        throw BreakException();
+    }
+};
+
+struct ContinueException {};
+
+class ContinueNode : public ASTNode {
+public:
+    Value get(SymbolTable&, std::ostream&) override {
+        throw ContinueException();
+    }
 };
 
 inline bool is_truthy(const Value& val) {

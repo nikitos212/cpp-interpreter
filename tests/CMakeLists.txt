@@ -18,6 +18,9 @@ add_executable(
   types_test.cpp
   loop_and_branch_test.cpp
   illegal_ops_test.cpp
+  int_funcs.cpp
+  list_funcs.cpp
+  string_funcs.cpp
 )
 
 target_link_libraries(

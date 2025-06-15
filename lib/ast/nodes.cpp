@@ -1,8 +1,12 @@
 #include "nodes.h"
 #include "tokens/tokens.h"
+#include <algorithm>
+#include <cmath>
 #include <cstddef>
 #include <iostream>
 #include <memory>
+#include <random>
+#include <ranges>
 
 std::ostream& operator<<(std::ostream& os, const Value& v) {
     std::visit([&](auto&& x){
@@ -12,11 +16,55 @@ std::ostream& operator<<(std::ostream& os, const Value& v) {
         } else if constexpr (std::is_same_v<T, bool>) {
             if (x == true) os << "true";
             else os << "false";
+        } else if constexpr (std::is_same_v<T, std::shared_ptr<ListValue>>) {
+            os << "[";
+            const auto& items = x->items;
+            for (size_t i = 0; i < items.size(); ++i) {
+                os << items[i];
+                if (i + 1 < items.size()) os << ", ";
+            }
+            os << "]";
         } else {
             os << x;
         }
     }, v);
     return os;
+}
+
+std::shared_ptr<ListValue> operator+(const std::shared_ptr<ListValue>& first, const std::shared_ptr<ListValue>& second) {
+    auto res = std::make_shared<ListValue>();
+    res->items.reserve(first->items.size() + second->items.size());
+
+    for (auto& v : first->items)  res->items.push_back(v);
+    for (auto& v : second->items) res->items.push_back(v);
+
+    return res;
+}
+
+std::shared_ptr<ListValue> operator*(const std::shared_ptr<ListValue>& list, int count) {
+    if (count == 0) return std::make_shared<ListValue>();
+
+    auto res = std::make_shared<ListValue>();
+    res->items.reserve(list->items.size() * count);
+
+    for (auto i : std::views::iota(0, count)) {
+        for (auto& v : list->items)  res->items.push_back(v);
+    }
+    
+    return res;
+}
+
+std::shared_ptr<ListValue> operator*(int count, const std::shared_ptr<ListValue>& list) {
+    if (count == 0) return std::make_shared<ListValue>();
+
+    auto res = std::make_shared<ListValue>();
+    res->items.reserve(list->items.size() * count);
+
+    for (auto i : std::views::iota(0, count)) {
+        for (auto& v : list->items)  res->items.push_back(v);
+    }
+    
+    return res;
 }
 
 NumberNode::NumberNode(int v) : value(v) {}
@@ -26,6 +74,7 @@ Value NumberNode::get(SymbolTable&, std::ostream& out)  { return value; }
 
 VariableNode::VariableNode(const std::string& n) : name(n) {}
 Value VariableNode::get(SymbolTable& symbols, std::ostream& out) { return symbols.get_variable(name); }
+std::string& VariableNode::get_name() { return name; }
 
 
 AssignmentNode::AssignmentNode(const std::string& name, std::unique_ptr<ASTNode> val) : var_name(name), value(std::move(val)) {}
@@ -80,6 +129,15 @@ Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
                 return a * std::get<bool>(rval);
             }
         }
+        if (std::holds_alternative<std::shared_ptr<ListValue>>(lval)) {
+            std::shared_ptr<ListValue> a = std::get<std::shared_ptr<ListValue>>(lval);
+            if (std::holds_alternative<int>(rval)) {
+                return a * std::get<int>(rval);
+            }
+            if (std::holds_alternative<bool>(rval)) {
+                return a * std::get<bool>(rval);
+            }
+        }
         if (std::holds_alternative<int>(lval)) {
             int a = std::get<int>(lval);
             if (std::holds_alternative<int>(rval)) {
@@ -93,6 +151,9 @@ Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
             }
             if (std::holds_alternative<bool>(rval)) {
                 return a * std::get<bool>(rval);
+            }
+            if (std::holds_alternative<std::shared_ptr<ListValue>>(rval)) {
+                return a * std::get<std::shared_ptr<ListValue>>(rval);
             }
         }
         if (std::holds_alternative<double>(lval)) {
@@ -118,6 +179,12 @@ Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
             if (std::holds_alternative<bool>(rval)) {
                 return a * std::get<bool>(rval);
             }
+            if (std::holds_alternative<std::string>(rval)) {
+                return a * std::get<std::string>(rval);
+            }
+            if (std::holds_alternative<std::shared_ptr<ListValue>>(rval)) {
+                return a * std::get<std::shared_ptr<ListValue>>(rval);
+            }
         }
         throw std::runtime_error("Bad types for '*'");
     }
@@ -137,6 +204,9 @@ Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
     if (op == TokenType::PLUS) {
         if (std::holds_alternative<std::string>(lval) && std::holds_alternative<std::string>(rval)) {
             return std::get<std::string>(lval) + std::get<std::string>(rval);
+        }
+        if (std::holds_alternative<std::shared_ptr<ListValue>>(lval) && std::holds_alternative<std::shared_ptr<ListValue>>(rval)) {
+            return std::get<std::shared_ptr<ListValue>>(lval) + std::get<std::shared_ptr<ListValue>>(rval);
         }
         if (std::holds_alternative<int>(lval)) {
             int a = std::get<int>(lval);
@@ -358,6 +428,20 @@ Value PrintNode::get(SymbolTable& symbols, std::ostream& out) {
     return val;
 }
 
+PrintlnNode::PrintlnNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
+Value PrintlnNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value val = expr->get(symbols, out);
+    out << val << std::endl;
+    
+    return val;
+}
+
+ReadNode::ReadNode() {
+    std::getline(std::cin, expr);
+}
+Value ReadNode::get(SymbolTable& symbols, std::ostream& out) {
+    return expr;
+}
 
 IfNode::IfNode(std::unique_ptr<ASTNode> cond, 
                std::vector<std::unique_ptr<ASTNode>> then_exprs,
@@ -452,41 +536,65 @@ Value ForNode::get(SymbolTable& symbols, std::ostream& out) {
         if (st > 0) {
             for (int i = s; i < e; i += st) {
                 symbols.add_variable(var_name, i);
-                for (auto& stmt : body) {
-                    stmt->get(symbols, out);
+                try {
+                    for (auto& stmt : body) {
+                        stmt->get(symbols, out);
+                    }
+                } catch (const ContinueException&) {
+                    continue;
+                } catch (const BreakException&) {
+                    break;
                 }
             }
         } else {
             for (int i = s; i > e; i += st) {
                 symbols.add_variable(var_name, i);
-                for (auto& stmt : body) {
-                    stmt->get(symbols, out);
+                try {
+                    for (auto& stmt : body) {
+                        stmt->get(symbols, out);
+                    }
+                } catch (const ContinueException&) {
+                    continue;
+                } catch (const BreakException&) {
+                    break;
                 }
             }
         }
-        return Value{};
+        return Nil{};
     } else {
         Value iter = iterable_expr->get(symbols, out);
         if (auto p = std::get_if<std::shared_ptr<ListValue>>(&iter)) {
-        for (auto& v : (*p)->items) {
-            symbols.add_variable(var_name, v);
-            for (auto& stmt : body) {
-                stmt->get(symbols, out);
+            for (auto& v : (*p)->items) {
+                symbols.add_variable(var_name, v);
+                try {
+                    for (auto& stmt : body) {
+                        stmt->get(symbols, out);
+                    }
+                } catch (const ContinueException&) {
+                    continue;
+                } catch (const BreakException&) {
+                    break;
+                }
             }
+            return Nil{};
         }
-        return {};
-    }
 
         if (std::holds_alternative<std::string>(iter)) {
             const auto& s = std::get<std::string>(iter);
             for (char c : s) {
                 SymbolTable child = symbols.create_child();
                 child.add_variable(var_name, std::string(1, c));
-                for (auto& stmt : body) {
-                    stmt->get(child, out);
+                try {
+                    for (auto& stmt : body) {
+                        stmt->get(symbols, out);
+                    }
+                } catch (const ContinueException&) {
+                    continue;
+                } catch (const BreakException&) {
+                    break;
                 }
             }
-            return {};
+            return Nil{};
         }
 
         throw std::runtime_error("Cannot iterate over non-list/string value in for-loop");
@@ -501,7 +609,7 @@ Value LenNode::get(SymbolTable& symbols, std::ostream& out) {
     } else if (std::holds_alternative<std::shared_ptr<ListValue>>(v)) {
         return static_cast<int>(std::get<std::shared_ptr<ListValue>>(v)->items.size());
     }
-    throw std::runtime_error("len() argument must be a string");
+    throw std::runtime_error("len() argument must be a string or list");
     
 }
 
@@ -532,18 +640,382 @@ Value MinNode::get(SymbolTable& symbols, std::ostream& out) {
         return min;
     }
 
-    throw std::runtime_error("max() argument must be a list");
+    throw std::runtime_error("min() argument must be a list");
+}
+
+Value AbsNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value v = expr->get(symbols, out);
+    if (std::holds_alternative<int>(v)) {
+        auto& lst = std::get<int>(v);
+        if (lst < 0) lst *= -1;
+        return lst;
+    } else if (std::holds_alternative<double>(v)) {
+        auto& lst = std::get<double>(v);
+        if (lst < 0) lst *= -1.0;
+        return lst;
+    }
+
+    throw std::runtime_error("abs() argument must be a int or double");
+}
+
+Value CeilNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value v = expr->get(symbols, out);
+    if (std::holds_alternative<double>(v)) {
+        auto& lst = std::get<double>(v);
+        return std::ceil(lst);
+    }
+
+    throw std::runtime_error("ceil() argument must be a double");
+}
+
+Value FloorNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value v = expr->get(symbols, out);
+    if (std::holds_alternative<double>(v)) {
+        auto& lst = std::get<double>(v);
+        return std::floor(lst);
+    }
+
+    throw std::runtime_error("floor() argument must be a double");
+}
+
+Value RoundNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value v = expr->get(symbols, out);
+    if (std::holds_alternative<double>(v)) {
+        auto& lst = std::get<double>(v);
+        return std::round(lst);
+    }
+
+    throw std::runtime_error("round() argument must be a double");
+}
+
+Value SqrtNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value v = expr->get(symbols, out);
+    if (std::holds_alternative<int>(v)) {
+        auto& lst = std::get<int>(v);
+        return std::sqrt(lst);
+    } else if (std::holds_alternative<double>(v)) {
+        auto& lst = std::get<double>(v);
+        return std::sqrt(lst);
+    }
+
+    throw std::runtime_error("sqrt() argument must be a int or double");
+}
+
+int random(int min, int max) {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(min, max);
+    return dist(gen);
+}
+
+Value RndNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value v = expr->get(symbols, out);
+    if (std::holds_alternative<int>(v)) {
+        auto& lst = std::get<int>(v);
+        return random(0, lst - 1);
+    }
+
+    throw std::runtime_error("rnd() argument must be a int");
+}
+
+Value ParseNumNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value v = expr->get(symbols, out);
+    if (std::holds_alternative<std::string>(v)) {
+        auto& lst = std::get<std::string>(v);
+        try {
+            int n = std::stoi(lst);
+            return n;
+        } catch (...) {
+            return Nil{};
+        }
+    }
+
+    throw std::runtime_error("parse_num() argument must be a string");
+}
+
+Value ToStringNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value v = expr->get(symbols, out);
+    if (std::holds_alternative<int>(v)) {
+        auto& lst = std::get<int>(v);
+        try {
+            std::string n = std::to_string(lst);
+            return n;
+        } catch (...) {
+            return Nil{};
+        }
+    }
+
+    throw std::runtime_error("to_string() argument must be a int");
+}
+
+std::string toLower(std::string str) {
+    std::transform(str.begin(), str.end(), str.begin(),
+        [](unsigned char c) { return std::tolower(c); });
+    return str;
+}
+
+Value LowerNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value v = expr->get(symbols, out);
+    if (std::holds_alternative<std::string>(v)) {
+        auto& lst = std::get<std::string>(v);
+        return toLower(lst);
+    }
+
+    throw std::runtime_error("lower() argument must be a string");
+}
+
+std::string toUpper(std::string str) {
+    std::transform(str.begin(), str.end(), str.begin(),
+        [](unsigned char c) { return std::toupper(c); });
+    return str;
+}
+
+Value UpperNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value v = expr->get(symbols, out);
+    if (std::holds_alternative<std::string>(v)) {
+        auto& lst = std::get<std::string>(v);
+        return toUpper(lst);
+    }
+
+    throw std::runtime_error("upper() argument must be a string");
+}
+
+std::vector<std::string> split(const std::string& str, const std::string& delimiter) {
+    std::vector<std::string> tokens;
+    size_t start = 0;
+    size_t end = str.find(delimiter);
+    
+    while (end != std::string::npos) {
+        tokens.push_back(str.substr(start, end - start));
+        start = end + delimiter.length();
+        end = str.find(delimiter, start);
+    }
+    tokens.push_back(str.substr(start));
+    
+    return tokens;
+}
+
+Value SplitNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value e = expr->get(symbols, out);
+    Value d = delim->get(symbols, out);
+
+    if (std::holds_alternative<std::string>(e) && std::holds_alternative<std::string>(d)) {
+        auto& s = std::get<std::string>(e);
+        auto& del = std::get<std::string>(d);
+        std::vector<std::string> parts = split(s, del);
+
+        auto list = std::make_shared<ListValue>();
+        for (const auto& part : parts) {
+            list->items.push_back(part);
+        }
+
+        return list;
+    }
+
+    throw std::runtime_error("split() arguments must be a string");
+}
+
+Value JoinNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value e = expr->get(symbols, out);
+    Value d = delim->get(symbols, out);
+    
+    if (std::holds_alternative<std::shared_ptr<ListValue>>(e) && std::holds_alternative<std::string>(d)) {
+        auto& v = std::get<std::shared_ptr<ListValue>>(e);
+        auto& del = std::get<std::string>(d);
+
+        std::string string = "";
+        int count = 0;
+
+        for (auto& i : v->items) {
+            ++count;
+            if (std::holds_alternative<std::string>(i)) string += std::get<std::string>(i);
+
+            else if (std::holds_alternative<int>(i)){
+                try {
+                    string += std::to_string(std::get<int>(i));
+                } catch(...) {
+                    string += del;
+                    continue;
+                }
+            }
+
+            else if (std::holds_alternative<double>(i)){
+                try {
+                    string += std::to_string(std::get<double>(i));
+                } catch(...) {
+                    string += del;
+                    continue;
+                }
+            }
+
+            else if (std::holds_alternative<bool>(i)){
+                try {
+                    string += std::to_string(std::get<bool>(i));
+                } catch(...) {
+                    string += del;
+                    continue;
+                }
+            }
+
+            if(count != v->items.size()) string += del;
+        }
+
+        return string;
+    }
+
+    throw std::runtime_error("join() arguments must be a 1st: list, 2nd: string");
+}
+
+Value ReplaceNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value ve = expr->get(symbols, out);
+    Value vo = old->get(symbols, out);
+    Value vn = new_s->get(symbols, out);
+
+    if (!std::holds_alternative<std::string>(ve) ||
+        !std::holds_alternative<std::string>(vo) ||
+        !std::holds_alternative<std::string>(vn)) {
+        throw std::runtime_error("replace() arguments must be strings");
+    }
+
+    const std::string& original = std::get<std::string>(ve);
+    const std::string& from = std::get<std::string>(vo);
+    const std::string& to = std::get<std::string>(vn);
+
+    if (from.empty()) {
+        return original;
+    }
+
+    std::string result;
+    size_t pos = 0;
+    while (true) {
+        size_t found = original.find(from, pos);
+        if (found == std::string::npos) {
+            result.append(original, pos, std::string::npos);
+            break;
+        }
+        result.append(original, pos, found - pos);
+        result += to;
+        pos = found + from.size();
+    }
+
+    return result;
+}
+
+Value PushNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value lv = list->get(symbols, out);
+    Value v  = expr->get(symbols, out);
+
+    if (!std::holds_alternative<std::shared_ptr<ListValue>>(lv)) {
+        throw std::runtime_error("push() 1st argument must be a list");
+    }
+    auto& lst_ptr = std::get<std::shared_ptr<ListValue>>(lv);
+
+    lst_ptr->items.push_back(std::move(v));
+
+    return Nil{};
+}
+
+Value PopNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value lv = expr->get(symbols, out);
+
+    if (!std::holds_alternative<std::shared_ptr<ListValue>>(lv)) {
+        throw std::runtime_error("pop() argument must be a list");
+    }
+    auto& lst_ptr = std::get<std::shared_ptr<ListValue>>(lv);
+
+    lst_ptr->items.pop_back();
+
+    return Nil{};
+}
+
+Value SortNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value lv = expr->get(symbols, out);
+    if (!std::holds_alternative<std::shared_ptr<ListValue>>(lv))
+        throw std::runtime_error("sort() argument must be a list");
+
+    auto lst_ptr = std::get<std::shared_ptr<ListValue>>(lv);
+
+    std::sort(lst_ptr->items.begin(), lst_ptr->items.end(),
+        [](const Value& a, const Value& b) {
+            if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b))
+                return std::get<int>(a) < std::get<int>(b);
+            if ((std::holds_alternative<int>(a) || std::holds_alternative<double>(a)) &&
+                (std::holds_alternative<int>(b) || std::holds_alternative<double>(b))) {
+                double da = std::holds_alternative<int>(a) ? std::get<int>(a) : std::get<double>(a);
+                double db = std::holds_alternative<int>(b) ? std::get<int>(b) : std::get<double>(b);
+                return da < db;
+            }
+            if (std::holds_alternative<std::string>(a) && std::holds_alternative<std::string>(b))
+                return std::get<std::string>(a) < std::get<std::string>(b);
+            if (std::holds_alternative<bool>(a) && std::holds_alternative<bool>(b))
+                return std::get<bool>(a) < std::get<bool>(b);
+
+            throw std::runtime_error("Cannot compare elements for sorting");
+        }
+    );
+
+    return Nil{};
+}
+
+static int to_int_index(const Value& v) {
+    if (std::holds_alternative<int>(v)) return std::get<int>(v);
+    if (std::holds_alternative<double>(v)) return static_cast<int>(std::get<double>(v));
+    throw std::runtime_error("Index must be an integer");
+}
+
+Value RemoveNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value lv  = expr->get(symbols, out);
+    Value iv  = ind->get(symbols, out);
+
+    if (!std::holds_alternative<std::shared_ptr<ListValue>>(lv))
+        throw std::runtime_error("remove() 1st argument must be a list");
+
+    auto lst_ptr = std::get<std::shared_ptr<ListValue>>(lv);
+    int idx = to_int_index(iv);
+
+    auto& vec = lst_ptr->items;
+    if (idx < 0 || idx >= (int)vec.size())
+        throw std::runtime_error("remove() index out of range");
+
+    vec.erase(vec.begin() + idx);
+    return Nil{};
+}
+
+Value InsertNode::get(SymbolTable& symbols, std::ostream& out) {
+    Value lv = expr->get(symbols, out);
+    Value iv = ind->get(symbols, out);
+    Value vv = value->get(symbols, out);
+
+    if (!std::holds_alternative<std::shared_ptr<ListValue>>(lv))
+        throw std::runtime_error("insert() 1st argument must be a list");
+
+    auto lst_ptr = std::get<std::shared_ptr<ListValue>>(lv);
+    int idx = to_int_index(iv);
+
+    auto& vec = lst_ptr->items;
+    if (idx < 0 || idx > (int)vec.size())
+        throw std::runtime_error("insert() index out of range");
+
+    vec.insert(vec.begin() + idx, std::move(vv));
+    return Nil{};
 }
 
 Value WhileNode::get(SymbolTable& symbols, std::ostream& out) {
     Value cond_val = condition->get(symbols, out);
     while (is_truthy(cond_val)) {
-        for (auto& stmt : body) {
-            stmt->get(symbols, out);
+        try {
+            for (auto& stmt : body) {
+                stmt->get(symbols, out);
+            }
+        } catch (const ContinueException&) {
+            continue;
+        } catch (const BreakException&) {
+            break;
         }
+        
         cond_val = condition->get(symbols, out);
     }
-    return Value{};
+    return Nil{};
 }
 
 ReturnNode::ReturnNode(std::unique_ptr<ASTNode> e) : expr(std::move(e)) {}
@@ -580,7 +1052,6 @@ Value CallNode::get(SymbolTable& symbols, std::ostream& out) {
     }
 
     SymbolTable local = symbols.create_child();
-
     for (size_t i = 0; i < args.size(); ++i) {
         Value aval = args[i]->get(symbols, out);
         local.add_variable(fv.params[i], std::move(aval));
@@ -594,7 +1065,7 @@ Value CallNode::get(SymbolTable& symbols, std::ostream& out) {
         return rex.value;
     }
 
-    return Value{0};
+    return Nil{};
 }
 
 static int to_int(const Value& v) {
