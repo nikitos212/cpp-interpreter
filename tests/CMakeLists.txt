@@ -5,8 +5,6 @@ FetchContent_Declare(
   GIT_REPOSITORY https://github.com/google/googletest.git
   GIT_TAG release-1.12.1
 )
-
-# For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
@@ -21,6 +19,7 @@ add_executable(
   int_funcs.cpp
   list_funcs.cpp
   string_funcs.cpp
+  stacktrace_test.cpp
 )
 
 target_link_libraries(

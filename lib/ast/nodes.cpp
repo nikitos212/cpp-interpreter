@@ -24,6 +24,8 @@ std::ostream& operator<<(std::ostream& os, const Value& v) {
                 if (i + 1 < items.size()) os << ", ";
             }
             os << "]";
+        } else if constexpr (std::is_same_v<T, std::shared_ptr<std::string>>) {
+            os << *x;
         } else {
             os << x;
         }
@@ -65,6 +67,41 @@ std::shared_ptr<ListValue> operator*(int count, const std::shared_ptr<ListValue>
     }
     
     return res;
+}
+
+
+std::shared_ptr<std::string> operator*(int n, const std::shared_ptr<std::string>& str) {
+    std::string copy = *str;
+    auto x = static_cast<size_t>(n);
+    if (x <= 0) throw std::runtime_error("The multiplier must be positive");
+    --x;
+    while (x--) *str += copy;
+
+    return str;
+}
+
+template<typename T>
+std::shared_ptr<std::string> operator*(const std::shared_ptr<std::string>& str, T n) {
+    std::string copy = *str;
+    auto x = static_cast<size_t>(n);
+    if (x <= 0) throw std::runtime_error("The multiplier must be positive");
+    --x;
+    while (x--) *str += copy;
+
+    return str;
+}
+
+std::shared_ptr<std::string> operator+(const std::shared_ptr<std::string>& first, const std::shared_ptr<std::string>& second) {
+    *first += *second;
+    return first;
+}
+
+std::shared_ptr<std::string> operator-(const std::shared_ptr<std::string>& first, const std::shared_ptr<std::string>& second) {
+    if (first->size() >= second->size() && first->compare(first->size() - second->size(), second->size(), *second) == 0) {
+        *first = first->substr(0, first->size() - second->size());
+    }
+        
+    return first;
 }
 
 NumberNode::NumberNode(int v) : value(v) {}
@@ -120,8 +157,8 @@ Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
     }
 
     if (op == TokenType::MULTIPLY) {
-        if (std::holds_alternative<std::string>(lval)) {
-            std::string a = std::get<std::string>(lval);
+        if (std::holds_alternative<std::shared_ptr<std::string>>(lval)) {
+            std::shared_ptr<std::string> a = std::get<std::shared_ptr<std::string>>(lval);
             if (std::holds_alternative<int>(rval)) {
                 return a * std::get<int>(rval);
             }
@@ -146,8 +183,8 @@ Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
             if (std::holds_alternative<double>(rval)) {
                 return static_cast<double>(a) * std::get<double>(rval);
             }
-            if (std::holds_alternative<std::string>(rval)) {
-                return a * std::get<std::string>(rval);
+            if (std::holds_alternative<std::shared_ptr<std::string>>(rval)) {
+                return a * std::get<std::shared_ptr<std::string>>(rval);
             }
             if (std::holds_alternative<bool>(rval)) {
                 return a * std::get<bool>(rval);
@@ -179,8 +216,8 @@ Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
             if (std::holds_alternative<bool>(rval)) {
                 return a * std::get<bool>(rval);
             }
-            if (std::holds_alternative<std::string>(rval)) {
-                return a * std::get<std::string>(rval);
+            if (std::holds_alternative<std::shared_ptr<std::string>>(rval)) {
+                return a * std::get<std::shared_ptr<std::string>>(rval);
             }
             if (std::holds_alternative<std::shared_ptr<ListValue>>(rval)) {
                 return a * std::get<std::shared_ptr<ListValue>>(rval);
@@ -202,8 +239,8 @@ Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
 
 
     if (op == TokenType::PLUS) {
-        if (std::holds_alternative<std::string>(lval) && std::holds_alternative<std::string>(rval)) {
-            return std::get<std::string>(lval) + std::get<std::string>(rval);
+        if (std::holds_alternative<std::shared_ptr<std::string>>(lval) && std::holds_alternative<std::shared_ptr<std::string>>(rval)) {
+            return std::get<std::shared_ptr<std::string>>(lval) + std::get<std::shared_ptr<std::string>>(rval);
         }
         if (std::holds_alternative<std::shared_ptr<ListValue>>(lval) && std::holds_alternative<std::shared_ptr<ListValue>>(rval)) {
             return std::get<std::shared_ptr<ListValue>>(lval) + std::get<std::shared_ptr<ListValue>>(rval);
@@ -247,6 +284,9 @@ Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
             if (std::holds_alternative<double>(rval)) {
                 return a - std::get<double>(rval);
             }
+        }
+        if (std::holds_alternative<std::shared_ptr<std::string>>(lval) && std::holds_alternative<std::shared_ptr<std::string>>(rval)) {
+            return std::get<std::shared_ptr<std::string>>(lval) - std::get<std::shared_ptr<std::string>>(rval);
         }
         throw std::runtime_error("Bad types for '-'");
     }
@@ -338,8 +378,8 @@ Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
         if (std::holds_alternative<bool>(lval) && std::holds_alternative<bool>(rval)) {
             return std::get<bool>(lval) == std::get<bool>(rval);
         }
-        if (std::holds_alternative<std::string>(lval) && std::holds_alternative<std::string>(rval)) {
-            return std::get<std::string>(lval) == std::get<std::string>(rval);
+        if (std::holds_alternative<std::shared_ptr<std::string>>(lval) && std::holds_alternative<std::shared_ptr<std::string>>(rval)) {
+            return std::get<std::shared_ptr<std::string>>(lval) == std::get<std::shared_ptr<std::string>>(rval);
         }
         if (std::holds_alternative<FunctionValue>(lval) && std::holds_alternative<FunctionValue>(rval)) {
             throw std::runtime_error("Cannot compare functions with == ");
@@ -371,8 +411,8 @@ Value BinOpNode::get(SymbolTable& symbols, std::ostream& out) {
         if (std::holds_alternative<bool>(lval) && std::holds_alternative<bool>(rval)) {
             return std::get<bool>(lval) != std::get<bool>(rval);
         }
-        if (std::holds_alternative<std::string>(lval) && std::holds_alternative<std::string>(rval)) {
-            return std::get<std::string>(lval) != std::get<std::string>(rval);
+        if (std::holds_alternative<std::shared_ptr<std::string>>(lval) && std::holds_alternative<std::shared_ptr<std::string>>(rval)) {
+            return std::get<std::shared_ptr<std::string>>(lval) != std::get<std::shared_ptr<std::string>>(rval);
         }
         if (std::holds_alternative<FunctionValue>(lval) && std::holds_alternative<FunctionValue>(rval)) {
             throw std::runtime_error("Cannot compare functions with == ");
@@ -440,7 +480,8 @@ ReadNode::ReadNode() {
     std::getline(std::cin, expr);
 }
 Value ReadNode::get(SymbolTable& symbols, std::ostream& out) {
-    return expr;
+    auto string = std::make_shared<std::string>(expr);
+    return string;
 }
 
 IfNode::IfNode(std::unique_ptr<ASTNode> cond, 
@@ -484,7 +525,7 @@ Value IfNode::get(SymbolTable& symbols, std::ostream& out) {
 
 StringNode::StringNode(const std::string& val) : value(val) {}
 Value StringNode::get(SymbolTable&, std::ostream&) {
-    return value;
+    return std::make_shared<std::string>(value);
 }
 
 BoolNode::BoolNode(const std::string& val) {
@@ -579,11 +620,11 @@ Value ForNode::get(SymbolTable& symbols, std::ostream& out) {
             return Nil{};
         }
 
-        if (std::holds_alternative<std::string>(iter)) {
-            const auto& s = std::get<std::string>(iter);
-            for (char c : s) {
+        if (std::holds_alternative<std::shared_ptr<std::string>>(iter)) {
+            const auto& s = std::get<std::shared_ptr<std::string>>(iter);
+            for (char c : *s) {
                 SymbolTable child = symbols.create_child();
-                child.add_variable(var_name, std::string(1, c));
+                child.add_variable(var_name, std::make_shared<std::string>(1, c));
                 try {
                     for (auto& stmt : body) {
                         stmt->get(symbols, out);
@@ -603,9 +644,9 @@ Value ForNode::get(SymbolTable& symbols, std::ostream& out) {
 
 Value LenNode::get(SymbolTable& symbols, std::ostream& out) {
     Value v = expr->get(symbols, out);
-    if (std::holds_alternative<std::string>(v)) {
-        const std::string& s = std::get<std::string>(v);
-        return static_cast<int>(s.size());
+    if (std::holds_alternative<std::shared_ptr<std::string>>(v)) {
+        const auto& s = std::get<std::shared_ptr<std::string>>(v);
+        return static_cast<int>(s->size());
     } else if (std::holds_alternative<std::shared_ptr<ListValue>>(v)) {
         return static_cast<int>(std::get<std::shared_ptr<ListValue>>(v)->items.size());
     }
@@ -720,10 +761,10 @@ Value RndNode::get(SymbolTable& symbols, std::ostream& out) {
 
 Value ParseNumNode::get(SymbolTable& symbols, std::ostream& out) {
     Value v = expr->get(symbols, out);
-    if (std::holds_alternative<std::string>(v)) {
-        auto& lst = std::get<std::string>(v);
+    if (std::holds_alternative<std::shared_ptr<std::string>>(v)) {
+        auto& lst = std::get<std::shared_ptr<std::string>>(v);
         try {
-            int n = std::stoi(lst);
+            int n = std::stoi(*lst);
             return n;
         } catch (...) {
             return Nil{};
@@ -739,7 +780,7 @@ Value ToStringNode::get(SymbolTable& symbols, std::ostream& out) {
         auto& lst = std::get<int>(v);
         try {
             std::string n = std::to_string(lst);
-            return n;
+            return std::make_shared<std::string>(n);
         } catch (...) {
             return Nil{};
         }
@@ -756,9 +797,9 @@ std::string toLower(std::string str) {
 
 Value LowerNode::get(SymbolTable& symbols, std::ostream& out) {
     Value v = expr->get(symbols, out);
-    if (std::holds_alternative<std::string>(v)) {
-        auto& lst = std::get<std::string>(v);
-        return toLower(lst);
+    if (std::holds_alternative<std::shared_ptr<std::string>>(v)) {
+        auto& lst = std::get<std::shared_ptr<std::string>>(v);
+        return std::make_shared<std::string>(toLower(*lst));
     }
 
     throw std::runtime_error("lower() argument must be a string");
@@ -772,9 +813,9 @@ std::string toUpper(std::string str) {
 
 Value UpperNode::get(SymbolTable& symbols, std::ostream& out) {
     Value v = expr->get(symbols, out);
-    if (std::holds_alternative<std::string>(v)) {
-        auto& lst = std::get<std::string>(v);
-        return toUpper(lst);
+    if (std::holds_alternative<std::shared_ptr<std::string>>(v)) {
+        auto& lst = std::get<std::shared_ptr<std::string>>(v);
+        return std::make_shared<std::string>(toUpper(*lst));
     }
 
     throw std::runtime_error("upper() argument must be a string");
@@ -799,14 +840,14 @@ Value SplitNode::get(SymbolTable& symbols, std::ostream& out) {
     Value e = expr->get(symbols, out);
     Value d = delim->get(symbols, out);
 
-    if (std::holds_alternative<std::string>(e) && std::holds_alternative<std::string>(d)) {
-        auto& s = std::get<std::string>(e);
-        auto& del = std::get<std::string>(d);
-        std::vector<std::string> parts = split(s, del);
+    if (std::holds_alternative<std::shared_ptr<std::string>>(e) && std::holds_alternative<std::shared_ptr<std::string>>(d)) {
+        auto& s = std::get<std::shared_ptr<std::string>>(e);
+        auto& del = std::get<std::shared_ptr<std::string>>(d);
+        std::vector<std::string> parts = split(*s, *del);
 
         auto list = std::make_shared<ListValue>();
         for (const auto& part : parts) {
-            list->items.push_back(part);
+            list->items.push_back(std::make_shared<std::string>(part));
         }
 
         return list;
@@ -819,22 +860,22 @@ Value JoinNode::get(SymbolTable& symbols, std::ostream& out) {
     Value e = expr->get(symbols, out);
     Value d = delim->get(symbols, out);
     
-    if (std::holds_alternative<std::shared_ptr<ListValue>>(e) && std::holds_alternative<std::string>(d)) {
+    if (std::holds_alternative<std::shared_ptr<ListValue>>(e) && std::holds_alternative<std::shared_ptr<std::string>>(d)) {
         auto& v = std::get<std::shared_ptr<ListValue>>(e);
-        auto& del = std::get<std::string>(d);
+        auto& del = std::get<std::shared_ptr<std::string>>(d);
 
         std::string string = "";
         int count = 0;
 
         for (auto& i : v->items) {
             ++count;
-            if (std::holds_alternative<std::string>(i)) string += std::get<std::string>(i);
+            if (std::holds_alternative<std::shared_ptr<std::string>>(i)) string += *std::get<std::shared_ptr<std::string>>(i);
 
             else if (std::holds_alternative<int>(i)){
                 try {
                     string += std::to_string(std::get<int>(i));
                 } catch(...) {
-                    string += del;
+                    string += *del;
                     continue;
                 }
             }
@@ -843,7 +884,7 @@ Value JoinNode::get(SymbolTable& symbols, std::ostream& out) {
                 try {
                     string += std::to_string(std::get<double>(i));
                 } catch(...) {
-                    string += del;
+                    string += *del;
                     continue;
                 }
             }
@@ -852,15 +893,15 @@ Value JoinNode::get(SymbolTable& symbols, std::ostream& out) {
                 try {
                     string += std::to_string(std::get<bool>(i));
                 } catch(...) {
-                    string += del;
+                    string += *del;
                     continue;
                 }
             }
 
-            if(count != v->items.size()) string += del;
+            if(count != v->items.size()) string += *del;
         }
 
-        return string;
+        return std::make_shared<std::string>(string);
     }
 
     throw std::runtime_error("join() arguments must be a 1st: list, 2nd: string");
@@ -871,34 +912,34 @@ Value ReplaceNode::get(SymbolTable& symbols, std::ostream& out) {
     Value vo = old->get(symbols, out);
     Value vn = new_s->get(symbols, out);
 
-    if (!std::holds_alternative<std::string>(ve) ||
-        !std::holds_alternative<std::string>(vo) ||
-        !std::holds_alternative<std::string>(vn)) {
+    if (!std::holds_alternative<std::shared_ptr<std::string>>(ve) ||
+        !std::holds_alternative<std::shared_ptr<std::string>>(vo) ||
+        !std::holds_alternative<std::shared_ptr<std::string>>(vn)) {
         throw std::runtime_error("replace() arguments must be strings");
     }
 
-    const std::string& original = std::get<std::string>(ve);
-    const std::string& from = std::get<std::string>(vo);
-    const std::string& to = std::get<std::string>(vn);
+    const auto& original = std::get<std::shared_ptr<std::string>>(ve);
+    const auto& from = std::get<std::shared_ptr<std::string>>(vo);
+    const auto& to = std::get<std::shared_ptr<std::string>>(vn);
 
-    if (from.empty()) {
+    if (from->empty()) {
         return original;
     }
 
     std::string result;
     size_t pos = 0;
     while (true) {
-        size_t found = original.find(from, pos);
+        size_t found = original->find(*from, pos);
         if (found == std::string::npos) {
-            result.append(original, pos, std::string::npos);
+            result.append(*original, pos, std::string::npos);
             break;
         }
-        result.append(original, pos, found - pos);
-        result += to;
-        pos = found + from.size();
+        result.append(*original, pos, found - pos);
+        result += *to;
+        pos = found + from->size();
     }
 
-    return result;
+    return std::make_shared<std::string>(result);
 }
 
 Value PushNode::get(SymbolTable& symbols, std::ostream& out) {
@@ -945,8 +986,8 @@ Value SortNode::get(SymbolTable& symbols, std::ostream& out) {
                 double db = std::holds_alternative<int>(b) ? std::get<int>(b) : std::get<double>(b);
                 return da < db;
             }
-            if (std::holds_alternative<std::string>(a) && std::holds_alternative<std::string>(b))
-                return std::get<std::string>(a) < std::get<std::string>(b);
+            if (std::holds_alternative<std::shared_ptr<std::string>>(a) && std::holds_alternative<std::shared_ptr<std::string>>(b))
+                return std::get<std::shared_ptr<std::string>>(a) < std::get<std::shared_ptr<std::string>>(b);
             if (std::holds_alternative<bool>(a) && std::holds_alternative<bool>(b))
                 return std::get<bool>(a) < std::get<bool>(b);
 
@@ -1047,6 +1088,12 @@ Value CallNode::get(SymbolTable& symbols, std::ostream& out) {
     }
     FunctionValue fv = std::get<FunctionValue>(std::move(fval));
 
+    std::string fname = "<anon>";
+    if (auto var = dynamic_cast<VariableNode*>(funcExpr.get())) {
+        fname = var->get_name();
+    }
+    CallStackGuard guard(std::move(fname));
+
     if (args.size() != fv.params.size()) {
         throw std::runtime_error("Function called with wrong number of arguments");
     }
@@ -1072,7 +1119,7 @@ static int to_int(const Value& v) {
     if (std::holds_alternative<int>(v))       return std::get<int>(v);
     if (std::holds_alternative<double>(v))    return static_cast<int>(std::get<double>(v));
     if (std::holds_alternative<bool>(v))      return std::get<bool>(v) ? 1 : 0;
-    if (std::holds_alternative<std::string>(v)) return std::stoi(std::get<std::string>(v));
+    if (std::holds_alternative<std::shared_ptr<std::string>>(v)) return std::stoi(*std::get<std::shared_ptr<std::string>>(v));
     throw std::runtime_error("Cannot convert to int");
 }
 
@@ -1096,32 +1143,16 @@ Value IndexNode::get(SymbolTable& symbols, std::ostream& out) {
         if (idx < 0 || idx >= static_cast<int>(lv->items.size()))
             throw std::runtime_error("List index out of range");
 
-        const auto& element = lv->items[idx];
-
-        if (std::holds_alternative<int>(element)) {
-            return std::get<int>(element);
-        }
-        if (std::holds_alternative<double>(element)) {
-            return std::get<double>(element);
-        }
-        if (std::holds_alternative<std::string>(element)) {
-            return std::get<std::string>(element);
-        }
-        if (std::holds_alternative<bool>(element)) {
-            return std::get<bool>(element);
-        }
-        if (std::holds_alternative<FunctionValue>(element)) {
-            return std::get<FunctionValue>(element);
-        }
+        return lv->items[idx];
 
         throw std::runtime_error("IndexNode: unexpected variant alternative");
     }
 
-    if (std::holds_alternative<std::string>(container_val)) {
-        const std::string& s = std::get<std::string>(container_val);
-        if (idx < 0 || idx >= static_cast<int>(s.size()))
+    if (std::holds_alternative<std::shared_ptr<std::string>>(container_val)) {
+        const auto& s = std::get<std::shared_ptr<std::string>>(container_val);
+        if (idx < 0 || idx >= static_cast<int>(s->size()))
             throw std::runtime_error("String index out of range");
-        return std::string(1, s[idx]);
+        return std::make_shared<std::string>(1, (*s)[idx]);
     }
 
     throw std::runtime_error("Indexing non-list/string value");
@@ -1145,12 +1176,12 @@ Value SliceNode::get(SymbolTable& symbols, std::ostream& out) {
 
         return slice;
     }
-    if (std::holds_alternative<std::string>(container_val)) {
-        auto& s = std::get<std::string>(container_val);
+    if (std::holds_alternative<std::shared_ptr<std::string>>(container_val)) {
+        auto& s = std::get<std::shared_ptr<std::string>>(container_val);
         if (start_idx < 0) start_idx = 0;
-        if (end_idx > (int)s.size()) end_idx = s.size();
+        if (end_idx > (int)s->size()) end_idx = s->size();
         if (start_idx > end_idx) start_idx = end_idx;
-        return s.substr(start_idx, end_idx - start_idx);
+        return std::make_shared<std::string>(s->substr(start_idx, end_idx - start_idx));
     }
     throw std::runtime_error("Slicing non-list/string value");
 }

@@ -1,18 +1,15 @@
 #include "interpreter.h"
 #include "parser/parser.h"
 #include "ast/nodes.h"
+#include <memory>
+#include <string>
 
 class Interpreter {
     SymbolTable symbol_table;
     std::ostream& output;
-    std::vector<std::string> call_stack;
 
 public:
     Interpreter(std::ostream& out) : output(out) {}
-
-    void push_call(const std::string& name) { call_stack.push_back(name); }
-    void pop_call() { call_stack.pop_back(); }
-    std::vector<std::string> get_call_stack() const { return call_stack; }
 
     Value interpr(const std::string& text) {
         Parser parser(text);
@@ -100,7 +97,7 @@ bool interpret(std::istream& input, std::ostream& output) {
                 t.find("end for") != std::string::npos ||
                 t.find("end while") != std::string::npos ||
                 t.rfind("end function", 0) == 0 ||
-                t.rfind("]", 0) == 0)
+                t.find("]") != std::string::npos)
             {
                 depth--;
             }

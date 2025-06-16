@@ -167,6 +167,20 @@ tests/CMakeFiles/itmoscript_tests.dir/string_funcs.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/itmoscript_tests.dir/string_funcs.cpp.s"
 	cd /home/littleking08/Projects/labwork10-nikitos212/build/tests && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/littleking08/Projects/labwork10-nikitos212/tests/string_funcs.cpp -o CMakeFiles/itmoscript_tests.dir/string_funcs.cpp.s
 
+tests/CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.o: tests/CMakeFiles/itmoscript_tests.dir/flags.make
+tests/CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.o: /home/littleking08/Projects/labwork10-nikitos212/tests/stacktrace_test.cpp
+tests/CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.o: tests/CMakeFiles/itmoscript_tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object tests/CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.o"
+	cd /home/littleking08/Projects/labwork10-nikitos212/build/tests && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT tests/CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.o -MF CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.o.d -o CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.o -c /home/littleking08/Projects/labwork10-nikitos212/tests/stacktrace_test.cpp
+
+tests/CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.i"
+	cd /home/littleking08/Projects/labwork10-nikitos212/build/tests && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/littleking08/Projects/labwork10-nikitos212/tests/stacktrace_test.cpp > CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.i
+
+tests/CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.s"
+	cd /home/littleking08/Projects/labwork10-nikitos212/build/tests && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/littleking08/Projects/labwork10-nikitos212/tests/stacktrace_test.cpp -o CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.s
+
 # Object files for target itmoscript_tests
 itmoscript_tests_OBJECTS = \
 "CMakeFiles/itmoscript_tests.dir/function_test.cpp.o" \
@@ -175,7 +189,8 @@ itmoscript_tests_OBJECTS = \
 "CMakeFiles/itmoscript_tests.dir/illegal_ops_test.cpp.o" \
 "CMakeFiles/itmoscript_tests.dir/int_funcs.cpp.o" \
 "CMakeFiles/itmoscript_tests.dir/list_funcs.cpp.o" \
-"CMakeFiles/itmoscript_tests.dir/string_funcs.cpp.o"
+"CMakeFiles/itmoscript_tests.dir/string_funcs.cpp.o" \
+"CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.o"
 
 # External object files for target itmoscript_tests
 itmoscript_tests_EXTERNAL_OBJECTS =
@@ -187,12 +202,13 @@ tests/itmoscript_tests: tests/CMakeFiles/itmoscript_tests.dir/illegal_ops_test.c
 tests/itmoscript_tests: tests/CMakeFiles/itmoscript_tests.dir/int_funcs.cpp.o
 tests/itmoscript_tests: tests/CMakeFiles/itmoscript_tests.dir/list_funcs.cpp.o
 tests/itmoscript_tests: tests/CMakeFiles/itmoscript_tests.dir/string_funcs.cpp.o
+tests/itmoscript_tests: tests/CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.o
 tests/itmoscript_tests: tests/CMakeFiles/itmoscript_tests.dir/build.make
 tests/itmoscript_tests: lib/libitmoscript.a
 tests/itmoscript_tests: lib/libgtest_main.a
 tests/itmoscript_tests: lib/libgtest.a
 tests/itmoscript_tests: tests/CMakeFiles/itmoscript_tests.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable itmoscript_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable itmoscript_tests"
 	cd /home/littleking08/Projects/labwork10-nikitos212/build/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/itmoscript_tests.dir/link.txt --verbose=$(VERBOSE)
 	cd /home/littleking08/Projects/labwork10-nikitos212/build/tests && /usr/bin/cmake -D TEST_TARGET=itmoscript_tests -D TEST_EXECUTABLE=/home/littleking08/Projects/labwork10-nikitos212/build/tests/itmoscript_tests -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/home/littleking08/Projects/labwork10-nikitos212/build/tests -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=itmoscript_tests_TESTS -D CTEST_FILE=/home/littleking08/Projects/labwork10-nikitos212/build/tests/itmoscript_tests[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_XML_OUTPUT_DIR= -P /usr/share/cmake-3.28/Modules/GoogleTestAddTests.cmake
 

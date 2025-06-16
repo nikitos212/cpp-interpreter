@@ -243,6 +243,13 @@ std::unique_ptr<ASTNode> Parser::factor() {
         return std::make_unique<InsertNode>(std::move(list), std::move(ind), std::move(x));
     }
 
+    if (token.type == TokenType::STACKTRACE) {
+        eat(TokenType::STACKTRACE);
+        eat(TokenType::LPAREN);
+        eat(TokenType::RPAREN);
+        return std::make_unique<StackTraceNode>();
+    }
+
     if (token.type == TokenType::FUNCTION) {
         auto functionNode = parse_function();
 

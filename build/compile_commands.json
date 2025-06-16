@@ -78,6 +78,12 @@
   "output": "tests/CMakeFiles/itmoscript_tests.dir/string_funcs.cpp.o"
 },
 {
+  "directory": "/home/littleking08/Projects/labwork10-nikitos212/build/tests",
+  "command": "/usr/bin/g++  -I/home/littleking08/Projects/labwork10-nikitos212/lib -I/home/littleking08/Projects/labwork10-nikitos212 -isystem /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-src/googletest/include -isystem /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-src/googletest -g -std=gnu++23 -o CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.o -c /home/littleking08/Projects/labwork10-nikitos212/tests/stacktrace_test.cpp",
+  "file": "/home/littleking08/Projects/labwork10-nikitos212/tests/stacktrace_test.cpp",
+  "output": "tests/CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.o"
+},
+{
   "directory": "/home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googlemock",
   "command": "/usr/bin/g++  -I/home/littleking08/Projects/labwork10-nikitos212/lib -I/home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-src/googlemock/include -I/home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-src/googlemock -isystem /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-src/googletest/include -isystem /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-src/googletest -g -std=c++23 -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-src/googlemock/src/gmock-all.cc",
   "file": "/home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-src/googlemock/src/gmock-all.cc",

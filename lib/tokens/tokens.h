@@ -141,26 +141,6 @@ struct Token {
     Token(TokenType t, const std::string& v = "");
 };
 
-template<typename T>
-inline std::string operator*(const std::string& str, T n) {
-    std::string result;
-    auto x = static_cast<size_t>(n);
-    if (x <= 0) return result;
-    result.reserve(str.size() * x);
-    while (x--) result += str;
-    return result;
-}
-
-template<typename T>
-inline std::string operator*(T n, const std::string& str) {
-    std::string result;
-    auto x = static_cast<size_t>(n);
-    if (x <= 0) return result;
-    result.reserve(str.size() * x);
-    while (x--) result += str;
-    return result;
-}
-
 inline int pow(int l, int r) {
     int res = 1;
     if (r == 0) return 1;

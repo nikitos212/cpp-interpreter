@@ -305,6 +305,30 @@ loop_and_branch_test.cpp.s:
 	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/loop_and_branch_test.cpp.s
 .PHONY : loop_and_branch_test.cpp.s
 
+stacktrace_test.o: stacktrace_test.cpp.o
+.PHONY : stacktrace_test.o
+
+# target to build an object file
+stacktrace_test.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.o
+.PHONY : stacktrace_test.cpp.o
+
+stacktrace_test.i: stacktrace_test.cpp.i
+.PHONY : stacktrace_test.i
+
+# target to preprocess a source file
+stacktrace_test.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.i
+.PHONY : stacktrace_test.cpp.i
+
+stacktrace_test.s: stacktrace_test.cpp.s
+.PHONY : stacktrace_test.s
+
+# target to generate assembly for a file
+stacktrace_test.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.s
+.PHONY : stacktrace_test.cpp.s
+
 string_funcs.o: string_funcs.cpp.o
 .PHONY : string_funcs.o
 
@@ -382,6 +406,9 @@ help:
 	@echo "... loop_and_branch_test.o"
 	@echo "... loop_and_branch_test.i"
 	@echo "... loop_and_branch_test.s"
+	@echo "... stacktrace_test.o"
+	@echo "... stacktrace_test.i"
+	@echo "... stacktrace_test.s"
 	@echo "... string_funcs.o"
 	@echo "... string_funcs.i"
 	@echo "... string_funcs.s"

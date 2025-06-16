@@ -51,6 +51,13 @@ Lexer::Lexer(const std::string& t) : text(t), current_char(t.empty() ? '\0' : t[
 
 Token Lexer::get_next_token() {
     while (current_char != '\0') {
+        if (current_char == '/' && peek(1) == '/') {
+            while (current_char != '\n' && current_char != '\0') {
+                step();
+            }
+            continue;
+        }
+        
         if (isspace(current_char)) {
             skip_whitespace();
             continue;

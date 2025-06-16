@@ -1,11 +1,27 @@
 #pragma once
 #include "tokens/tokens.h"
+#include "interpreter/call_stack.h"
 #include <memory>
 #include <unordered_map>
 #include <variant>
 #include <vector>
 
-class ASTNode;
+struct ASTNode;
+struct ListValue;
+struct Nil;
+struct FunctionValue;  
+
+struct Nil { };
+
+using Value = std::variant<
+    int,
+    double,
+    std::shared_ptr<std::string>,
+    bool,
+    FunctionValue,
+    std::shared_ptr<ListValue>,
+    Nil
+>;
 
 struct FunctionValue {
     std::vector<std::string> params;
@@ -16,18 +32,6 @@ struct FunctionValue {
 };
 
 struct ListValue;
-
-struct Nil { };
-
-using Value = std::variant<
-    int,
-    double,
-    std::string,
-    bool,
-    FunctionValue,
-    std::shared_ptr<ListValue>,
-    Nil
->;
 
 struct ListValue {
     std::vector<Value> items;
@@ -467,8 +471,8 @@ inline bool is_truthy(const Value& val) {
     if (std::holds_alternative<double>(val)) {
         return std::get<double>(val) != 0.0;
     }
-    if (std::holds_alternative<std::string>(val)) {
-        return !std::get<std::string>(val).empty();
+    if (std::holds_alternative<std::shared_ptr<std::string>>(val)) {
+        return !std::get<std::shared_ptr<std::string>>(val)->empty();
     }
     if (std::holds_alternative<Nil>(val)) {
         return false;
@@ -503,4 +507,16 @@ public:
               std::unique_ptr<ASTNode> e)
       : container(std::move(c)), start(std::move(s)), end(std::move(e)) {}
     Value get(SymbolTable& symbols, std::ostream& out) override;
+};
+
+class StackTraceNode : public ASTNode {
+public:
+    StackTraceNode () {}
+    Value get(SymbolTable&, std::ostream&) override {
+        auto list = std::make_shared<ListValue>();
+        for (auto& fn : call_stack) {
+            list->items.push_back(std::make_shared<std::string>(fn));
+        }
+        return list;
+    }
 };
