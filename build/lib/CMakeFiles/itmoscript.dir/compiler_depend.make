@@ -12,6 +12,42 @@ lib/itmoscript_autogen/timestamp: /home/littleking08/Projects/labwork10-nikitos2
   /home/littleking08/Projects/labwork10-nikitos212/lib/parser/parser.h \
   /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.cpp \
   /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.h \
+  /usr/bin/cmake \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/CMakeLists.txt \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/lexer/lexer.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/lexer/lexer.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/parser/parser.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/parser/parser.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.h \
+  /usr/bin/cmake \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/CMakeLists.txt \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/lexer/lexer.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/lexer/lexer.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/parser/parser.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/parser/parser.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.h \
+  /usr/bin/cmake \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/CMakeLists.txt \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/lexer/lexer.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/lexer/lexer.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/parser/parser.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/parser/parser.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.cpp \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.h \
   /usr/bin/cmake
 
 lib/CMakeFiles/itmoscript.dir/ast/nodes.cpp.o: /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.cpp \

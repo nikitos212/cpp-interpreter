@@ -41,7 +41,10 @@ tests/CMakeFiles/itmoscript_tests.dir/function_test.cpp.o: /home/littleking08/Pr
   _deps/googletest-src/googletest/include/gtest/internal/gtest-port.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-string.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-type-util.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/call_stack.h \
   /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -423,7 +426,10 @@ tests/CMakeFiles/itmoscript_tests.dir/illegal_ops_test.cpp.o: /home/littleking08
   _deps/googletest-src/googletest/include/gtest/internal/gtest-port.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-string.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-type-util.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/call_stack.h \
   /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -805,7 +811,10 @@ tests/CMakeFiles/itmoscript_tests.dir/int_funcs.cpp.o: /home/littleking08/Projec
   _deps/googletest-src/googletest/include/gtest/internal/gtest-port.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-string.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-type-util.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/call_stack.h \
   /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -1190,7 +1199,10 @@ tests/CMakeFiles/itmoscript_tests.dir/list_funcs.cpp.o: /home/littleking08/Proje
   _deps/googletest-src/googletest/include/gtest/internal/gtest-port.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-string.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-type-util.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/call_stack.h \
   /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -1572,7 +1584,10 @@ tests/CMakeFiles/itmoscript_tests.dir/loop_and_branch_test.cpp.o: /home/littleki
   _deps/googletest-src/googletest/include/gtest/internal/gtest-port.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-string.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-type-util.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/call_stack.h \
   /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -1954,7 +1969,10 @@ tests/CMakeFiles/itmoscript_tests.dir/stacktrace_test.cpp.o: /home/littleking08/
   _deps/googletest-src/googletest/include/gtest/internal/gtest-port.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-string.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-type-util.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/call_stack.h \
   /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -2336,7 +2354,10 @@ tests/CMakeFiles/itmoscript_tests.dir/string_funcs.cpp.o: /home/littleking08/Pro
   _deps/googletest-src/googletest/include/gtest/internal/gtest-port.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-string.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-type-util.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/call_stack.h \
   /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -2718,7 +2739,10 @@ tests/CMakeFiles/itmoscript_tests.dir/types_test.cpp.o: /home/littleking08/Proje
   _deps/googletest-src/googletest/include/gtest/internal/gtest-port.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-string.h \
   _deps/googletest-src/googletest/include/gtest/internal/gtest-type-util.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/call_stack.h \
   /home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.h \
+  /home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -3215,8 +3239,6 @@ tests/itmoscript_tests_autogen/mocs_compilation.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/sigaction.h:
 
-/usr/include/x86_64-linux-gnu/bits/semaphore.h:
-
 /usr/include/x86_64-linux-gnu/bits/time.h:
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
@@ -3263,15 +3285,15 @@ tests/itmoscript_tests_autogen/mocs_compilation.cpp:
 
 /usr/include/x86_64-linux-gnu/asm/bitsperlong.h:
 
-/usr/include/c++/13/cstdint:
+/usr/include/x86_64-linux-gnu/bits/statx.h:
 
-/usr/include/c++/13/cstdlib:
+/usr/include/unistd.h:
 
-/usr/include/c++/13/bits/postypes.h:
+/usr/include/x86_64-linux-gnu/bits/setjmp.h:
 
-/usr/include/c++/13/bits/stl_multiset.h:
+/usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
 
-/usr/include/c++/13/bits/uses_allocator.h:
+/usr/include/time.h:
 
 /usr/include/c++/13/bits/shared_ptr.h:
 
@@ -3287,10 +3309,6 @@ tests/itmoscript_tests_autogen/mocs_compilation.cpp:
 
 /usr/include/c++/13/bits/ranges_uninitialized.h:
 
-/usr/include/c++/13/bits/std_abs.h:
-
-/usr/include/c++/13/bits/parse_numbers.h:
-
 /usr/include/c++/13/bits/ostream.tcc:
 
 /usr/include/c++/13/numbers:
@@ -3302,12 +3320,6 @@ tests/itmoscript_tests_autogen/mocs_compilation.cpp:
 /usr/include/c++/13/bits/mofunc_impl.h:
 
 /usr/include/c++/13/bits/memoryfwd.h:
-
-/usr/include/x86_64-linux-gnu/bits/setjmp.h:
-
-/usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
-
-/usr/include/time.h:
 
 /usr/include/c++/13/bits/max_size_type.h:
 
@@ -3328,10 +3340,6 @@ _deps/googletest-src/googletest/include/gtest/internal/gtest-type-util.h:
 /usr/include/x86_64-linux-gnu/bits/timesize.h:
 
 /usr/include/c++/13/bits/locale_classes.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/error_t.h:
-
-/usr/include/c++/13/bits/hashtable.h:
 
 /usr/include/c++/13/bits/functional_hash.h:
 
@@ -3381,14 +3389,6 @@ _deps/googletest-src/googletest/include/gtest/gtest-param-test.h:
 
 /usr/include/c++/13/bits/hashtable_policy.h:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
-
-/usr/include/x86_64-linux-gnu/bits/signal_ext.h:
-
-/usr/include/c++/13/bits/std_function.h:
-
-/usr/include/c++/13/bits/char_traits.h:
-
 /usr/include/c++/13/bits/exception.h:
 
 /usr/include/c++/13/bits/cxxabi_init_exception.h:
@@ -3405,6 +3405,10 @@ _deps/googletest-src/googletest/include/gtest/gtest-param-test.h:
 
 /usr/include/linux/stddef.h:
 
+/usr/include/wchar.h:
+
+/usr/include/c++/13/bits/shared_ptr_base.h:
+
 /usr/include/c++/13/bits/basic_ios.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:
@@ -3413,7 +3417,11 @@ _deps/googletest-src/googletest/include/gtest/gtest-param-test.h:
 
 /usr/include/c++/13/bits/atomic_timed_wait.h:
 
-_deps/googletest-src/googletest/include/gtest/gtest-test-part.h:
+/usr/include/c++/13/bits/concept_check.h:
+
+_deps/googletest-src/googletest/include/gtest/internal/gtest-param-util.h:
+
+/usr/include/c++/13/bits/stl_bvector.h:
 
 /usr/include/c++/13/bits/move.h:
 
@@ -3485,7 +3493,7 @@ _deps/googletest-src/googletest/include/gtest/gtest-assertion-result.h:
 
 /usr/include/c++/13/bits/atomic_lockfree_defines.h:
 
-/usr/include/c++/13/bits/concept_check.h:
+_deps/googletest-src/googletest/include/gtest/gtest-test-part.h:
 
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
 
@@ -3503,13 +3511,19 @@ _deps/googletest-src/googletest/include/gtest/gtest-death-test.h:
 
 /usr/include/c++/13/bits/this_thread_sleep.h:
 
-/usr/include/c++/13/bits/shared_ptr_base.h:
-
-/usr/include/wchar.h:
-
 /usr/include/c++/13/bits/invoke.h:
 
 _deps/googletest-src/googletest/include/gtest/internal/gtest-port-arch.h:
+
+/usr/include/c++/13/bits/postypes.h:
+
+/usr/include/c++/13/bits/parse_numbers.h:
+
+/usr/include/c++/13/bits/std_abs.h:
+
+/usr/include/c++/13/bits/stl_multiset.h:
+
+/usr/include/c++/13/bits/uses_allocator.h:
 
 /usr/include/c++/13/bits/move_only_function.h:
 
@@ -3525,11 +3539,29 @@ _deps/googletest-src/googletest/include/gtest/internal/gtest-port-arch.h:
 
 _deps/googletest-src/googletest/include/gtest/internal/gtest-filepath.h:
 
+/usr/include/x86_64-linux-gnu/sys/syscall.h:
+
+/usr/include/c++/13/clocale:
+
+_deps/googletest-src/googletest/include/gtest/internal/gtest-string.h:
+
+/home/littleking08/Projects/labwork10-nikitos212/tests/illegal_ops_test.cpp:
+
+/usr/include/c++/13/ctime:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h:
+
+/home/littleking08/Projects/labwork10-nikitos212/tests/types_test.cpp:
+
+/usr/include/c++/13/istream:
+
 /usr/include/x86_64-linux-gnu/bits/endianness.h:
 
 /usr/include/c++/13/bits/chrono.h:
 
 /usr/include/asm-generic/posix_types.h:
+
+/home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.h:
 
 /usr/include/stdc-predef.h:
 
@@ -3551,7 +3583,9 @@ _deps/googletest-src/googletest/include/gtest/internal/custom/gtest-printers.h:
 
 _deps/googletest-src/googletest/include/gtest/internal/gtest-death-test-internal.h:
 
-_deps/googletest-src/googletest/include/gtest/internal/gtest-param-util.h:
+/usr/include/x86_64-linux-gnu/bits/types/error_t.h:
+
+/usr/include/c++/13/bits/hashtable.h:
 
 /usr/include/c++/13/bits/alloc_traits.h:
 
@@ -3559,21 +3593,9 @@ _deps/googletest-src/googletest/include/gtest/internal/gtest-port.h:
 
 /usr/include/c++/13/bits/stl_tempbuf.h:
 
-_deps/googletest-src/googletest/include/gtest/internal/gtest-string.h:
+/usr/include/x86_64-linux-gnu/bits/semaphore.h:
 
-/home/littleking08/Projects/labwork10-nikitos212/tests/illegal_ops_test.cpp:
-
-/usr/include/c++/13/ctime:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h:
-
-/home/littleking08/Projects/labwork10-nikitos212/tests/types_test.cpp:
-
-/usr/include/c++/13/istream:
-
-/usr/include/x86_64-linux-gnu/sys/syscall.h:
-
-/usr/include/c++/13/clocale:
+/home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/call_stack.h:
 
 /usr/include/c++/13/bits/basic_string.tcc:
 
@@ -3631,8 +3653,6 @@ _deps/googletest-src/googletest/include/gtest/gtest-printers.h:
 
 /usr/include/c++/13/backward/binders.h:
 
-/usr/include/c++/13/bits/stl_bvector.h:
-
 /usr/share/cmake-3.28/Modules/FindGit.cmake:
 
 /usr/include/x86_64-linux-gnu/bits/long-double.h:
@@ -3646,6 +3666,18 @@ _deps/googletest-src/googletest/include/gtest/gtest-printers.h:
 /usr/include/c++/13/bits/unique_ptr.h:
 
 /usr/include/c++/13/semaphore:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
+
+/usr/include/x86_64-linux-gnu/bits/signal_ext.h:
+
+/usr/include/c++/13/bits/char_traits.h:
+
+/usr/include/c++/13/bits/std_function.h:
+
+/usr/include/c++/13/cstdint:
+
+/usr/include/c++/13/cstdlib:
 
 /usr/include/c++/13/bits/std_mutex.h:
 
@@ -3707,11 +3739,13 @@ _deps/googletest-src/googletest/include/gtest/gtest_pred_impl.h:
 
 /usr/include/c++/13/bits/stringfwd.h:
 
-_deps/googletest-src/googletest/include/gtest/gtest-message.h:
-
 /usr/include/c++/13/bits/locale_classes.tcc:
 
+_deps/googletest-src/googletest/include/gtest/gtest-message.h:
+
 /usr/include/c++/13/bits/uniform_int_dist.h:
+
+/home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.h:
 
 /usr/include/c++/13/bits/unique_lock.h:
 
@@ -3870,7 +3904,3 @@ _deps/googletest-src/googletest/include/gtest/internal/custom/gtest-port.h:
 /usr/include/stdlib.h:
 
 /usr/include/string.h:
-
-/usr/include/x86_64-linux-gnu/bits/statx.h:
-
-/usr/include/unistd.h:

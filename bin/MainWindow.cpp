@@ -2,6 +2,7 @@
 #include "CodeEditor.h"
 #include "ConsoleWidget.h"
 #include "ItmoWrapper.h"
+#include "interpreter/interpreter.h"
 #include <QToolBar>
 #include <QAction>
 #include <QSplitter>
@@ -16,7 +17,8 @@
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
-    , engine(new ItmoWrapper)
+    , engine(new ItmoWrapper),
+    interpreter(out)
 {
     setMinimumSize(750, 900);
     resize(900, 1000);
@@ -141,15 +143,71 @@ void MainWindow::onRun() {
     console->append(output);
 }
 
+bool startsBlock(const std::string& t) {
+  return t.rfind("if ",0) == 0 || t.rfind("for ",0) == 0 ||
+         t.rfind("while ",0) == 0 || (t.find("= function") != std::string::npos) ||
+         (t.find("= [") != std::string::npos);
+}
+
+bool endsBlock(const std::string& t) {
+  return t.find("end if") != std::string::npos || t.find("end for") != std::string::npos ||
+         t.find("end while") != std::string::npos || t.rfind("end function",0) == 0 ||
+         t.find("]") != std::string::npos;
+}
+
 void MainWindow::onReplExecute() {
-    QString cmd = replInput->text().trimmed();
-    if (cmd.isEmpty()) return;
-
-    console->append("> " + cmd);
-
+    QString qcmd = replInput->text().trimmed();
+    if (qcmd.isEmpty()) return;
     replInput->clear();
+    console->append("> " + qcmd);
 
-    QString output = engine->run(cmd);
-    if (!output.isEmpty())
-        console->append(output);
+    std::string cmd = qcmd.toUtf8().toStdString();
+    out.str(""); 
+    out.clear();
+
+    if (cmd.rfind("//", 0) == 0) return;
+
+    auto starts = [&](const std::string& t){ return startsBlock(t); };
+    auto ends   = [&](const std::string& t){ return endsBlock(t); };
+
+    if (!isUnclosed) {
+        if (starts(cmd)) {
+            block = cmd + "\n";
+            depth = 1;
+            if (ends(cmd)) {
+                try {
+                    interpreter.interpr(block);
+                } catch (const std::exception& e) {
+                    out << "Error: " << e.what() << std::endl;
+                }
+            } else {
+                isUnclosed = true;
+            }
+        } else {
+            try {
+                interpreter.interpr(cmd);
+            } catch (const std::exception& e) {
+                out << "Error: " << e.what() << std::endl;
+            }
+        }
+    } else {
+        block += cmd + "\n";
+        if (starts(cmd)) ++depth;
+        if (ends(cmd))   --depth;
+        if (depth == 0) {
+            isUnclosed = false;
+            try {
+                interpreter.interpr(block);
+            } catch (const std::exception& e) {
+                out << "Error: " << e.what() << std::endl;
+            }
+        }
+    }
+
+    if (!isUnclosed) {
+        auto outStr = out.str();
+        depth = 0;
+        if (!outStr.empty())
+            console->append(QString::fromUtf8(outStr.c_str()));
+    }
 }

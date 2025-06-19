@@ -12,3 +12,4 @@ QString ItmoWrapper::run(const QString& code) {
 
     return QString::fromUtf8(out.str().c_str());
 }
+

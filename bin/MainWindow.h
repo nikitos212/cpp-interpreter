@@ -1,6 +1,8 @@
 #pragma once
 #include <QMainWindow>
 #include <QLineEdit>
+#include <qobject.h>
+#include "lib/interpreter/interpreter.h"
 
 class CodeEditor;
 class ConsoleWidget;
@@ -30,4 +32,9 @@ private:
     bool _firstShow = true;
     QString currentFile;
     QLineEdit* replInput; 
+    Interpreter interpreter;
+    std::ostringstream out;
+    std::string block;
+    bool isUnclosed = false;
+    int depth = 0;
 };

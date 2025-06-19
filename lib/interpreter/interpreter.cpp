@@ -1,22 +1,13 @@
 #include "interpreter.h"
 #include "parser/parser.h"
-#include "ast/nodes.h"
-#include <memory>
-#include <string>
 
-class Interpreter {
-    SymbolTable symbol_table;
-    std::ostream& output;
+Interpreter::Interpreter(std::ostream& out) : output(out) {}
 
-public:
-    Interpreter(std::ostream& out) : output(out) {}
-
-    Value interpr(const std::string& text) {
+Value Interpreter::interpr(const std::string& text) {
         Parser parser(text);
         auto ast = parser.parse();
         return ast->get(symbol_table, output);
-    }
-};
+}
 
 bool interpret(std::istream& input, std::ostream& output) {
     Interpreter interpreter(output);
@@ -31,8 +22,8 @@ bool interpret(std::istream& input, std::ostream& output) {
 
         if (trimmed.empty() || (trimmed.size() >= 2 && trimmed[0] == '/' && trimmed[1] == '/')) continue;
 
-        bool isIf    = (trimmed.rfind("if ", 0) == 0);
-        bool isFor   = (trimmed.rfind("for ", 0) == 0);
+        bool isIf = (trimmed.rfind("if ", 0) == 0);
+        bool isFor = (trimmed.rfind("for ", 0) == 0);
         bool isWhile = (trimmed.rfind("while ", 0) == 0);
         bool isList = (trimmed.find("= [") != std::string::npos);
         bool isFunctionLiteral = (trimmed.find("= function") != std::string::npos);
@@ -51,11 +42,11 @@ bool interpret(std::istream& input, std::ostream& output) {
 
         int depth = 1;
 
-        bool oneLineIf    = (isIf    && (trimmed.find("end if")    != std::string::npos));
-        bool oneLineFor   = (isFor   && (trimmed.find("end for")   != std::string::npos));
+        bool oneLineIf = (isIf && (trimmed.find("end if") != std::string::npos));
+        bool oneLineFor = (isFor && (trimmed.find("end for") != std::string::npos));
         bool oneLineWhile = (isWhile && (trimmed.find("end while") != std::string::npos));
-        bool oneLineFunc  = (isFunctionLiteral && (trimmed.find("end function") != std::string::npos));
-        bool oneLineList  = (isList && (trimmed.find("]") != std::string::npos));
+        bool oneLineFunc = (isFunctionLiteral && (trimmed.find("end function") != std::string::npos));
+        bool oneLineList = (isList && (trimmed.find("]") != std::string::npos));
 
         if (oneLineIf || oneLineFor || oneLineWhile || oneLineFunc || oneLineList) {
             try {
