@@ -185,6 +185,34 @@ itmoscript_tests/fast:
 	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/build
 .PHONY : itmoscript_tests/fast
 
+# Convenience name for target.
+tests/CMakeFiles/itmoscript_tests_autogen_timestamp_deps.dir/rule:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/itmoscript_tests_autogen_timestamp_deps.dir/rule
+.PHONY : tests/CMakeFiles/itmoscript_tests_autogen_timestamp_deps.dir/rule
+
+# Convenience name for target.
+itmoscript_tests_autogen_timestamp_deps: tests/CMakeFiles/itmoscript_tests_autogen_timestamp_deps.dir/rule
+.PHONY : itmoscript_tests_autogen_timestamp_deps
+
+# fast build rule for target.
+itmoscript_tests_autogen_timestamp_deps/fast:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests_autogen_timestamp_deps.dir/build.make tests/CMakeFiles/itmoscript_tests_autogen_timestamp_deps.dir/build
+.PHONY : itmoscript_tests_autogen_timestamp_deps/fast
+
+# Convenience name for target.
+tests/CMakeFiles/itmoscript_tests_autogen.dir/rule:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/itmoscript_tests_autogen.dir/rule
+.PHONY : tests/CMakeFiles/itmoscript_tests_autogen.dir/rule
+
+# Convenience name for target.
+itmoscript_tests_autogen: tests/CMakeFiles/itmoscript_tests_autogen.dir/rule
+.PHONY : itmoscript_tests_autogen
+
+# fast build rule for target.
+itmoscript_tests_autogen/fast:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests_autogen.dir/build.make tests/CMakeFiles/itmoscript_tests_autogen.dir/build
+.PHONY : itmoscript_tests_autogen/fast
+
 function_test.o: function_test.cpp.o
 .PHONY : function_test.o
 
@@ -256,6 +284,30 @@ int_funcs.s: int_funcs.cpp.s
 int_funcs.cpp.s:
 	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/int_funcs.cpp.s
 .PHONY : int_funcs.cpp.s
+
+itmoscript_tests_autogen/mocs_compilation.o: itmoscript_tests_autogen/mocs_compilation.cpp.o
+.PHONY : itmoscript_tests_autogen/mocs_compilation.o
+
+# target to build an object file
+itmoscript_tests_autogen/mocs_compilation.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/itmoscript_tests_autogen/mocs_compilation.cpp.o
+.PHONY : itmoscript_tests_autogen/mocs_compilation.cpp.o
+
+itmoscript_tests_autogen/mocs_compilation.i: itmoscript_tests_autogen/mocs_compilation.cpp.i
+.PHONY : itmoscript_tests_autogen/mocs_compilation.i
+
+# target to preprocess a source file
+itmoscript_tests_autogen/mocs_compilation.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/itmoscript_tests_autogen/mocs_compilation.cpp.i
+.PHONY : itmoscript_tests_autogen/mocs_compilation.cpp.i
+
+itmoscript_tests_autogen/mocs_compilation.s: itmoscript_tests_autogen/mocs_compilation.cpp.s
+.PHONY : itmoscript_tests_autogen/mocs_compilation.s
+
+# target to generate assembly for a file
+itmoscript_tests_autogen/mocs_compilation.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/itmoscript_tests.dir/build.make tests/CMakeFiles/itmoscript_tests.dir/itmoscript_tests_autogen/mocs_compilation.cpp.s
+.PHONY : itmoscript_tests_autogen/mocs_compilation.cpp.s
 
 list_funcs.o: list_funcs.cpp.o
 .PHONY : list_funcs.o
@@ -390,6 +442,8 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... itmoscript_tests_autogen"
+	@echo "... itmoscript_tests_autogen_timestamp_deps"
 	@echo "... itmoscript_tests"
 	@echo "... function_test.o"
 	@echo "... function_test.i"
@@ -400,6 +454,9 @@ help:
 	@echo "... int_funcs.o"
 	@echo "... int_funcs.i"
 	@echo "... int_funcs.s"
+	@echo "... itmoscript_tests_autogen/mocs_compilation.o"
+	@echo "... itmoscript_tests_autogen/mocs_compilation.i"
+	@echo "... itmoscript_tests_autogen/mocs_compilation.s"
 	@echo "... list_funcs.o"
 	@echo "... list_funcs.i"
 	@echo "... list_funcs.s"

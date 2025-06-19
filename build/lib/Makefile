@@ -185,6 +185,34 @@ itmoscript/fast:
 	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f lib/CMakeFiles/itmoscript.dir/build.make lib/CMakeFiles/itmoscript.dir/build
 .PHONY : itmoscript/fast
 
+# Convenience name for target.
+lib/CMakeFiles/itmoscript_autogen_timestamp_deps.dir/rule:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/CMakeFiles/itmoscript_autogen_timestamp_deps.dir/rule
+.PHONY : lib/CMakeFiles/itmoscript_autogen_timestamp_deps.dir/rule
+
+# Convenience name for target.
+itmoscript_autogen_timestamp_deps: lib/CMakeFiles/itmoscript_autogen_timestamp_deps.dir/rule
+.PHONY : itmoscript_autogen_timestamp_deps
+
+# fast build rule for target.
+itmoscript_autogen_timestamp_deps/fast:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f lib/CMakeFiles/itmoscript_autogen_timestamp_deps.dir/build.make lib/CMakeFiles/itmoscript_autogen_timestamp_deps.dir/build
+.PHONY : itmoscript_autogen_timestamp_deps/fast
+
+# Convenience name for target.
+lib/CMakeFiles/itmoscript_autogen.dir/rule:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/CMakeFiles/itmoscript_autogen.dir/rule
+.PHONY : lib/CMakeFiles/itmoscript_autogen.dir/rule
+
+# Convenience name for target.
+itmoscript_autogen: lib/CMakeFiles/itmoscript_autogen.dir/rule
+.PHONY : itmoscript_autogen
+
+# fast build rule for target.
+itmoscript_autogen/fast:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f lib/CMakeFiles/itmoscript_autogen.dir/build.make lib/CMakeFiles/itmoscript_autogen.dir/build
+.PHONY : itmoscript_autogen/fast
+
 ast/nodes.o: ast/nodes.cpp.o
 .PHONY : ast/nodes.o
 
@@ -232,6 +260,30 @@ interpreter/interpreter.s: interpreter/interpreter.cpp.s
 interpreter/interpreter.cpp.s:
 	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f lib/CMakeFiles/itmoscript.dir/build.make lib/CMakeFiles/itmoscript.dir/interpreter/interpreter.cpp.s
 .PHONY : interpreter/interpreter.cpp.s
+
+itmoscript_autogen/mocs_compilation.o: itmoscript_autogen/mocs_compilation.cpp.o
+.PHONY : itmoscript_autogen/mocs_compilation.o
+
+# target to build an object file
+itmoscript_autogen/mocs_compilation.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f lib/CMakeFiles/itmoscript.dir/build.make lib/CMakeFiles/itmoscript.dir/itmoscript_autogen/mocs_compilation.cpp.o
+.PHONY : itmoscript_autogen/mocs_compilation.cpp.o
+
+itmoscript_autogen/mocs_compilation.i: itmoscript_autogen/mocs_compilation.cpp.i
+.PHONY : itmoscript_autogen/mocs_compilation.i
+
+# target to preprocess a source file
+itmoscript_autogen/mocs_compilation.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f lib/CMakeFiles/itmoscript.dir/build.make lib/CMakeFiles/itmoscript.dir/itmoscript_autogen/mocs_compilation.cpp.i
+.PHONY : itmoscript_autogen/mocs_compilation.cpp.i
+
+itmoscript_autogen/mocs_compilation.s: itmoscript_autogen/mocs_compilation.cpp.s
+.PHONY : itmoscript_autogen/mocs_compilation.s
+
+# target to generate assembly for a file
+itmoscript_autogen/mocs_compilation.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f lib/CMakeFiles/itmoscript.dir/build.make lib/CMakeFiles/itmoscript.dir/itmoscript_autogen/mocs_compilation.cpp.s
+.PHONY : itmoscript_autogen/mocs_compilation.cpp.s
 
 lexer/lexer.o: lexer/lexer.cpp.o
 .PHONY : lexer/lexer.o
@@ -318,6 +370,8 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... itmoscript_autogen"
+	@echo "... itmoscript_autogen_timestamp_deps"
 	@echo "... itmoscript"
 	@echo "... ast/nodes.o"
 	@echo "... ast/nodes.i"
@@ -325,6 +379,9 @@ help:
 	@echo "... interpreter/interpreter.o"
 	@echo "... interpreter/interpreter.i"
 	@echo "... interpreter/interpreter.s"
+	@echo "... itmoscript_autogen/mocs_compilation.o"
+	@echo "... itmoscript_autogen/mocs_compilation.i"
+	@echo "... itmoscript_autogen/mocs_compilation.s"
 	@echo "... lexer/lexer.o"
 	@echo "... lexer/lexer.i"
 	@echo "... lexer/lexer.s"

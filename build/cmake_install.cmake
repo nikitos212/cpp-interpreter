@@ -43,11 +43,18 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for each subdirectory.
+  # Include the install script for the subdirectory.
   include("/home/littleking08/Projects/labwork10-nikitos212/build/lib/cmake_install.cmake")
-  include("/home/littleking08/Projects/labwork10-nikitos212/build/bin/cmake_install.cmake")
-  include("/home/littleking08/Projects/labwork10-nikitos212/build/tests/cmake_install.cmake")
+endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/littleking08/Projects/labwork10-nikitos212/build/bin/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/littleking08/Projects/labwork10-nikitos212/build/tests/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)

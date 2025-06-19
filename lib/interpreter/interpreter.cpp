@@ -97,7 +97,7 @@ bool interpret(std::istream& input, std::ostream& output) {
                 t.find("end for") != std::string::npos ||
                 t.find("end while") != std::string::npos ||
                 t.rfind("end function", 0) == 0 ||
-                t.find("]") != std::string::npos)
+                t.rfind("]", 0) == 0)
             {
                 depth--;
             }

@@ -8,8 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "" "lib/itmoscript_autogen/timestamp" "custom" "lib/itmoscript_autogen/deps"
   "/home/littleking08/Projects/labwork10-nikitos212/lib/ast/nodes.cpp" "lib/CMakeFiles/itmoscript.dir/ast/nodes.cpp.o" "gcc" "lib/CMakeFiles/itmoscript.dir/ast/nodes.cpp.o.d"
   "/home/littleking08/Projects/labwork10-nikitos212/lib/interpreter/interpreter.cpp" "lib/CMakeFiles/itmoscript.dir/interpreter/interpreter.cpp.o" "gcc" "lib/CMakeFiles/itmoscript.dir/interpreter/interpreter.cpp.o.d"
+  "/home/littleking08/Projects/labwork10-nikitos212/build/lib/itmoscript_autogen/mocs_compilation.cpp" "lib/CMakeFiles/itmoscript.dir/itmoscript_autogen/mocs_compilation.cpp.o" "gcc" "lib/CMakeFiles/itmoscript.dir/itmoscript_autogen/mocs_compilation.cpp.o.d"
   "/home/littleking08/Projects/labwork10-nikitos212/lib/lexer/lexer.cpp" "lib/CMakeFiles/itmoscript.dir/lexer/lexer.cpp.o" "gcc" "lib/CMakeFiles/itmoscript.dir/lexer/lexer.cpp.o.d"
   "/home/littleking08/Projects/labwork10-nikitos212/lib/parser/parser.cpp" "lib/CMakeFiles/itmoscript.dir/parser/parser.cpp.o" "gcc" "lib/CMakeFiles/itmoscript.dir/parser/parser.cpp.o.d"
   "/home/littleking08/Projects/labwork10-nikitos212/lib/tokens/tokens.cpp" "lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o" "gcc" "lib/CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o.d"

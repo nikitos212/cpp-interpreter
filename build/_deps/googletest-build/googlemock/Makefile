@@ -199,6 +199,110 @@ gmock_main/fast:
 	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build
 .PHONY : gmock_main/fast
 
+# Convenience name for target.
+_deps/googletest-build/googlemock/CMakeFiles/gmock_autogen_timestamp_deps.dir/rule:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _deps/googletest-build/googlemock/CMakeFiles/gmock_autogen_timestamp_deps.dir/rule
+.PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock_autogen_timestamp_deps.dir/rule
+
+# Convenience name for target.
+gmock_autogen_timestamp_deps: _deps/googletest-build/googlemock/CMakeFiles/gmock_autogen_timestamp_deps.dir/rule
+.PHONY : gmock_autogen_timestamp_deps
+
+# fast build rule for target.
+gmock_autogen_timestamp_deps/fast:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_autogen_timestamp_deps.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_autogen_timestamp_deps.dir/build
+.PHONY : gmock_autogen_timestamp_deps/fast
+
+# Convenience name for target.
+_deps/googletest-build/googlemock/CMakeFiles/gmock_autogen.dir/rule:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _deps/googletest-build/googlemock/CMakeFiles/gmock_autogen.dir/rule
+.PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock_autogen.dir/rule
+
+# Convenience name for target.
+gmock_autogen: _deps/googletest-build/googlemock/CMakeFiles/gmock_autogen.dir/rule
+.PHONY : gmock_autogen
+
+# fast build rule for target.
+gmock_autogen/fast:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_autogen.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_autogen.dir/build
+.PHONY : gmock_autogen/fast
+
+# Convenience name for target.
+_deps/googletest-build/googlemock/CMakeFiles/gmock_main_autogen_timestamp_deps.dir/rule:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _deps/googletest-build/googlemock/CMakeFiles/gmock_main_autogen_timestamp_deps.dir/rule
+.PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock_main_autogen_timestamp_deps.dir/rule
+
+# Convenience name for target.
+gmock_main_autogen_timestamp_deps: _deps/googletest-build/googlemock/CMakeFiles/gmock_main_autogen_timestamp_deps.dir/rule
+.PHONY : gmock_main_autogen_timestamp_deps
+
+# fast build rule for target.
+gmock_main_autogen_timestamp_deps/fast:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main_autogen_timestamp_deps.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main_autogen_timestamp_deps.dir/build
+.PHONY : gmock_main_autogen_timestamp_deps/fast
+
+# Convenience name for target.
+_deps/googletest-build/googlemock/CMakeFiles/gmock_main_autogen.dir/rule:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _deps/googletest-build/googlemock/CMakeFiles/gmock_main_autogen.dir/rule
+.PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock_main_autogen.dir/rule
+
+# Convenience name for target.
+gmock_main_autogen: _deps/googletest-build/googlemock/CMakeFiles/gmock_main_autogen.dir/rule
+.PHONY : gmock_main_autogen
+
+# fast build rule for target.
+gmock_main_autogen/fast:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main_autogen.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main_autogen.dir/build
+.PHONY : gmock_main_autogen/fast
+
+gmock_autogen/mocs_compilation.o: gmock_autogen/mocs_compilation.cpp.o
+.PHONY : gmock_autogen/mocs_compilation.o
+
+# target to build an object file
+gmock_autogen/mocs_compilation.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/gmock_autogen/mocs_compilation.cpp.o
+.PHONY : gmock_autogen/mocs_compilation.cpp.o
+
+gmock_autogen/mocs_compilation.i: gmock_autogen/mocs_compilation.cpp.i
+.PHONY : gmock_autogen/mocs_compilation.i
+
+# target to preprocess a source file
+gmock_autogen/mocs_compilation.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/gmock_autogen/mocs_compilation.cpp.i
+.PHONY : gmock_autogen/mocs_compilation.cpp.i
+
+gmock_autogen/mocs_compilation.s: gmock_autogen/mocs_compilation.cpp.s
+.PHONY : gmock_autogen/mocs_compilation.s
+
+# target to generate assembly for a file
+gmock_autogen/mocs_compilation.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/gmock_autogen/mocs_compilation.cpp.s
+.PHONY : gmock_autogen/mocs_compilation.cpp.s
+
+gmock_main_autogen/mocs_compilation.o: gmock_main_autogen/mocs_compilation.cpp.o
+.PHONY : gmock_main_autogen/mocs_compilation.o
+
+# target to build an object file
+gmock_main_autogen/mocs_compilation.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/gmock_main_autogen/mocs_compilation.cpp.o
+.PHONY : gmock_main_autogen/mocs_compilation.cpp.o
+
+gmock_main_autogen/mocs_compilation.i: gmock_main_autogen/mocs_compilation.cpp.i
+.PHONY : gmock_main_autogen/mocs_compilation.i
+
+# target to preprocess a source file
+gmock_main_autogen/mocs_compilation.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/gmock_main_autogen/mocs_compilation.cpp.i
+.PHONY : gmock_main_autogen/mocs_compilation.cpp.i
+
+gmock_main_autogen/mocs_compilation.s: gmock_main_autogen/mocs_compilation.cpp.s
+.PHONY : gmock_main_autogen/mocs_compilation.s
+
+# target to generate assembly for a file
+gmock_main_autogen/mocs_compilation.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/gmock_main_autogen/mocs_compilation.cpp.s
+.PHONY : gmock_main_autogen/mocs_compilation.cpp.s
+
 src/gmock-all.o: src/gmock-all.cc.o
 .PHONY : src/gmock-all.o
 
@@ -260,8 +364,18 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... gmock_autogen"
+	@echo "... gmock_autogen_timestamp_deps"
+	@echo "... gmock_main_autogen"
+	@echo "... gmock_main_autogen_timestamp_deps"
 	@echo "... gmock"
 	@echo "... gmock_main"
+	@echo "... gmock_autogen/mocs_compilation.o"
+	@echo "... gmock_autogen/mocs_compilation.i"
+	@echo "... gmock_autogen/mocs_compilation.s"
+	@echo "... gmock_main_autogen/mocs_compilation.o"
+	@echo "... gmock_main_autogen/mocs_compilation.i"
+	@echo "... gmock_main_autogen/mocs_compilation.s"
 	@echo "... src/gmock-all.o"
 	@echo "... src/gmock-all.i"
 	@echo "... src/gmock-all.s"

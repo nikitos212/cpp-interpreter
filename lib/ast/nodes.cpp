@@ -34,46 +34,49 @@ std::ostream& operator<<(std::ostream& os, const Value& v) {
 }
 
 std::shared_ptr<ListValue> operator+(const std::shared_ptr<ListValue>& first, const std::shared_ptr<ListValue>& second) {
-    auto res = std::make_shared<ListValue>();
-    res->items.reserve(first->items.size() + second->items.size());
+    for (auto& v : second->items) first->items.push_back(v);
 
-    for (auto& v : first->items)  res->items.push_back(v);
-    for (auto& v : second->items) res->items.push_back(v);
-
-    return res;
+    return first;
 }
 
-std::shared_ptr<ListValue> operator*(const std::shared_ptr<ListValue>& list, int count) {
-    if (count == 0) return std::make_shared<ListValue>();
+template <typename T>
+std::shared_ptr<ListValue> operator*(const std::shared_ptr<ListValue>& list, T count) {
+    auto x = static_cast<int>(count);
+    if (x < 0) throw std::runtime_error("The multiplier must be >= 0 ");
+    if (x == 0) { *list = {}; return list; }
 
-    auto res = std::make_shared<ListValue>();
-    res->items.reserve(list->items.size() * count);
+    ListValue copy;
+    for (auto& v : list->items) copy.items.push_back(v);
 
-    for (auto i : std::views::iota(0, count)) {
-        for (auto& v : list->items)  res->items.push_back(v);
+    for (auto i : std::views::iota(0, x - 1)) {
+        for (auto& v : copy.items)  list->items.push_back(v);
     }
     
-    return res;
+    return list;
 }
 
-std::shared_ptr<ListValue> operator*(int count, const std::shared_ptr<ListValue>& list) {
-    if (count == 0) return std::make_shared<ListValue>();
+template <typename T>
+std::shared_ptr<ListValue> operator*(T count, const std::shared_ptr<ListValue>& list) {
+    auto x = static_cast<int>(count);
+    if (x < 0) throw std::runtime_error("The multiplier must be >= 0 ");
+    if (x == 0) { *list = {}; return list; }
 
-    auto res = std::make_shared<ListValue>();
-    res->items.reserve(list->items.size() * count);
+    ListValue copy;
+    for (auto& v : list->items) copy.items.push_back(v);
 
-    for (auto i : std::views::iota(0, count)) {
-        for (auto& v : list->items)  res->items.push_back(v);
+    for (auto i : std::views::iota(0, x - 1)) {
+        for (auto& v : copy.items)  list->items.push_back(v);
     }
     
-    return res;
+    return list;
 }
 
 
 std::shared_ptr<std::string> operator*(int n, const std::shared_ptr<std::string>& str) {
     std::string copy = *str;
-    auto x = static_cast<size_t>(n);
-    if (x <= 0) throw std::runtime_error("The multiplier must be positive");
+    auto x = static_cast<int>(n);
+    if (x < 0) throw std::runtime_error("The multiplier must be >= 0 ");
+    if (x == 0) { *str = ""; return str; }
     --x;
     while (x--) *str += copy;
 
@@ -83,8 +86,9 @@ std::shared_ptr<std::string> operator*(int n, const std::shared_ptr<std::string>
 template<typename T>
 std::shared_ptr<std::string> operator*(const std::shared_ptr<std::string>& str, T n) {
     std::string copy = *str;
-    auto x = static_cast<size_t>(n);
-    if (x <= 0) throw std::runtime_error("The multiplier must be positive");
+    auto x = static_cast<int>(n);
+    if (x < 0) throw std::runtime_error("The multiplier must be >= 0");
+    if (x == 0) { *str = ""; return str; }
     --x;
     while (x--) *str += copy;
 

@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/littleking08/Projects/labwork10-nikitos212/lib
+CXX_INCLUDES = -I/home/littleking08/Projects/labwork10-nikitos212/build/lib/itmoscript_autogen/include -I/home/littleking08/Projects/labwork10-nikitos212/lib
 
 CXX_FLAGS = -g -std=gnu++23
 

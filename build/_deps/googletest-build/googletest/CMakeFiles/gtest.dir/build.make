@@ -69,10 +69,31 @@ include _deps/googletest-build/googletest/CMakeFiles/gtest.dir/progress.make
 # Include the compile flags for this target's objects.
 include _deps/googletest-build/googletest/CMakeFiles/gtest.dir/flags.make
 
+_deps/googletest-build/googletest/gtest_autogen/timestamp: /usr/lib/qt6/libexec/moc
+_deps/googletest-build/googletest/gtest_autogen/timestamp: /usr/lib/qt6/libexec/uic
+_deps/googletest-build/googletest/gtest_autogen/timestamp: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target gtest"
+	cd /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest && /usr/bin/cmake -E cmake_autogen /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest/CMakeFiles/gtest_autogen.dir/AutogenInfo.json Debug
+	cd /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest && /usr/bin/cmake -E touch /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest/gtest_autogen/timestamp
+
+_deps/googletest-build/googletest/CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.o: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/flags.make
+_deps/googletest-build/googletest/CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.o: _deps/googletest-build/googletest/gtest_autogen/mocs_compilation.cpp
+_deps/googletest-build/googletest/CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.o: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object _deps/googletest-build/googletest/CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.o"
+	cd /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/googletest-build/googletest/CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.o -MF CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.o.d -o CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.o -c /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest/gtest_autogen/mocs_compilation.cpp
+
+_deps/googletest-build/googletest/CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.i"
+	cd /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest/gtest_autogen/mocs_compilation.cpp > CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.i
+
+_deps/googletest-build/googletest/CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.s"
+	cd /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest/gtest_autogen/mocs_compilation.cpp -o CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.s
+
 _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/flags.make
 _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o: _deps/googletest-src/googletest/src/gtest-all.cc
 _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
 	cd /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o -MF CMakeFiles/gtest.dir/src/gtest-all.cc.o.d -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-src/googletest/src/gtest-all.cc
 
 _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.i: cmake_force
@@ -85,15 +106,17 @@ _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.s: cmake
 
 # Object files for target gtest
 gtest_OBJECTS = \
+"CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.o" \
 "CMakeFiles/gtest.dir/src/gtest-all.cc.o"
 
 # External object files for target gtest
 gtest_EXTERNAL_OBJECTS =
 
+lib/libgtest.a: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/gtest_autogen/mocs_compilation.cpp.o
 lib/libgtest.a: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o
 lib/libgtest.a: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build.make
 lib/libgtest.a: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library ../../../lib/libgtest.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/littleking08/Projects/labwork10-nikitos212/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX static library ../../../lib/libgtest.a"
 	cd /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest && $(CMAKE_COMMAND) -P CMakeFiles/gtest.dir/cmake_clean_target.cmake
 	cd /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gtest.dir/link.txt --verbose=$(VERBOSE)
 
@@ -105,7 +128,7 @@ _deps/googletest-build/googletest/CMakeFiles/gtest.dir/clean:
 	cd /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest && $(CMAKE_COMMAND) -P CMakeFiles/gtest.dir/cmake_clean.cmake
 .PHONY : _deps/googletest-build/googletest/CMakeFiles/gtest.dir/clean
 
-_deps/googletest-build/googletest/CMakeFiles/gtest.dir/depend:
+_deps/googletest-build/googletest/CMakeFiles/gtest.dir/depend: _deps/googletest-build/googletest/gtest_autogen/timestamp
 	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/littleking08/Projects/labwork10-nikitos212 /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-src/googletest /home/littleking08/Projects/labwork10-nikitos212/build /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest /home/littleking08/Projects/labwork10-nikitos212/build/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : _deps/googletest-build/googletest/CMakeFiles/gtest.dir/depend
 

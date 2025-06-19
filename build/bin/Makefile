@@ -185,6 +185,178 @@ itmoscript_interpreter/fast:
 	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/build
 .PHONY : itmoscript_interpreter/fast
 
+# Convenience name for target.
+bin/CMakeFiles/itmoscript_interpreter_autogen_timestamp_deps.dir/rule:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/CMakeFiles/itmoscript_interpreter_autogen_timestamp_deps.dir/rule
+.PHONY : bin/CMakeFiles/itmoscript_interpreter_autogen_timestamp_deps.dir/rule
+
+# Convenience name for target.
+itmoscript_interpreter_autogen_timestamp_deps: bin/CMakeFiles/itmoscript_interpreter_autogen_timestamp_deps.dir/rule
+.PHONY : itmoscript_interpreter_autogen_timestamp_deps
+
+# fast build rule for target.
+itmoscript_interpreter_autogen_timestamp_deps/fast:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter_autogen_timestamp_deps.dir/build.make bin/CMakeFiles/itmoscript_interpreter_autogen_timestamp_deps.dir/build
+.PHONY : itmoscript_interpreter_autogen_timestamp_deps/fast
+
+# Convenience name for target.
+bin/CMakeFiles/itmoscript_interpreter_autogen.dir/rule:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/CMakeFiles/itmoscript_interpreter_autogen.dir/rule
+.PHONY : bin/CMakeFiles/itmoscript_interpreter_autogen.dir/rule
+
+# Convenience name for target.
+itmoscript_interpreter_autogen: bin/CMakeFiles/itmoscript_interpreter_autogen.dir/rule
+.PHONY : itmoscript_interpreter_autogen
+
+# fast build rule for target.
+itmoscript_interpreter_autogen/fast:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter_autogen.dir/build.make bin/CMakeFiles/itmoscript_interpreter_autogen.dir/build
+.PHONY : itmoscript_interpreter_autogen/fast
+
+CodeEditor.o: CodeEditor.cpp.o
+.PHONY : CodeEditor.o
+
+# target to build an object file
+CodeEditor.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/CodeEditor.cpp.o
+.PHONY : CodeEditor.cpp.o
+
+CodeEditor.i: CodeEditor.cpp.i
+.PHONY : CodeEditor.i
+
+# target to preprocess a source file
+CodeEditor.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/CodeEditor.cpp.i
+.PHONY : CodeEditor.cpp.i
+
+CodeEditor.s: CodeEditor.cpp.s
+.PHONY : CodeEditor.s
+
+# target to generate assembly for a file
+CodeEditor.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/CodeEditor.cpp.s
+.PHONY : CodeEditor.cpp.s
+
+ConsoleWidget.o: ConsoleWidget.cpp.o
+.PHONY : ConsoleWidget.o
+
+# target to build an object file
+ConsoleWidget.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/ConsoleWidget.cpp.o
+.PHONY : ConsoleWidget.cpp.o
+
+ConsoleWidget.i: ConsoleWidget.cpp.i
+.PHONY : ConsoleWidget.i
+
+# target to preprocess a source file
+ConsoleWidget.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/ConsoleWidget.cpp.i
+.PHONY : ConsoleWidget.cpp.i
+
+ConsoleWidget.s: ConsoleWidget.cpp.s
+.PHONY : ConsoleWidget.s
+
+# target to generate assembly for a file
+ConsoleWidget.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/ConsoleWidget.cpp.s
+.PHONY : ConsoleWidget.cpp.s
+
+ItmoHighlighter.o: ItmoHighlighter.cpp.o
+.PHONY : ItmoHighlighter.o
+
+# target to build an object file
+ItmoHighlighter.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/ItmoHighlighter.cpp.o
+.PHONY : ItmoHighlighter.cpp.o
+
+ItmoHighlighter.i: ItmoHighlighter.cpp.i
+.PHONY : ItmoHighlighter.i
+
+# target to preprocess a source file
+ItmoHighlighter.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/ItmoHighlighter.cpp.i
+.PHONY : ItmoHighlighter.cpp.i
+
+ItmoHighlighter.s: ItmoHighlighter.cpp.s
+.PHONY : ItmoHighlighter.s
+
+# target to generate assembly for a file
+ItmoHighlighter.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/ItmoHighlighter.cpp.s
+.PHONY : ItmoHighlighter.cpp.s
+
+ItmoWrapper.o: ItmoWrapper.cpp.o
+.PHONY : ItmoWrapper.o
+
+# target to build an object file
+ItmoWrapper.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/ItmoWrapper.cpp.o
+.PHONY : ItmoWrapper.cpp.o
+
+ItmoWrapper.i: ItmoWrapper.cpp.i
+.PHONY : ItmoWrapper.i
+
+# target to preprocess a source file
+ItmoWrapper.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/ItmoWrapper.cpp.i
+.PHONY : ItmoWrapper.cpp.i
+
+ItmoWrapper.s: ItmoWrapper.cpp.s
+.PHONY : ItmoWrapper.s
+
+# target to generate assembly for a file
+ItmoWrapper.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/ItmoWrapper.cpp.s
+.PHONY : ItmoWrapper.cpp.s
+
+MainWindow.o: MainWindow.cpp.o
+.PHONY : MainWindow.o
+
+# target to build an object file
+MainWindow.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/MainWindow.cpp.o
+.PHONY : MainWindow.cpp.o
+
+MainWindow.i: MainWindow.cpp.i
+.PHONY : MainWindow.i
+
+# target to preprocess a source file
+MainWindow.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/MainWindow.cpp.i
+.PHONY : MainWindow.cpp.i
+
+MainWindow.s: MainWindow.cpp.s
+.PHONY : MainWindow.s
+
+# target to generate assembly for a file
+MainWindow.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/MainWindow.cpp.s
+.PHONY : MainWindow.cpp.s
+
+itmoscript_interpreter_autogen/mocs_compilation.o: itmoscript_interpreter_autogen/mocs_compilation.cpp.o
+.PHONY : itmoscript_interpreter_autogen/mocs_compilation.o
+
+# target to build an object file
+itmoscript_interpreter_autogen/mocs_compilation.cpp.o:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/itmoscript_interpreter_autogen/mocs_compilation.cpp.o
+.PHONY : itmoscript_interpreter_autogen/mocs_compilation.cpp.o
+
+itmoscript_interpreter_autogen/mocs_compilation.i: itmoscript_interpreter_autogen/mocs_compilation.cpp.i
+.PHONY : itmoscript_interpreter_autogen/mocs_compilation.i
+
+# target to preprocess a source file
+itmoscript_interpreter_autogen/mocs_compilation.cpp.i:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/itmoscript_interpreter_autogen/mocs_compilation.cpp.i
+.PHONY : itmoscript_interpreter_autogen/mocs_compilation.cpp.i
+
+itmoscript_interpreter_autogen/mocs_compilation.s: itmoscript_interpreter_autogen/mocs_compilation.cpp.s
+.PHONY : itmoscript_interpreter_autogen/mocs_compilation.s
+
+# target to generate assembly for a file
+itmoscript_interpreter_autogen/mocs_compilation.cpp.s:
+	cd /home/littleking08/Projects/labwork10-nikitos212/build && $(MAKE) $(MAKESILENT) -f bin/CMakeFiles/itmoscript_interpreter.dir/build.make bin/CMakeFiles/itmoscript_interpreter.dir/itmoscript_interpreter_autogen/mocs_compilation.cpp.s
+.PHONY : itmoscript_interpreter_autogen/mocs_compilation.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -222,7 +394,27 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... itmoscript_interpreter_autogen"
+	@echo "... itmoscript_interpreter_autogen_timestamp_deps"
 	@echo "... itmoscript_interpreter"
+	@echo "... CodeEditor.o"
+	@echo "... CodeEditor.i"
+	@echo "... CodeEditor.s"
+	@echo "... ConsoleWidget.o"
+	@echo "... ConsoleWidget.i"
+	@echo "... ConsoleWidget.s"
+	@echo "... ItmoHighlighter.o"
+	@echo "... ItmoHighlighter.i"
+	@echo "... ItmoHighlighter.s"
+	@echo "... ItmoWrapper.o"
+	@echo "... ItmoWrapper.i"
+	@echo "... ItmoWrapper.s"
+	@echo "... MainWindow.o"
+	@echo "... MainWindow.i"
+	@echo "... MainWindow.s"
+	@echo "... itmoscript_interpreter_autogen/mocs_compilation.o"
+	@echo "... itmoscript_interpreter_autogen/mocs_compilation.i"
+	@echo "... itmoscript_interpreter_autogen/mocs_compilation.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

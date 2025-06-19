@@ -1,2 +1,2 @@
-/usr/bin/ar qc libitmoscript.a CMakeFiles/itmoscript.dir/ast/nodes.cpp.o CMakeFiles/itmoscript.dir/interpreter/interpreter.cpp.o CMakeFiles/itmoscript.dir/lexer/lexer.cpp.o CMakeFiles/itmoscript.dir/parser/parser.cpp.o CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o
+/usr/bin/ar qc libitmoscript.a CMakeFiles/itmoscript.dir/itmoscript_autogen/mocs_compilation.cpp.o CMakeFiles/itmoscript.dir/ast/nodes.cpp.o CMakeFiles/itmoscript.dir/interpreter/interpreter.cpp.o CMakeFiles/itmoscript.dir/lexer/lexer.cpp.o CMakeFiles/itmoscript.dir/parser/parser.cpp.o CMakeFiles/itmoscript.dir/tokens/tokens.cpp.o
 /usr/bin/ranlib libitmoscript.a
