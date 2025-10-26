@@ -1,5 +1,0 @@
-if(EXISTS "/home/littleking08/Projects/labwork10-nikitos212/build/tests/itmoscript_tests[1]_tests.cmake")
-  include("/home/littleking08/Projects/labwork10-nikitos212/build/tests/itmoscript_tests[1]_tests.cmake")
-else()
-  add_test(itmoscript_tests_NOT_BUILT itmoscript_tests_NOT_BUILT)
-endif()
